@@ -40,6 +40,63 @@
   default-name)
 
 (eval-and-compile
+  (defconst combobulate-ocaml-interface-definitions
+    '((context-nodes
+       '("false" "true" "number" "class_name" "value_name" "module_type_name"))
+
+      ;; The function to use to indent a region. Defaults to indent-region which
+      ;; is fine if you're not using a whitespace-sensitive language.
+      (envelope-indent-region-function #'indent-region)
+
+      ;; You can pretty print the display of node names in many places in
+      ;; Combobulate. Use your own function here to do this.
+      (pretty-print-node-name-function #'combobulate-ocaml-pretty-print-node-name)
+
+      ;; Plausible separators between items, probably comma and semi-colon?
+      (plausible-separators '(";" ","))
+
+      ;; This is a list of procedures that determine what a defun is.
+      ;; In OCaml it is any _definition node. Select the defun using C-M-h
+      (procedures-defun
+       '((:activation-nodes ((:nodes ("type_definition"
+                                      "value_specification"
+                                      "open_module"
+                                      "module_definition"))))))
+
+      ;; Logical navigation is bound to M-a and M-e. These commands move to the
+      ;; next logical node after or before point. It defaults to all possible nodes
+      ;; types, and this is usually the right default.
+      (procedures-logical
+       '((:activation-nodes ((:nodes (all))))))
+
+      ;; Sibling navigation really means picking the right siblings as point will
+      ;; often intersect many nodes, each having its own siblings. Sibling navigation
+      ;; is essential to get right and it must work consistently and everywhere.
+      ;; You navigate by siblings with C-M-n and C-M-p.
+      (procedures-sibling
+       `(
+         ;; Instead of typing out all possible node types that you want to
+         ;; navigate by, it's often easier to use their common parent node and
+         ;; ask Combobulate to give you all the node types that can appear in it:
+         (:activation-nodes
+          ((:nodes ((all))))
+          :selector (:choose node :match-children t))))
+
+      ;; This is a list of procedures that determine the parent-child relationship
+      ;; between nodes. Specifically C-M-d and C-M-u.
+      (procedures-hierarchy
+       `(
+
+         ;; This should be equivalent to listing everything in "compilation_unit"
+         (:activation-nodes
+          ((:nodes (rule "compilation_unit")))
+          :selector (:choose node :match-children t))
+
+         (:activation-nodes
+          ((:nodes ((all))))
+          :selector (:choose node :match-children t))
+         ))))
+
   (defconst combobulate-ocaml-definitions
     ;; ... DEFINITIONS ...
     ;; Context nodes is a list of node types that are contextual in your language.
@@ -83,17 +140,7 @@
       ;; You navigate by siblings with C-M-n and C-M-p.
       (procedures-sibling
        `(
-         ;; (:activation-nodes
-         ;;  ((:nodes ("type_definition"
-         ;;            "exception_definition"
-         ;;            "external"
-         ;;            "value_definition"
-         ;;            "method_definition"
-         ;;            "instance_variable_definition"
-         ;;            "module_definition"
-         ;;            "module_type_definition"
-         ;;            "class_definition")))
-         ;;  :selector (:choose node :match-children t))
+
 
          ;; Instead of typing out all possible node types that you want to
          ;; navigate by, it's often easier to use their common parent node and
@@ -233,14 +280,22 @@
 
          )))))
 
+(defun combobulate-ocaml-setup (_))
+
 (define-combobulate-language
  :name ocaml
  :language ocaml
- :major-modes (ocaml-ts-mode ocamli-ts-mode neocaml-mode neocamli-mode) ; Only work for experimental tree-sitter modes.
+ :major-modes (ocaml-ts-mode  neocaml-mode) ; Only work for experimental tree-sitter modes.
  :custom combobulate-ocaml-definitions
  :setup-fn combobulate-ocaml-setup)
 
-(defun combobulate-ocaml-setup (_))
+(define-combobulate-language
+ :name ocaml-interface
+ :language ocaml-interface
+ :major-modes (ocamli-ts-mode neocamli-mode)
+ :custom combobulate-ocaml-definitions
+ :setup-fn combobulate-ocaml-setup)
+
 
 (provide 'combobulate-ocaml)
 ;;; combobulate-ocaml.el ends here
