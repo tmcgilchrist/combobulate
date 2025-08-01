@@ -40,6 +40,7 @@
   default-name)
 
 (eval-and-compile
+  ;; Define combobulate support for *.mli files
   (defconst combobulate-ocaml-interface-definitions
     '((context-nodes
        '("false" "true" "number" "class_name" "value_name" "module_type_name"))
@@ -97,6 +98,7 @@
           :selector (:choose node :match-children t))
          ))))
 
+  ;; Define combobulate support for *.ml files
   (defconst combobulate-ocaml-definitions
     ;; ... DEFINITIONS ...
     ;; Context nodes is a list of node types that are contextual in your language.
@@ -285,7 +287,7 @@
 (define-combobulate-language
  :name ocaml
  :language ocaml
- :major-modes (ocaml-ts-mode  neocaml-mode) ; Only work for experimental tree-sitter modes.
+ :major-modes (ocaml-ts-mode neocaml-mode) ; Only work for experimental tree-sitter modes.
  :custom combobulate-ocaml-definitions
  :setup-fn combobulate-ocaml-setup)
 
@@ -295,7 +297,6 @@
  :major-modes (ocamli-ts-mode neocamli-mode)
  :custom combobulate-ocaml-definitions
  :setup-fn combobulate-ocaml-setup)
-
 
 (provide 'combobulate-ocaml)
 ;;; combobulate-ocaml.el ends here
