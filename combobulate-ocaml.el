@@ -40,7 +40,7 @@
   default-name)
 
 (eval-and-compile
-  ;; Define combobulate support for *.mli files
+    ;; Define combobulate support for *.mli files
   (defconst combobulate-ocaml-interface-definitions
     '((context-nodes
        '("false" "true" "number" "class_name" "value_name" "module_type_name"))
@@ -59,9 +59,10 @@
       ;; This is a list of procedures that determine what a defun is.
       ;; In OCaml it is any _definition node. Select the defun using C-M-h
       (procedures-defun
-       '((:activation-nodes ((:nodes ("type_definition"
+       '((:activation-nodes ((:nodes ("open_module"
+                                      "type_definition"
                                       "value_specification"
-                                      "open_module"
+                                      "exception_definition"
                                       "module_definition"))))))
 
       ;; Logical navigation is bound to M-a and M-e. These commands move to the
@@ -76,27 +77,91 @@
       ;; You navigate by siblings with C-M-n and C-M-p.
       (procedures-sibling
        `(
+         
          ;; Instead of typing out all possible node types that you want to
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
+         ;; (:activation-nodes
+         ;;  ((:nodes ((rule "value_specification"))
+         ;;           :has-parent ("value_specification")))
+         ;;  :selector (:choose parent :match-children t))
+
+         ;; (:activation-nodes
+         ;;  ((:nodes ((rule "constructed_type"))
+         ;;           :has-parent ("constructed_type")))
+         ;;  :selector (:choose parent :match-children t))
+
+         ;; (:activation-nodes
+         ;;  ((:nodes ((rule "record_declaration"))
+         ;;           :has-parent ("record_declaration")))
+         ;;  :selector (:choose parent :match-children t))
+
+         ;; (:activation-nodes
+         ;;  ((:nodes ((rule "type_binding"))
+         ;;           :has-parent ("type_binding")))
+         ;;  :selector (:choose parent :match-children t))
+
+         ;; (:activation-nodes
+         ;;  ((:nodes ((rule "type_definition"))
+         ;;           :has-parent ("type_definition")))
+         ;;  :selector (:choose parent :match-children t))
+
+         ;; (:activation-nodes
+         ;;  ((:nodes ((rule "signature"))
+         ;;           :has-parent ("signature")))
+         ;;  :selector (:choose parent :match-children t))
+
+         ;; (:activation-nodes
+         ;;  ((:nodes ((rule "module_binding"))
+         ;;           :has-parent ("module_binding")))
+         ;;  :selector (:choose parent :match-children t))
+
+         ;; (:activation-nodes
+         ;;  ((:nodes ((rule "module_definition"))
+         ;;           :has-parent ("module_definition")))
+         ;;  :selector (:choose parent :match-children t))
+
+
+         ;; This should be equivalent to listing everything in "compilation_unit"
          (:activation-nodes
-          ((:nodes ((all))))
-          :selector (:choose node :match-children t))))
+          ((:nodes ((rule "compilation_unit"))
+                   :position at
+                   :has-parent ("compilation_unit")))
+          :selector (:choose parent :match-children t))
+
+         ))
 
       ;; This is a list of procedures that determine the parent-child relationship
       ;; between nodes. Specifically C-M-d and C-M-u.
       (procedures-hierarchy
        `(
+         ;; (type_definition type
+         ;;   (type_binding name: (type_constructor) =
+         ;;    body:
+         ;; either record_declaration, type alias or some variant_type
+         (:activation-nodes
+          ((:nodes ("type_definition" "type_binding"
+                    "record_declaration" "variant_declaration" "polymorphic_variant_type" "type_constructor_path")))
+          :selector (:choose node :match-children t))
+
+         ;; (module_definition module
+         ;;   (module_binding name: (module_name) :
+         ;;     (signature sig
+         ;;       (value_specification val (value_name) :
+         ;; -> Repeated value_specifications or type_specifications
+
+         (:activation-nodes
+          ((:nodes ("module_definition" "module_binding" "signature")))
+          :selector (:choose node :match-children t))
 
          ;; This should be equivalent to listing everything in "compilation_unit"
          (:activation-nodes
-          ((:nodes (rule "compilation_unit")))
+          ((:nodes ("compilation_unit") :position at))
           :selector (:choose node :match-children t))
 
-         (:activation-nodes
-          ((:nodes ((all))))
-          :selector (:choose node :match-children t))
-         ))))
+         )))))
+
+(eval-and-compile
 
   ;; Define combobulate support for *.ml files
   (defconst combobulate-ocaml-definitions
@@ -142,8 +207,6 @@
       ;; You navigate by siblings with C-M-n and C-M-p.
       (procedures-sibling
        `(
-
-
          ;; Instead of typing out all possible node types that you want to
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
@@ -184,10 +247,18 @@
           :selector (:choose parent :match-children t))
 
          (:activation-nodes
-          ((:nodes ((rule "compilation_unit") )
+          ((:nodes ((rule "compilation_unit"))
                    :position at
-                   :has-parent ("compilation_unit" )))
+                   :has-parent ("compilation_unit")))
           :selector (:choose parent :match-children t))
+
+         ;; TODO Navigation for sequence expressions copied from combobulate-go.el
+         ;; (:activation-nodes
+         ;;  ((:nodes  (rule "_sequence_expression")
+         ;;            :has-parent ((rule "_sequence_expression"))))
+         ;;  :selector (:choose
+         ;;             parent
+         ;;             :match-children t))
 
          ;; (rule "compilation_unit") is equivalent to listing everything that can
          ;; appear in a compilation unit.
@@ -295,7 +366,7 @@
  :name ocaml-interface
  :language ocaml-interface
  :major-modes (ocamli-ts-mode neocamli-mode)
- :custom combobulate-ocaml-definitions
+ :custom combobulate-ocaml-interface-definitions
  :setup-fn combobulate-ocaml-setup)
 
 (provide 'combobulate-ocaml)
