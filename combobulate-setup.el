@@ -526,7 +526,7 @@ NAME is the name of the language as it'll be known to
 Combobulate; LANGUAGE is the tree sitter language symbol, and
 MAJOR-MODES is a list of major modes that should be set up for
 this language."
-  (cl-assert (symbolp language) t "LANGUAGE must be a list")
+  (cl-assert (symbolp language) t "LANGUAGE must be a symbol")
   (cl-assert (symbolp name) t "NAME must be a symbol")
   (let ((group-name (intern (format "combobulate-language-%s" name))))
     ;; Create a customize group for the language
