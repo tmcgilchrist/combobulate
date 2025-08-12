@@ -76,7 +76,7 @@
       ;; is essential to get right and it must work consistently and everywhere.
       ;; You navigate by siblings with C-M-n and C-M-p.
       (procedures-sibling
-       `(
+       '(
          ;; Instead of typing out all possible node types that you want to
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
@@ -133,7 +133,7 @@
       ;; This is a list of procedures that determine the parent-child relationship
       ;; between nodes. Specifically C-M-d and C-M-u.
       (procedures-hierarchy
-       `(
+       '(
          ;; (type_definition type
          ;;   (type_binding name: (type_constructor) =
          ;;    body:
@@ -216,7 +216,7 @@
       ;; is essential to get right and it must work consistently and everywhere.
       ;; You navigate by siblings with C-M-n and C-M-p.
       (procedures-sibling
-       `(
+       '(
          ;; Instead of typing out all possible node types that you want to
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
@@ -264,7 +264,7 @@
 
          ;; TODO Navigation for sequence expressions copied from combobulate-go.el
          (:activation-nodes
-          ((:nodes  (rule "_sequence_expression")
+          ((:nodes  ((rule "_sequence_expression"))
                     :has-parent ((rule "_sequence_expression"))))
           :selector (:choose
                      parent
@@ -274,7 +274,7 @@
       ;; This is a list of procedures that determine the parent-child relationship
       ;; between nodes. Specifically C-M-d and C-M-u.
       (procedures-hierarchy
-       `(
+       '(
 
          ;; (type_definition type
          ;;   (type_binding name: (type_constructor) =
