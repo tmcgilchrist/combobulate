@@ -221,6 +221,14 @@
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
          (:activation-nodes
+          ((:nodes ("module_parameter")
+                   :has-parent ("functor")
+                   :position any))
+          :selector
+          (:choose parent
+                   :match-children t))
+
+         (:activation-nodes
           ((:nodes ((rule "variant_declaration"))
                    :position at
                    :has-parent ("variant_declaration")))
