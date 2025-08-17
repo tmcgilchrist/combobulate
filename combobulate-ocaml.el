@@ -229,6 +229,14 @@
                    :match-children t))
 
          (:activation-nodes
+          ((:nodes ("structure")
+                   :has-parent ("functor")
+                   :position any))
+          :selector
+          (:choose parent
+                   :match-children t))
+
+         (:activation-nodes
           ((:nodes ((rule "variant_declaration"))
                    :position at
                    :has-parent ("variant_declaration")))
