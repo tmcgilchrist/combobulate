@@ -292,10 +292,6 @@
       (procedures-hierarchy
        '(
 
-         ;; (type_definition type
-         ;;   (type_binding name: (type_constructor) =
-         ;;    body:
-         ;; either record_declaration, type alias or some variant_type
          (:activation-nodes
           ((:nodes ("function_type")
                    :position any))
@@ -303,20 +299,6 @@
           (:choose node
                      :match-children t))
 
-         ;; (:activation-nodes
-         ;;  ((:nodes ()))
-         ;;  :selector (:choose
-         ;;             node
-         ;;             :match-children t))
-
-         ;; (:activation-nodes
-         ;;  ((:nodes ()))
-         ;;  :selector (:choose
-         ;;             node
-         ;;             :match-children t))
-
-         ;; Navigates down to 'match_case' nodes and then to each
-         ;; following 'match_case'.
          (:activation-nodes
           ((:nodes ("match_expression" "function_expression")))
           :selector (:choose
