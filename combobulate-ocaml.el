@@ -170,7 +170,7 @@
     ;; Context nodes is a list of node types that are contextual in your language.
     ;; e.g. constant values, identifiers and type identifiers
     '((context-nodes
-       '("false" "true" "number" "class_name" "value_name" "module_type_name"))
+       '("false" "true" "number" "class_name" "value_name" "module_type_name" "module_name" "module_type_name"))
 
       ;; The function to use to indent a region. Defaults to indent-region which
       ;; is fine if you're not using a whitespace-sensitive language.
