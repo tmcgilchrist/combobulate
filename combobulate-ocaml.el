@@ -220,6 +220,7 @@
          ;; Instead of typing out all possible node types that you want to
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
+
          (:activation-nodes
           ((:nodes ("module_parameter")
                    :has-parent ("functor")
@@ -228,7 +229,7 @@
           (:choose parent
                    :match-children t))
 
-         (:activation-nodes
+        (:activation-nodes
           ((:nodes ("structure")
                    :has-parent ("functor")
                    :position any))
@@ -242,22 +243,11 @@
                    :has-parent ("variant_declaration")))
           :selector (:choose parent :match-children t))
 
-         (:activation-nodes
-          ((:nodes ((rule "signature"))
-                   :position at
-                   :has-parent ("signature")))
-          :selector (:choose parent :match-children t))
 
          (:activation-nodes
           ((:nodes ((rule "object_expression"))
                    :position at
                    :has-parent ("object_expression")))
-          :selector (:choose parent :match-children t))
-
-         (:activation-nodes
-          ((:nodes ((rule "structure"))
-                   :position at
-                   :has-parent ("structure")))
           :selector (:choose parent :match-children t))
 
          (:activation-nodes
@@ -270,6 +260,18 @@
           ((:nodes ((rule "match_expression"))
                    :position at
                    :has-parent ("match_expression" )))
+          :selector (:choose parent :match-children t))
+
+          (:activation-nodes
+          ((:nodes ((rule "structure"))
+                   :position at
+                   :has-parent ("structure")))
+          :selector (:choose parent :match-children t))
+
+          (:activation-nodes
+          ((:nodes ((rule "signature"))
+                   :position at
+                   :has-parent ("signature")))
           :selector (:choose parent :match-children t))
 
          (:activation-nodes
@@ -292,49 +294,37 @@
       (procedures-hierarchy
        '(
 
-         (:activation-nodes
+        (:activation-nodes
           ((:nodes ("function_type")
                    :position any))
           :selector
           (:choose node
+                   :match-children t))
+
+        (:activation-nodes
+          ((:nodes ("type_binding" "let_binding" "module_binding" "type_constructor" )))
+          :selector (:choose
+                     node
                      :match-children t))
 
-         (:activation-nodes
-          ((:nodes ("match_expression" "function_expression")))
+        (:activation-nodes
+          ((:nodes ("type_definition" "value_specification" "type_constructor_path" )))
           :selector (:choose
                      node
                      :match-children t))
 
          (:activation-nodes
-          ((:nodes ("let_binding")))
+          ((:nodes ("match_expression" "function_expression" "function_type" "module_definition")))
           :selector (:choose
                      node
                      :match-children t))
 
          (:activation-nodes
-          ((:nodes ("module_binding")))
+          ((:nodes ("structure" "signature")))
           :selector (:choose
                      node
                      :match-children t))
 
-         (:activation-nodes
-          ((:nodes ("structure")))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-         (:activation-nodes
-          ((:nodes ("signature")))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-         ;; (:activation-nodes
-         ;;  ((:nodes ("method_definition" "object_expression")))
-         ;;  :selector (:choose
-         ;;             node
-         ;;             :match-children t))
-         ;; Clearly the above definition is different to having two activation-nodes sexps? How does the :nodes matching work?
          (:activation-nodes
           ((:nodes ("object_expression")))
           :selector (:choose
