@@ -297,26 +297,10 @@
          ;;    body:
          ;; either record_declaration, type alias or some variant_type
          (:activation-nodes
-          ((:nodes ("type_definition"
-                    "type_binding"
-                    "record_declaration"
-                    "variant_declaration" "polymorphic_variant_type" "type_constructor_path")))
-          :selector (:choose node :match-children t))
-
-         ;; (module_definition module
-         ;;   (module_binding name: (module_name) :
-         ;;     (signature sig
-         ;;       (value_specification val (value_name) :
-         ;; -> Repeated value_specifications or type_specifications
-
-         (:activation-nodes
-          ((:nodes ("module_definition" "module_binding" "signature")))
-          :selector (:choose node :match-children t))
-
-         (:activation-nodes
-          ((:nodes ("variant_declaration" "type_binding" "type_constructor")))
-          :selector (:choose
-                     node
+          ((:nodes ("function_type")
+                   :position any))
+          :selector
+          (:choose node
                      :match-children t))
 
          ;; (:activation-nodes
