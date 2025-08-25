@@ -152,8 +152,13 @@
          ;; -> Repeated value_specifications or type_specifications
 
          (:activation-nodes
-          ((:nodes ("module_definition" "module_binding" "signature")))
+          ((:nodes ("module_definition" "module_binding")))
           :selector (:choose node :match-children t))
+
+
+          (:activation-nodes
+          ((:nodes ("signature")))
+          :selector (:choose node :match-children ((:discard-rules ("sig" "end")))))
 
          ;; This should be equivalent to listing everything in "compilation_unit"
          (:activation-nodes
@@ -170,7 +175,7 @@
     ;; Context nodes is a list of node types that are contextual in your language.
     ;; e.g. constant values, identifiers and type identifiers
     '((context-nodes
-       '("false" "true" "number" "class_name" "value_name" "module_type_name" "module_name" "module_type_name"))
+       '("false" "true" "number" "class_name" "value_name" "module_name" "module_type_name"))
 
       ;; The function to use to indent a region. Defaults to indent-region which
       ;; is fine if you're not using a whitespace-sensitive language.
@@ -295,14 +300,7 @@
        '(
 
         (:activation-nodes
-          ((:nodes ("function_type")
-                   :position any))
-          :selector
-          (:choose node
-                   :match-children t))
-
-        (:activation-nodes
-          ((:nodes ("type_binding" "let_binding" "module_binding" "type_constructor" )))
+          ((:nodes ("type_binding" "let_binding" "type_constructor" )))
           :selector (:choose
                      node
                      :match-children t))
@@ -313,26 +311,51 @@
                      node
                      :match-children t))
 
-         (:activation-nodes
-          ((:nodes ("match_expression" "function_expression" "function_type" "module_definition")))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-         (:activation-nodes
+        (:activation-nodes
           ((:nodes ("structure" "signature")))
           :selector (:choose
                      node
-                     :match-children t))
+                     :match-children ((:discard-rules ("struct" "sig" "end")))))
+
+        (:activation-nodes
+          ((:nodes ("functor" )))
+          :selector (:choose
+                     node
+                     :match-children (:discard-rules ("module_parameter" "struct"))))
+
+        (:activation-nodes
+          ((:nodes ("function_type")
+                   :position any))
+          :selector
+          (:choose node
+                   :match-children t))
 
          (:activation-nodes
-          ((:nodes ("object_expression")))
+          ((:nodes ("match_expression" "function_expression" "function_type")))
           :selector (:choose
                      node
                      :match-children t))
 
+      (:activation-nodes
+          ((:nodes ("module_binding") :has-ancestor ("functor")))
+          :selector (:choose
+                     node
+                     :match-children t))
+
+      (:activation-nodes
+          ((:nodes ("object_expression" "module_binding")))
+          :selector (:choose
+                     node
+                     :match-children t))
+
+        (:activation-nodes
+          ((:nodes ("module_type_definition" "module_definition")))
+          :selector (:choose
+                     node
+                     :match-children ((:discard-rules ("struct" "sig" "end")))))
+
          (:activation-nodes
-          ((:nodes ("method_definition")))
+          ((:nodes ("method_definition" "polymorphic_variant_type")))
           :selector (:choose
                      node
                      :match-children t))
