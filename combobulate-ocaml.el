@@ -321,7 +321,7 @@
           ((:nodes ("functor" )))
           :selector (:choose
                      node
-                     :match-children (:discard-rules ("module_parameter" "struct"))))
+                     :match-children t))
 
         (:activation-nodes
           ((:nodes ("function_type")
