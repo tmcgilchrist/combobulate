@@ -300,7 +300,7 @@
        '(
 
          (:activation-nodes
-          ((:nodes ("object_expression" "method_definition" "instance_variable_definition" )))
+          ((:nodes ("class_definition" "class_binding" "object_expression" "method_definition" "instance_variable_definition" )))
           :selector (:choose
                      node
                      :match-children t))
