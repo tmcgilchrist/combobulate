@@ -80,46 +80,7 @@
          ;; Instead of typing out all possible node types that you want to
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
-         ;; (:activation-nodes
-         ;;  ((:nodes ((rule "value_specification"))
-         ;;           :has-parent ("value_specification")))
-         ;;  :selector (:choose parent :match-children t))
-
-         ;; (:activation-nodes
-         ;;  ((:nodes ((rule "constructed_type"))
-         ;;           :has-parent ("constructed_type")))
-         ;;  :selector (:choose parent :match-children t))
-
-         ;; (:activation-nodes
-         ;;  ((:nodes ((rule "record_declaration"))
-         ;;           :has-parent ("record_declaration")))
-         ;;  :selector (:choose parent :match-children t))
-
-         ;; (:activation-nodes
-         ;;  ((:nodes ((rule "type_binding"))
-         ;;           :has-parent ("type_binding")))
-         ;;  :selector (:choose parent :match-children t))
-
-         ;; (:activation-nodes
-         ;;  ((:nodes ((rule "type_definition"))
-         ;;           :has-parent ("type_definition")))
-         ;;  :selector (:choose parent :match-children t))
-
-         ;; (:activation-nodes
-         ;;  ((:nodes ((rule "signature"))
-         ;;           :has-parent ("signature")))
-         ;;  :selector (:choose parent :match-children t))
-
-         ;; (:activation-nodes
-         ;;  ((:nodes ((rule "module_binding"))
-         ;;           :has-parent ("module_binding")))
-         ;;  :selector (:choose parent :match-children t))
-
-         ;; (:activation-nodes
-         ;;  ((:nodes ((rule "module_definition"))
-         ;;           :has-parent ("module_definition")))
-         ;;  :selector (:choose parent :match-children t))
-
+        
 
          ;; This should be equivalent to listing everything in "compilation_unit"
          (:activation-nodes
@@ -333,7 +294,7 @@
           ((:nodes ("functor" )))
           :selector (:choose
                      node
-                     :match-children t))
+                     :match-children (:discard-rules ("module_parameter" "struct"))))
 
         (:activation-nodes
           ((:nodes ("function_type")
