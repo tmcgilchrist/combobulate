@@ -299,6 +299,12 @@
       (procedures-hierarchy
        '(
 
+        (:activation-nodes
+          ((:nodes ("set_expression" "infix_expression")))
+          :selector (:choose
+                     node
+                     :match-children t))
+
          (:activation-nodes
           ((:nodes ("class_definition" "class_binding" "object_expression" "method_definition" "instance_variable_definition" )))
           :selector (:choose
