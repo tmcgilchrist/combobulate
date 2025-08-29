@@ -299,6 +299,12 @@
       (procedures-hierarchy
        '(
 
+         (:activation-nodes
+          ((:nodes ("object_expression" "method_definition" "instance_variable_definition" )))
+          :selector (:choose
+                     node
+                     :match-children t))
+
         (:activation-nodes
           ((:nodes ("type_binding" "let_binding" "type_constructor" )))
           :selector (:choose
@@ -337,7 +343,7 @@
                      :match-children t))
 
       (:activation-nodes
-          ((:nodes ("module_binding") :has-ancestor ("functor")))
+          ((:nodes ("module_definition" "module_binding" "module_name") :has-parent ("structure")) )
           :selector (:choose
                      node
                      :match-children t))
