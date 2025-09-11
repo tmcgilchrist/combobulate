@@ -80,6 +80,16 @@
          ;; Instead of typing out all possible node types that you want to
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
+
+         (:activation-nodes
+          ((:nodes ("constructor_declaration" "constructor_name")
+                  :has-parent ("variant_declaration")
+                  :position any))
+        :selector
+        (:choose parent
+                  :match-children ((:only ("constructor_declaration"))
+                                  (:discard-rules ("|")))))
+
         
 
          ;; This should be equivalent to listing everything in "compilation_unit"
@@ -103,8 +113,21 @@
           ((:nodes ("type_definition"
                     "type_binding"
                     "record_declaration"
-                    "variant_declaration" "polymorphic_variant_type" "type_constructor_path")))
+                    "polymorphic_variant_type" 
+                    "type_constructor_path")))
           :selector (:choose node :match-children t))
+
+          (:activation-nodes
+            ((:nodes ("module_definition" "module_binding" "module_name")))
+          :selector
+          (:choose node
+                    :match-children t))
+
+          (:activation-nodes
+            ((:nodes ("structure" "signature")
+                    :has-parent ("functor")
+                    :position at))
+          :selector (:choose parent :match-children t))
 
          ;; (module_definition module
          ;;   (module_binding name: (module_name) :
@@ -113,8 +136,10 @@
          ;; -> Repeated value_specifications or type_specifications
 
          (:activation-nodes
-          ((:nodes ("module_definition" "module_binding")))
-          :selector (:choose node :match-children t))
+            ((:nodes ("module_definition" "module_binding" "module_name")))
+          :selector
+          (:choose node
+                    :match-children t))
 
 
           (:activation-nodes
@@ -188,27 +213,27 @@
          ;; ask Combobulate to give you all the node types that can appear in it:
 
          (:activation-nodes
+            ((:nodes ("constructor_declaration" "constructor_name")
+                    :has-parent ("variant_declaration")
+                    :position any))
+          :selector
+          (:choose parent
+                    :match-children ((:only ("constructor_declaration"))
+                                    (:discard-rules ("|")))))
+
+         (:activation-nodes
           ((:nodes ("module_parameter")
                    :has-parent ("functor")
                    :position any))
           :selector
           (:choose parent
-                   :match-children t))
+                   :match-children (:discard-rules ("module_parameter" "struct"))))
 
-        (:activation-nodes
-          ((:nodes ("structure")
-                   :has-parent ("functor")
-                   :position any))
-          :selector
-          (:choose parent
-                   :match-children t))
-
-         (:activation-nodes
-          ((:nodes ((rule "variant_declaration"))
-                   :position at
-                   :has-parent ("variant_declaration")))
+          (:activation-nodes
+            ((:nodes ("structure" "signature")
+                    :has-parent ("functor")
+                    :position at))
           :selector (:choose parent :match-children t))
-
 
          (:activation-nodes
           ((:nodes ((rule "object_expression"))
@@ -273,7 +298,7 @@
                      :match-children t))
 
         (:activation-nodes
-          ((:nodes ("type_binding" "let_binding" "type_constructor" )))
+          ((:nodes ("type_binding" "let_binding" "type_constructor" "polymorphic_variant_type")))
           :selector (:choose
                      node
                      :match-children t))
@@ -283,12 +308,30 @@
           :selector (:choose
                      node
                      :match-children t))
+        
+        (:activation-nodes
+        ((:nodes ("module_binding" "module_name") :has-ancestor ("functor")) )
+        :selector (:choose
+                    node
+                    :match-children t))
+
+        (:activation-nodes
+            ((:nodes ("module_definition") :has-parent ("structure")) )
+            :selector (:choose
+                      node
+                      :match-children t))
+
+        (:activation-nodes
+          ((:nodes ("structure" "signature") :has-parent ("module-binding")))
+          :selector (:choose
+                     node
+                     :match-children t))
 
         (:activation-nodes
           ((:nodes ("structure" "signature")))
           :selector (:choose
                      node
-                     :match-children ((:discard-rules ("struct" "sig" "end")))))
+                     :match-children t))
 
         (:activation-nodes
           ((:nodes ("functor" )))
@@ -310,25 +353,19 @@
                      :match-children t))
 
       (:activation-nodes
-          ((:nodes ("module_definition" "module_binding" "module_name") :has-parent ("structure")) )
+          ((:nodes ("module_definition" "module_binding" "module_name")) )
           :selector (:choose
                      node
                      :match-children t))
+
+       (:activation-nodes
+          ((:nodes ((rule "polymorphic_variant_type"))
+                   :position at
+                   :has-parent ("polymorphic_variant_type")))
+          :selector (:choose parent :match-children t))
 
       (:activation-nodes
-          ((:nodes ("object_expression" "module_binding")))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-        (:activation-nodes
-          ((:nodes ("module_type_definition" "module_definition")))
-          :selector (:choose
-                     node
-                     :match-children ((:discard-rules ("struct" "sig" "end")))))
-
-         (:activation-nodes
-          ((:nodes ("method_definition" "polymorphic_variant_type")))
+          ((:nodes ("object_expression" )))
           :selector (:choose
                      node
                      :match-children t))
@@ -338,7 +375,8 @@
           ((:nodes (rule "compilation_unit")))
           :selector (:choose node :match-children t))
 
-         )))))
+         ))
+    )))
 
 (defun combobulate-ocaml-setup (_))
 
