@@ -213,6 +213,12 @@
          ;; ask Combobulate to give you all the node types that can appear in it:
 
          (:activation-nodes
+          ((:nodes ("field_declaration"
+                    "field_name"
+                    ) :has-parent ("record_declaration")))
+          :selector (:choose parent :match-children t))
+
+         (:activation-nodes
             ((:nodes ("constructor_declaration" "constructor_name")
                     :has-parent ("variant_declaration")
                     :position any))
