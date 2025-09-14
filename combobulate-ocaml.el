@@ -298,7 +298,7 @@
                      :match-children t))
 
          (:activation-nodes
-          ((:nodes ("class_definition" "class_binding" "object_expression" "method_definition" "instance_variable_definition" )))
+          ((:nodes ("class_definition" "class_type_definition" "class_binding" "object_expression" "method_definition" "class_type_binding" "class_type_name" "class_body_type" "instance_variable_definition" )))
           :selector (:choose
                      node
                      :match-children t))
