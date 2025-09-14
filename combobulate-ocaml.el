@@ -109,6 +109,7 @@
          ;;   (type_binding name: (type_constructor) =
          ;;    body:
          ;; either record_declaration, type alias or some variant_type
+
          (:activation-nodes
           ((:nodes ("type_definition"
                     "type_binding"
@@ -290,6 +291,18 @@
       ;; between nodes. Specifically C-M-d and C-M-u.
       (procedures-hierarchy
        '(
+
+        (:activation-nodes
+            ((:nodes ( "method_specification" "method_name" )))
+          :selector
+          (:choose node
+                    :match-children t))
+
+        (:activation-nodes
+            ((:nodes ( "record_declaration" "field_declaration" )))
+          :selector
+          (:choose node
+                    :match-children t))
 
         (:activation-nodes
           ((:nodes ("set_expression" "infix_expression")))
