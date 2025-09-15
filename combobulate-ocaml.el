@@ -214,6 +214,12 @@
          ;; ask Combobulate to give you all the node types that can appear in it:
 
          (:activation-nodes
+            ((:nodes ( "match_case" )))
+          :selector
+          (:choose parent
+                    :match-children t))
+
+         (:activation-nodes
           ((:nodes ("field_declaration"
                     "field_name"
                     ) :has-parent ("record_declaration")))
@@ -293,6 +299,12 @@
        '(
 
         (:activation-nodes
+            ((:nodes ( "match_case" "guard" "function_expression" )))
+          :selector
+          (:choose node
+                    :match-children t))
+
+        (:activation-nodes
             ((:nodes ( "method_specification" "method_name" )))
           :selector
           (:choose node
@@ -366,7 +378,7 @@
                    :match-children t))
 
          (:activation-nodes
-          ((:nodes ("match_expression" "function_expression" "function_type")))
+          ((:nodes ("match_expression" "function_type")))
           :selector (:choose
                      node
                      :match-children t))
