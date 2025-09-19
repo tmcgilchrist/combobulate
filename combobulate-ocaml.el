@@ -214,6 +214,12 @@
          ;; ask Combobulate to give you all the node types that can appear in it:
 
          (:activation-nodes
+            ((:nodes ( "infix_expression" "and_operator" "rel_operator" "mult_operator" )))
+          :selector
+          (:choose node
+                    :match-siblings t))
+
+         (:activation-nodes
             ((:nodes ( "match_case" )))
           :selector
           (:choose parent
