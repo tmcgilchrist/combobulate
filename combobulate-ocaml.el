@@ -214,6 +214,24 @@
          ;; ask Combobulate to give you all the node types that can appear in it:
 
          (:activation-nodes
+            ((:nodes ( "value_definition" "value_path" "number")))
+          :selector
+          (:choose parent
+                    :match-siblings t))
+
+         (:activation-nodes
+            ((:nodes ( "let_expressions")))
+          :selector
+          (:choose node
+                    :match-children t))
+
+         (:activation-nodes
+            ((:nodes ( "attribute" "attribute_id" "attribute_payload")))
+          :selector
+          (:choose node
+                    :match-siblings t))
+
+         (:activation-nodes
             ((:nodes ( "infix_expression" "and_operator" "rel_operator" "mult_operator" )))
           :selector
           (:choose node
@@ -303,6 +321,24 @@
       ;; between nodes. Specifically C-M-d and C-M-u.
       (procedures-hierarchy
        '(
+
+        (:activation-nodes
+            ((:nodes ("let_binding") :has-parent ("value_definition")) )
+            :selector (:choose
+                      node
+                      :match-children t))
+
+        (:activation-nodes
+            ((:nodes ( "expression_item" "let_expression" "value_definition" )))
+          :selector
+          (:choose node
+                    :match-children t))
+
+        (:activation-nodes
+            ((:nodes ( "attribute" "attribute_id" "attribute_payload" )))
+          :selector
+          (:choose node
+                    :match-children t))
 
         (:activation-nodes
             ((:nodes ( "match_case" "guard" "function_expression" )))
