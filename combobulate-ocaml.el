@@ -212,6 +212,12 @@
          ;; Instead of typing out all possible node types that you want to
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
+         
+         (:activation-nodes
+            ((:nodes ( "type_constructor_path" "type_constructor") :has-parent ("constructed_type")))
+          :selector
+          (:choose node
+                    :match-siblings t))
 
          (:activation-nodes
             ((:nodes ( "value_definition" "value_path" "number")))
@@ -256,7 +262,9 @@
           :selector
           (:choose parent
                     :match-children ((:only ("constructor_declaration"))
-                                    (:discard-rules ("|")))))
+                                    ))
+          :exclude-nodes ("|"))
+                
 
          (:activation-nodes
           ((:nodes ("module_parameter")
