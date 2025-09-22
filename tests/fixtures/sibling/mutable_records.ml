@@ -1,1 +1,0 @@
-type mutable_person = { name : string; mutable age: int }
