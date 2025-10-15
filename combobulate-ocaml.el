@@ -226,7 +226,7 @@
                     "inheritance_specification" "instance_variable_specification" "type_parameter_constraint"
                     "floating_attribute" "type_variable" "match_case" "type_definition" "exception_definition"
                     "class_type_definition" "class_definition" "module_type_definition" "module_definition"
-                    "let_binding" "field_declaration" "constructor_declaration")))
+                    "let_binding" "field_declaration" "constructor_declaration" "paranthesized_pattern" "tuple_pattern")))
             :selector
             (:choose node
                      :match-siblings t))
@@ -309,87 +309,17 @@
        '(
 
         (:activation-nodes
-            ((:nodes ( "expression_item" "let_expression" "value_definition" )))
+            ((:nodes ("paranthesized_expression") :has-parent ("match_case")))
           :selector
           (:choose node
                     :match-children t))
-
+     
         (:activation-nodes
-            ((:nodes ( "attribute" "floating_attribute" "attribute_id" "attribute_payload" )))
+            ((:nodes ("parameter" "match_expression" "function_expression" "match_case" "guard" "let_binding" "infix_expression" "paranthesized_expression") :has-ancestor ("value_definition")))
           :selector
           (:choose node
                     :match-children t))
-
-        (:activation-nodes
-            ((:nodes ( "match_case" "guard" "value_path" ) :has-parent ("match_expression")))
-          :selector
-          (:choose parent
-                    :match-children t))
-
-        (:activation-nodes
-            ((:nodes ( "parameter" "match_expression" ) :has-parent ("let_binding")))
-          :selector
-          (:choose parent
-                    :match-children t))
-
-        (:activation-nodes
-            ((:nodes ( "match_case" "guard" "function_expression" )))
-          :selector
-          (:choose node
-                    :match-children t))
-
-        (:activation-nodes
-            ((:nodes ("let_binding") :has-parent ("value_definition")) )
-            :selector (:choose
-                      node
-                      :match-children t))
-
-        (:activation-nodes
-         ((:nodes ( "method_specification" "method_name" "inheritance_specification" "instantiated_class_type"
-                    "instance_variable_specification" "type_parameter_constraint" "record_declaration"
-                    "field_declaration" "variant_declaration" "constructor_declaration" "set_expression"
-                    "infix_expression" ) :has-ancestor ("let_binding")))
-        :selector
-        (:choose node
-                 :match-children t))
-
-        (:activation-nodes
-         ((:nodes ( "method_specification" "method_name" "inheritance_specification" "instantiated_class_type"
-                    "instance_variable_specification" "type_parameter_constraint" )))
-          :selector
-          (:choose node
-                    :match-children t))
-
-        (:activation-nodes
-            ((:nodes ( "record_declaration" "field_declaration" "variant_declaration" "constructor_declaration" )))
-          :selector
-          (:choose node
-                    :match-children t))
-
-        (:activation-nodes
-          ((:nodes ("set_expression" "infix_expression")))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-         (:activation-nodes
-          ((:nodes ("class_definition" "class_type_definition" "class_binding" "object_expression" "method_definition"
-                    "class_type_binding" "class_type_name" "class_body_type" "instance_variable_definition" )))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-        (:activation-nodes
-          ((:nodes ("type_binding" "let_binding" "type_constructor" "polymorphic_variant_type")))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-        (:activation-nodes
-          ((:nodes ("type_definition" "value_specification" "type_constructor_path" )))
-          :selector (:choose
-                     node
-                     :match-children t))
+              
 
         (:activation-nodes
         ((:nodes ("module_binding" "module_name") :has-ancestor ("functor")) )
@@ -398,56 +328,16 @@
                     :match-children t))
 
         (:activation-nodes
-            ((:nodes ("module_definition") :has-parent ("structure")) )
-            :selector (:choose
-                      node
-                      :match-children t))
-
-        (:activation-nodes
-          ((:nodes ("structure" "signature") :has-parent ("module-binding")))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-        (:activation-nodes
-          ((:nodes ("structure" "signature")))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-        (:activation-nodes
           ((:nodes ("functor" )))
           :selector (:choose
                      node
                      :match-children (:discard-rules ("module_parameter" "struct"))))
 
         (:activation-nodes
-          ((:nodes ("function_type")
-                   :position any))
-          :selector
-          (:choose node
-                   :match-children t))
-
-         (:activation-nodes
-          ((:nodes ("match_expression" "function_type")))
-          :selector (:choose
-                     node
-                     :match-children t))
-
-      (:activation-nodes
-          ((:nodes ("module_definition" "module_binding" "module_name")) )
-          :selector (:choose
-                     node
-                     :match-children t))
-
-       (:activation-nodes
-          ((:nodes ((rule "polymorphic_variant_type"))
-                   :position at
-                   :has-parent ("polymorphic_variant_type")))
-          :selector (:choose parent :match-children t))
-
-      (:activation-nodes
-          ((:nodes ("object_expression" )))
+          ((:nodes ("class_definition" "class_type_definition" "class_binding" 
+                    "class_type_binding" "class_type_name" "class_body_type" "instance_variable_definition" "functor" "match_expression" "function_type" "module_definition" "module_binding" "module_name" "structure" "signature" "type_definition" "value_specification" "type_constructor_path" "type_binding" "let_binding" "type_constructor" "polymorphic_variant_type" "set_expression" "infix_expression" "application_expression" "expression_item" "let_expression" "value_definition" "match_case" "guard" "function_expression" "object_expression" "method_definition" "method_specification" "method_name" "inheritance_specification" "instantiated_class_type"
+                    "instance_variable_specification" "type_parameter_constraint" "record_declaration" "field_declaration" "variant_declaration" "constructor_declaration" "constructor_name" "attribute" "floating_attribute" "attribute_id" "attribute_payload" "field_name" "instance_variable_name"
+                    )))
           :selector (:choose
                      node
                      :match-children t))
