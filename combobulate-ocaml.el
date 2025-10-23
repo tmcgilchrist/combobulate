@@ -334,10 +334,22 @@
                      :match-children (:discard-rules ("module_parameter" "struct"))))
 
         (:activation-nodes
-          ((:nodes ("class_definition" "class_type_definition" "class_binding" 
-                    "class_type_binding" "class_type_name" "class_body_type" "instance_variable_definition" "functor" "match_expression" "function_type" "module_definition" "module_binding" "module_name" "structure" "signature" "type_definition" "value_specification" "type_constructor_path" "type_binding" "let_binding" "type_constructor" "polymorphic_variant_type" "set_expression" "infix_expression" "application_expression" "expression_item" "let_expression" "value_definition" "match_case" "guard" "function_expression" "object_expression" "method_definition" "method_specification" "method_name" "inheritance_specification" "instantiated_class_type"
-                    "instance_variable_specification" "type_parameter_constraint" "record_declaration" "field_declaration" "variant_declaration" "constructor_declaration" "constructor_name" "attribute" "floating_attribute" "attribute_id" "attribute_payload" "field_name" "instance_variable_name"
-                    )))
+          ((:nodes ((rule "attribute_payload")
+                   (irule "function_type")
+                   (rule "object_expression")
+                   (irule "set_expression")
+                   (irule "infix_expression")
+                   (rule "constructor_declaration")
+                   (rule "class_binding")
+                   (rule "class_application")
+                   (rule "type_binding")
+                   (rule "method_definition")
+                   (irule "value_path")
+                   (irule "signature")
+                   (irule "structure")
+                   (rule "_signature_item")
+                   (rule "_structure_item"))
+                   ))
           :selector (:choose
                      node
                      :match-children t))
