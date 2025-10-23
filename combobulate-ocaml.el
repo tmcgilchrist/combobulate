@@ -226,7 +226,7 @@
                     "inheritance_specification" "instance_variable_specification" "type_parameter_constraint"
                     "floating_attribute" "type_variable" "match_case" "type_definition" "exception_definition"
                     "class_type_definition" "class_definition" "module_type_definition" "module_definition"
-                    "let_binding" "field_declaration" "constructor_declaration" "paranthesized_pattern" "tuple_pattern")))
+                    "let_binding" "field_declaration" "constructor_declaration" "parenthesized_pattern" "tuple_pattern")))
             :selector
             (:choose node
                      :match-siblings t))
