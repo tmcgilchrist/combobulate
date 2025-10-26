@@ -39,7 +39,7 @@ clean-tests: clean-elc
 build-tests: clean-tests
 	$(EMACS_CMD) -l generate-harnesses.el
 
-ELFILES := $(find . -name "test-*.el" ! -name ".*" -print | sort)
+ELFILES := $(sort $(shell find ${srcdir} -name "test-*.el" ! -name ".*" -print))
 
 .PHONY:	run-tests
 run-tests: byte-compile
