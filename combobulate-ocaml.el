@@ -119,25 +119,6 @@
           :selector (:choose
                      node
                      :match-siblings t))
-
-         (:activation-nodes
-          ((:nodes ("value_definition" "value_path" "number" "attribute" "attribute_id" "attribute_payload"
-                    "infix_expression" "and_operator" "rel_operator" "mult_operator" "method_specification"
-                    "inheritance_specification" "instance_variable_specification" "type_parameter_constraint"
-                    "floating_attribute" "type_variable" "match_case" "type_definition" "exception_definition"
-                    "class_type_definition" "class_definition" "module_type_definition" "module_definition"
-                    "let_binding" "field_declaration" "constructor_declaration" "parenthesized_pattern" "tuple_pattern")))
-            :selector
-            (:choose node
-                     :match-siblings t))
-
-         ;; TODO Navigation for sequence expressions copied from combobulate-go.el
-         (:activation-nodes
-          ((:nodes  ((rule "_sequence_expression"))
-                    :has-parent ((rule "_sequence_expression"))))
-          :selector (:choose
-                     parent
-                     :match-children t))
          ))
 
       ;; This is a list of procedures that determine the parent-child relationship
