@@ -100,16 +100,12 @@
 
           (:activation-nodes
           ((:nodes ((rule "attribute_payload")
-                   (irule "function_type")
                    (rule "object_expression")
-                   (irule "set_expression")
-                   (irule "infix_expression")
                    (rule "constructor_declaration")
                    (rule "class_binding")
                    (rule "class_application")
                    (rule "type_binding")
                    (rule "method_definition")
-                   (irule "value_path")
                    (irule "signature")
                    (irule "structure")
                    (rule "_sequence_expression")
