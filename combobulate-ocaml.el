@@ -192,31 +192,6 @@
       ;; between nodes. Specifically C-M-d and C-M-u.
       (procedures-hierarchy
        '(
-
-        (:activation-nodes
-            ((:nodes ("paranthesized_expression") :has-parent ("match_case")))
-          :selector
-          (:choose node
-                   :match-children t))
-
-        (:activation-nodes
-            ((:nodes ("parameter" "match_expression" "function_expression" "match_case" "guard" "let_binding" "infix_expression" "paranthesized_expression") :has-ancestor ("value_definition")))
-          :selector
-          (:choose node
-                   :match-children t))
-
-        (:activation-nodes
-        ((:nodes ("module_binding" "module_name") :has-ancestor ("functor")) )
-        :selector (:choose
-                    node
-                    :match-children t))
-
-        (:activation-nodes
-          ((:nodes ("functor" )))
-          :selector (:choose
-                     node
-                     :match-children (:discard-rules ("module_parameter" "struct"))))
-
         (:activation-nodes
           ((:nodes ((rule "attribute_payload")
                    (irule "function_type")
