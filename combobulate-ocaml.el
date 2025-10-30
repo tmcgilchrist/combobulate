@@ -112,6 +112,7 @@
                    (irule "value_path")
                    (irule "signature")
                    (irule "structure")
+                   (rule "_sequence_expression")
                    (rule "_signature_item")
                    (rule "_structure_item"))
                    ))
