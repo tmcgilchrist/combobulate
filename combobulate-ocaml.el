@@ -117,6 +117,7 @@
             (rule "signature")
             (irule "signature")
             (irule "structure")
+            (rule "_class_field_specification")
             (rule "_sequence_expression")
             (rule "_signature_item")
             (rule "_structure_item"))
