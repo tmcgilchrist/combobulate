@@ -1,4 +1,4 @@
-(* -*- combobulate-test-point-overlays: ((1 outline 519) (2 outline 538) (3 outline 575) (4 outline 631) (5 outline 681) (6 outline 721) (7 outline 784) (8 outline 863) (9 outline 890) (10 outline 953) (11 outline 1006) (12 outline 1081)); eval: (combobulate-test-fixture-mode t); -*- *)
+(* -*- combobulate-test-point-overlays: ((1 outline 503) (2 outline 522) (3 outline 559) (4 outline 615) (5 outline 665) (6 outline 705) (7 outline 923) (8 outline 950) (9 outline 1013) (10 outline 1066) (11 outline 1144)); eval: (combobulate-test-fixture-mode t); -*- *)
 module Core_utils = struct
   let normalize_query s = String.trim s
 end
@@ -24,7 +24,8 @@ module Redis_client = struct
   exception Connection_failed of string
   exception Query_failed of { query: string; reason: string }
 
-  external get_redis_version_major : unit -> int = "caml_redis_major_version"
+  (* the external keyword is behaving unexpectedly in this context *)
+  (* external get_redis_version_major : unit -> int = "caml_redis_major_version" *)
 
   let default_port = 6379
 
@@ -35,6 +36,7 @@ module Redis_client = struct
   include (val (failwith "Unimplemented") : LOGGER)
 
   class type redis_connection_obj = object method send: string -> unit end
+  
   class default_connection = object
     method send cmd = print_endline cmd
   end
