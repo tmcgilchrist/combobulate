@@ -98,23 +98,38 @@
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
 
+         (:activation-nodes
+          ((:nodes (
+            "variant_declaration")))
+          :selector (:choose node :match-children t))
+
           (:activation-nodes
-          ((:nodes ((rule "attribute_payload")
-                   (rule "object_expression")
-                   (rule "constructor_declaration")
-                   (rule "class_binding")
-                   (rule "class_application")
-                   (rule "type_binding")
-                   (rule "method_definition")
-                   (irule "signature")
-                   (irule "structure")
-                   (rule "_sequence_expression")
-                   (rule "_signature_item")
-                   (rule "_structure_item"))
+          ((:nodes (
+            "attribute"
+            (rule "attribute_payload")
+            (rule "object_expression")
+            (rule "constructor_declaration")
+            (rule "class_binding")
+            (rule "class_application")
+            (rule "type_binding")
+            (rule "method_definition")
+            (rule "structure")
+            (rule "signature")
+            (irule "signature")
+            (irule "structure")
+            (rule "_sequence_expression")
+            (rule "_signature_item")
+            (rule "_structure_item"))
                    ))
           :selector (:choose
                      node
                      :match-siblings t))
+
+          (:activation-nodes
+          ((:nodes (
+            (rule "compilation_unit") 
+                    )))
+          :selector (:choose node :match-children t))
          ))
 
       ;; This is a list of procedures that determine the parent-child relationship
@@ -122,21 +137,22 @@
       (procedures-hierarchy
        '(
         (:activation-nodes
-          ((:nodes ((rule "attribute_payload")
-                   (irule "function_type")
-                   (rule "object_expression")
-                   (irule "set_expression")
-                   (irule "infix_expression")
-                   (rule "constructor_declaration")
-                   (rule "class_binding")
-                   (rule "class_application")
-                   (rule "type_binding")
-                   (rule "method_definition")
-                   (irule "value_path")
-                   (irule "signature")
-                   (irule "structure")
-                   (rule "_signature_item")
-                   (rule "_structure_item"))
+          ((:nodes (
+            (rule "attribute_payload")
+            (irule "function_type")
+            (rule "object_expression")
+            (irule "set_expression")
+            (irule "infix_expression")
+            (rule "constructor_declaration")
+            (rule "class_binding")
+            (rule "class_application")
+            (rule "type_binding")
+            (rule "method_definition")
+            (irule "value_path")
+            (irule "signature")
+            (irule "structure")
+            (rule "_signature_item")
+            (rule "_structure_item"))
                    ))
           :selector (:choose
                      node
