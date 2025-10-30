@@ -100,12 +100,12 @@
 
          (:activation-nodes
           ((:nodes (
-            "variant_declaration")))
+            "variant_declaration" "record_declaration")))
           :selector (:choose node :match-children t))
 
           (:activation-nodes
           ((:nodes (
-            "attribute"
+            "attribute" "field_declaration"
             (rule "attribute_payload")
             (rule "object_expression")
             (rule "constructor_declaration")

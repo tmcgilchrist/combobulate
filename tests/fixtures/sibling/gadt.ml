@@ -1,4 +1,4 @@
-(* -*- combobulate-test-point-overlays: ((1 outline 158) (2 outline 184) (3 outline 228)); eval: (combobulate-test-fixture-mode t); -*- *)
+(* -*- combobulate-test-point-overlays: ((1 outline 159) (2 outline 185) (3 outline 229)); eval: (combobulate-test-fixture-mode t); -*- *)
 
 type _ term =
   | Int : int -> int term

@@ -1,4 +1,4 @@
-(* -*- combobulate-test-point-overlays: ((1 outline 360) (2 outline 374) (3 outline 399) (4 outline 439) (5 outline 482) (6 outline 547) (7 outline 600) (8 outline 711) (9 outline 799) (10 outline 878) (11 outline 987) (12 outline 1006) (13 outline 1078) (14 outline 1121) (15 outline 1148) (16 outline 1203)); eval: (combobulate-test-fixture-mode t); -*- *)
+(* -*- combobulate-test-point-overlays: ((1 outline 361) (2 outline 375) (3 outline 400) (4 outline 440) (5 outline 483) (6 outline 548) (7 outline 601) (8 outline 712) (9 outline 800) (10 outline 879) (11 outline 988) (12 outline 1007) (13 outline 1079) (14 outline 1122) (15 outline 1149) (16 outline 1204)); eval: (combobulate-test-fixture-mode t); -*- *)
 
 type user_id
 
