@@ -98,12 +98,26 @@
          ;; navigate by, it's often easier to use their common parent node and
          ;; ask Combobulate to give you all the node types that can appear in it:
 
-         (:activation-nodes
-          ((:nodes ( "type_constructor_path" "type_constructor")
-                   :has-parent ("constructed_type")))
-          :selector
-          (:choose node
-                    :match-siblings t))
+          (:activation-nodes
+          ((:nodes ((rule "attribute_payload")
+                   (irule "function_type")
+                   (rule "object_expression")
+                   (irule "set_expression")
+                   (irule "infix_expression")
+                   (rule "constructor_declaration")
+                   (rule "class_binding")
+                   (rule "class_application")
+                   (rule "type_binding")
+                   (rule "method_definition")
+                   (irule "value_path")
+                   (irule "signature")
+                   (irule "structure")
+                   (rule "_signature_item")
+                   (rule "_structure_item"))
+                   ))
+          :selector (:choose
+                     node
+                     :match-siblings t))
 
          (:activation-nodes
           ((:nodes ("value_definition" "value_path" "number" "attribute" "attribute_id" "attribute_payload"
@@ -115,69 +129,6 @@
             :selector
             (:choose node
                      :match-siblings t))
-
-         (:activation-nodes
-          ((:nodes ( "let_expressions")))
-          :selector
-          (:choose node
-                    :match-children t))
-
-        (:activation-nodes
-         ((:nodes ( "match_case" "record_pattern" "guard" "infix_expression" )
-                  :has-parent ("function_expression")))
-          :selector
-          (:choose node
-                    :match-siblings t))
-
-         (:activation-nodes
-          ((:nodes ("module_parameter")
-                   :has-parent ("functor")
-                   :position any))
-          :selector
-          (:choose parent
-                   :match-children (:discard-rules ("module_parameter" "struct"))))
-
-          (:activation-nodes
-            ((:nodes ("structure" "signature")
-                    :has-parent ("functor")
-                    :position at))
-          :selector (:choose parent :match-children t))
-
-         (:activation-nodes
-          ((:nodes ((rule "object_expression"))
-                   :position at
-                   :has-parent ("object_expression")))
-          :selector (:choose parent :match-children t))
-
-         (:activation-nodes
-          ((:nodes ((rule "function_expression"))
-                   :position at
-                   :has-parent ("function_expression" )))
-          :selector (:choose parent :match-children t))
-
-         (:activation-nodes
-          ((:nodes ((rule "match_expression"))
-                   :position at
-                   :has-parent ("match_expression" )))
-          :selector (:choose parent :match-children t))
-
-          (:activation-nodes
-          ((:nodes ((rule "structure"))
-                   :position at
-                   :has-parent ("structure")))
-          :selector (:choose parent :match-children t))
-
-          (:activation-nodes
-          ((:nodes ((rule "signature"))
-                   :position at
-                   :has-parent ("signature")))
-          :selector (:choose parent :match-children t))
-
-         (:activation-nodes
-          ((:nodes ((rule "compilation_unit"))
-                   :position at
-                   :has-parent ("compilation_unit")))
-          :selector (:choose parent :match-children t))
 
          ;; TODO Navigation for sequence expressions copied from combobulate-go.el
          (:activation-nodes
