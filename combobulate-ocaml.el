@@ -99,9 +99,19 @@
          ;; ask Combobulate to give you all the node types that can appear in it:
 
          (:activation-nodes
+          ((:nodes ((rule "signature") (rule "structure")) 
+            :has-ancestor ("module_definition")))
+          :selector (:choose node :match-siblings t))
+
+         (:activation-nodes
           ((:nodes (
             "variant_declaration" "record_declaration")))
           :selector (:choose node :match-children t))
+
+          (:activation-nodes
+          ((:nodes (
+            "signature" "structure" "module_name") :has-ancestor ("module_definition")))
+          :selector (:choose node :match-siblings t))
 
           (:activation-nodes
           ((:nodes (
@@ -138,7 +148,10 @@
       (procedures-hierarchy
        '(
         (:activation-nodes
-          ((:nodes (
+          (
+            (:nodes ("signature" "structure" "module_name") :has-ancestor ("module_definition"))
+            (:nodes (
+            (rule "module_definition")
             (rule "attribute_payload")
             (irule "function_type")
             (rule "object_expression")
