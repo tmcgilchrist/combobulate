@@ -1,4 +1,5 @@
-(* -*- combobulate-test-point-overlays: ((1 outline 147) (2 outline 158) (3 outline 308)); eval: (combobulate-test-fixture-mode t); -*- *)
+(* -*- combobulate-test-point-overlays: ((1 outline 148) (2 outline 159) (3 outline 308)); eval: (combobulate-test-fixture-mode t); -*- *)
+
 module Positive : sig  (* sibling navigation should go to struct *)
   type t = private int
   val make : int -> t
