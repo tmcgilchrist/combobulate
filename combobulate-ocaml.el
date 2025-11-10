@@ -99,6 +99,19 @@
          ;; ask Combobulate to give you all the node types that can appear in it:
 
          (:activation-nodes
+          ((:nodes ("value_definition" "application_expression")
+            :has-parent ("let_expression")))
+          :selector
+          (:choose parent
+          :match-children t))
+
+          (:activation-nodes
+          ((:nodes ("parameter" "value_path")))
+          :selector
+          (:choose node
+          :match-siblings t))
+
+         (:activation-nodes
           ((:nodes ((rule "signature") (rule "structure")) 
             :has-ancestor ("module_definition")))
           :selector (:choose node :match-siblings t))
@@ -147,6 +160,12 @@
       ;; between nodes. Specifically C-M-d and C-M-u.
       (procedures-hierarchy
        '(
+        (:activation-nodes
+        ((:nodes ("parameter" "value_path")))
+        :selector
+        (:choose node
+        :match-siblings t))
+
         (:activation-nodes
           (
             (:nodes ("signature" "structure" "module_name") :has-ancestor ("module_definition"))
