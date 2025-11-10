@@ -1,4 +1,4 @@
-(* -*- combobulate-test-point-overlays: ((1 outline 224) (2 outline 239) (3 outline 264)); eval: (combobulate-test-fixture-mode t); -*- *)
+(* -*- combobulate-test-point-overlays: ((1 outline 223) (2 outline 248)); eval: (combobulate-test-fixture-mode t); -*- *)
 let nested_match pair =
   match pair with
   | (Some x, Some y) -> begin
