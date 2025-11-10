@@ -47,7 +47,7 @@
     ;; Context nodes is a list of node types that are contextual in your language.
     ;; e.g. constant values, identifiers and type identifiers
     '((context-nodes
-       '("false" "true" "number" "class_name" "value_name" "module_name" "module_type_name" "field_name"))
+       '("false" "true" "number" "class_name" "value_name" "module_name" "module_type_name" "field_name" "false" "true"))
 
       ;; The function to use to indent a region. Defaults to indent-region which
       ;; is fine if you're not using a whitespace-sensitive language.
@@ -58,7 +58,7 @@
       (pretty-print-node-name-function #'combobulate-ocaml-pretty-print-node-name)
 
       ;; Plausible separators between items, probably comma and semi-colon?
-      (plausible-separators '(";" ",", "|"))
+      (plausible-separators '(";" ",", "|", "struct", "sig", "end", "begin", "{", "}"))
 
       ;; This is a list of procedures that determine what a defun is.
       ;; In OCaml it is any _definition node. Select the defun using C-M-h
