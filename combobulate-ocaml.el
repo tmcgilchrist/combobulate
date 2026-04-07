@@ -49,7 +49,9 @@
 
   ;; Combobulate for implementation files (`ml').
   (defconst combobulate-ocaml-definitions
-    '((context-nodes
+    '((navigate-down-into-lists nil)
+
+      (context-nodes
        '("false" "true" "number" "class_name" "value_name"
          "module_name" "module_type_name" "field_name" "false" "true"))
 
@@ -273,7 +275,8 @@
                    :has-ancestor ("module_definition"
                                   "module_type_definition"
                                   "package_expression"))
-           (:nodes ("attribute"
+           (:nodes ("comment"
+                    "attribute"
                     "field_declaration"
                     "function_expression"
                     (rule "function_type")
@@ -402,7 +405,9 @@
   ;; Combobulate for interface files (`mli').
   ;; Asubset of constructs compared to implementation files
   (defconst combobulate-ocaml-interface-definitions
-    '((context-nodes
+    '((navigate-down-into-lists nil)
+
+      (context-nodes
        '("false" "true" "number" "class_name" "value_name"
          "module_name" "module_type_name" "field_name"
          "module" "sig" "end" "val" "type" "class" "exception"
@@ -442,6 +447,7 @@
                     (rule "_signature_item")
 
                     ;; Regular nodes
+                    "comment"
                     "attribute"
                     "field_declaration"
                     (rule "attribute_payload")
@@ -499,7 +505,7 @@
           :selector (:choose node :match-children t)))))))
 
 ;; NOTE: OCaml has two tree-sitter grammars: 'ocaml' for .ml files and
-;; 'ocaml_interface' for .mli files.
+;; 'ocaml-interface' for .mli files.
 ;; We register both as separate "languages" in Combobulate terms with their own
 ;; rule sets. Interface files (.mli) have a more restricted set of top-level
 ;; constructs (specifications rather than implementations).
@@ -510,19 +516,13 @@
  :name ocaml
  :language ocaml
  :major-modes (caml-mode tuareg-mode neocaml-mode)
- :custom combobulate-ocaml-definitions
- :setup-fn combobulate-ocaml-setup)
+ :custom combobulate-ocaml-definitions)
 
 (define-combobulate-language
  :name ocaml-interface
- :language ocaml_interface
+ :language ocaml-interface
  :major-modes (caml-mode tuareg-mode neocaml-interface-mode)
- :custom combobulate-ocaml-interface-definitions
- :setup-fn combobulate-ocaml-setup)
-
-(defun combobulate-ocaml-setup (_)
-  "Setup function for OCaml mode with Combobulate."
-  (setq-local combobulate-navigate-down-into-lists nil))
+ :custom combobulate-ocaml-interface-definitions)
 
 (provide 'combobulate-ocaml)
 ;;; combobulate-ocaml.el ends here

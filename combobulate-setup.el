@@ -370,7 +370,10 @@ For many languages it's usually something like `identifier' or
      #'combobulate--pretty-print-node)
     (pretty-print-node-name-function
      "Function that pretty prints a node name."
-     #'combobulate-pretty-print-node-name))
+     #'combobulate-pretty-print-node-name)
+    (navigate-down-into-lists
+     "Whether to navigate into the first list-like structure ahead of point."
+     t))
   "Default definitions that each language minor mode can set.
 
 This is a list of `defvar' forms that are used to define the
@@ -444,7 +447,6 @@ A complete list of known shorthands are found in
   (dolist (envelope (combobulate-read envelope-list))
     (apply #'combobulate-define-envelope envelope)))
 
-
 (defun combobulate-get-registered-language (mm)
   "Get the registered language for a major mode MM.
 
@@ -453,24 +455,22 @@ Returns a list of the form `(NAME MAJOR-MODES MINOR-MODE-FN TREESIT-LANGUAGE)'."
               (member mm major-modes))
             combobulate-registered-languages-alist))
 
-(defun combobulate-get-language-name-from-treesit (treesit-lang)
-  "Get the Combobulate language name for a tree-sitter language TREESIT-LANG.
+(defun combobulate-normalize-language-name (lang)
+  "Normalize a tree-sitter language symbol by replacing underscores with hyphens.
 
-Returns the NAME from the registered language alist, or TREESIT-LANG if not found."
-  (or (car (seq-find (pcase-lambda (`(_ _ _ ,ts-lang))
-                       (eq ts-lang treesit-lang))
-                     combobulate-registered-languages-alist))
-      treesit-lang))
+Different packages may create parsers using either underscored
+names (e.g., `ocaml_interface') or hyphenated names (e.g.,
+`ocaml-interface').  Both forms work with tree-sitter APIs as
+Emacs converts hyphens to underscores when loading grammar
+libraries.  This function normalizes to the hyphenated form
+which is the Emacs Lisp convention."
+  (intern (replace-regexp-in-string "_" "-" (symbol-name lang))))
 
-(defun combobulate-get-treesit-language-from-name (combobulate-name)
-  "Get the tree-sitter language for a Combobulate language name COMBOBULATE-NAME.
-
-Returns the tree-sitter LANGUAGE from the registered language alist, or
-COMBOBULATE-NAME if not found."
-  (or (nth 3 (seq-find (pcase-lambda (`(,name _ _ _))
-                        (eq name combobulate-name))
-                      combobulate-registered-languages-alist))
-      combobulate-name))
+(defun combobulate-language-equal-p (lang1 lang2)
+  "Return non-nil if LANG1 and LANG2 refer to the same tree-sitter language.
+Handles the underscore/hyphen difference between conventions."
+  (eq (combobulate-normalize-language-name lang1)
+      (combobulate-normalize-language-name lang2)))
 
 (defun combobulate-maybe-activate (&optional raise-if-missing called-interactively)
   "Maybe activate Combobulate in the current buffer.
@@ -486,7 +486,7 @@ enable Combobulate."
   (when-let (match (or (when-let ((existing-parsers (combobulate-parser-list)))
                          (let ((ts-lang (combobulate-parser-language (car existing-parsers))))
                            (seq-find (pcase-lambda (`(_ _ _ ,lang))
-                                       (eq lang ts-lang))
+                                       (combobulate-language-equal-p lang ts-lang))
                                      combobulate-registered-languages-alist)))
                        (combobulate-get-registered-language major-mode)))
     (pcase-let ((`(,name _ ,minor-mode-fn ,treesit-language) match))
@@ -506,7 +506,8 @@ Try reinstalling the grammar for that language and try again."
         ;; an initialised language in the buffer that it is not
         ;; different from the one we think it should be.
         (when-let ((existing-parsers (mapcar #'combobulate-parser-language (combobulate-parser-list))))
-          (unless (member treesit-language existing-parsers)
+          (unless (seq-some (lambda (p) (combobulate-language-equal-p treesit-language p))
+                            existing-parsers)
             (error "Cannot activate Combobulate in buffer `%s' because of a parser mismatch.
 
 The buffer's language is `%s' and does not match Combobulate's

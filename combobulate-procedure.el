@@ -596,12 +596,19 @@ defaults to `combobulate'. `:discard-rules' is a list of rules
 
 (defun combobulate-production-rules--get (variable &optional language)
   "Get the production rules from VARIABLE.
-LANGUAGE can be a Combobulate language name or tree-sitter language.
-Converts Combobulate names to tree-sitter names before lookup."
-  (declare-function combobulate-get-treesit-language-from-name "combobulate-setup")
-  (let ((lang (or language (combobulate-primary-language))))
-    ;; Convert Combobulate language name to tree-sitter language name if needed
-    (cadr (assoc (combobulate-get-treesit-language-from-name lang) variable))))
+
+The auto-generated production rules alist may key entries with
+underscored names (e.g., `ocaml_interface') while
+`combobulate-primary-language' returns the hyphenated form.
+This function normalizes both sides for comparison."
+  (declare-function combobulate-normalize-language-name "combobulate-setup")
+  (let* ((lang (or language (combobulate-primary-language)))
+         (normalized (combobulate-normalize-language-name lang)))
+    (or (cadr (assoc lang variable))
+        (cadr (seq-find (lambda (entry)
+                          (eq (combobulate-normalize-language-name (car entry))
+                              normalized))
+                        variable)))))
 
 (defun combobulate-production-rules-get-types (&optional language skip-discard-rules)
   "Return a list of all node types in LANGUAGE.
