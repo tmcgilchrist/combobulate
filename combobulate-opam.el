@@ -69,28 +69,36 @@
       (procedures-defun
        '((:activation-nodes ((:nodes ("variable" "section"))))))
       (procedures-sibling
-       '(;; navigate between top-level variables and sections
+       '(;; NOTE: procedures are ordered most-specific first because
+         ;; combobulate-procedure-start walks parent nodes and returns
+         ;; the first procedure+node match. Leaf-level rules must
+         ;; precede container-level rules or the variable/section rule
+         ;; will match via parent-walking before list/group rules.
+
+         ;; navigate between values in a group
          (:activation-nodes
-          ((:nodes ("variable" "section")
-            :has-parent ("source_file")))
+          ((:nodes ("option_value" "atom" "group"
+                    "prefix_relop" "relop_value"
+                    "logop_value" "pfxop_value")
+            :has-parent ("group")))
+          :selector (:match-children t))
+         ;; navigate between values in a list (e.g. dependencies, build steps)
+         (:activation-nodes
+          ((:nodes ("option_value" "atom" "group" "list"
+                    "prefix_relop" "relop_value"
+                    "logop_value" "pfxop_value")
+            :has-parent ("list")))
           :selector (:match-children t))
          ;; navigate between items within a section
          (:activation-nodes
           ((:nodes ("variable" "section")
             :has-parent ("section")))
           :selector (:match-children (:match-rules ("variable" "section"))))
-         ;; navigate between values in a list
+         ;; navigate between top-level variables and sections
          (:activation-nodes
-          ((:nodes ((rule "list"))
-            :position at
-            :has-parent ((rule "list"))))
-          :selector (:match-children t))
-         ;; navigate between values in a group
-         (:activation-nodes
-          ((:nodes ((rule "group"))
-            :position at
-            :has-parent ((rule "group"))))
-          :selector (:match-children t))))
+          ((:nodes ("variable" "section")
+            :has-parent ("source_file")))
+          :selector (:match-children (:match-rules ("variable" "section"))))))
       (procedures-hierarchy
        '(;; navigate into sections
          (:activation-nodes

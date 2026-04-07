@@ -65,24 +65,16 @@
       (procedures-defun
        '((:activation-nodes ((:nodes ("stanza"))))))
       (procedures-sibling
-       '(;; navigate between top-level stanzas
+       '(;; NOTE: procedures are ordered most-specific first because
+         ;; combobulate-procedure-start walks parent nodes and returns
+         ;; the first procedure+node match. Leaf-level rules must
+         ;; precede container-level rules or the stanza rule will
+         ;; match via parent-walking before field_name gets a chance.
+
+         ;; navigate between package dependency components
          (:activation-nodes
-          ((:nodes ("stanza")
-            :has-parent ("source_file")))
-          :selector (:match-children (:match-rules ("stanza"))))
-         ;; navigate between fields/values within a stanza
-         (:activation-nodes
-          ((:nodes ("field_name" "module_name" "library_name"
-                    "package_name" "public_name" "file_name"
-                    "sexp" "action" "sexps1")
-            :has-parent ("stanza")))
-          :selector (:match-children (:match-rules
-                                      (exclude (all) "stanza_name"))))
-         ;; navigate between children within a sexp
-         (:activation-nodes
-          ((:nodes ("sexp" "quoted_string" "multiline_string"
-                    "module_name" "library_name" "file_name")
-            :has-parent ("sexp")))
+          ((:nodes ("package_name" "version_constraint")
+            :has-parent ("package_dep")))
           :selector (:match-children t))
          ;; navigate between action arguments
          (:activation-nodes
@@ -90,11 +82,36 @@
                     "shell_command")
             :has-parent ("action")))
           :selector (:match-children t))
-         ;; navigate between package dependencies
+         ;; navigate between children within a sexp
          (:activation-nodes
-          ((:nodes ("package_name" "version_constraint")
-            :has-parent ("package_dep")))
-          :selector (:match-children t))))
+          ((:nodes ("sexp" "quoted_string" "multiline_string"
+                    "module_name" "library_name" "file_name")
+            :has-parent ("sexp")))
+          :selector (:match-children t))
+         ;; navigate between field names within a stanza
+         ;; (e.g. name, synopsis, depends in a package stanza)
+         (:activation-nodes
+          ((:nodes ("field_name")
+            :has-parent ("stanza")))
+          :selector (:match-children (:match-rules ("field_name"))))
+         ;; navigate between value nodes within a stanza
+         ;; (e.g. library_name siblings in libraries, package_dep
+         ;; siblings in depends)
+         (:activation-nodes
+          ((:nodes ("module_name" "library_name" "package_name"
+                    "public_name" "file_name" "sexp" "action"
+                    "sexps1" "package_dep")
+            :has-parent ("stanza")))
+          :selector (:match-children (:match-rules
+                                      ("module_name" "library_name"
+                                       "package_name" "public_name"
+                                       "file_name" "sexp" "action"
+                                       "sexps1" "package_dep"))))
+         ;; navigate between top-level stanzas
+         (:activation-nodes
+          ((:nodes ("stanza")
+            :has-parent ("source_file")))
+          :selector (:match-children (:match-rules ("stanza"))))))
       (procedures-hierarchy
        '(;; navigate into stanzas
          (:activation-nodes
