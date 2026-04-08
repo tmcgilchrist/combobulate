@@ -289,12 +289,14 @@ doesn't exist."
     (save-excursion
       (let* ((auto-mode-alist (append auto-mode-alist
                                       '(("\\.go\\'" . go-ts-mode)
+                                        ("\\.c\\'" . c-ts-mode)
                                         ("\\.ml[i]?\\'" . tuareg-mode)
                                         ("\\.dune\\'" . dune-ts-mode)
                                         ("\\.opam\\'" . opam-ts-mode)
                                         ("\\.mld\\'" . odoc-ts-mode))))
              ;; required to ensure the right major mode is chosen.
-             (major-mode-remap-alist '((python-mode . python-ts-mode)
+             (major-mode-remap-alist '((c-mode . c-ts-mode)
+                                       (python-mode . python-ts-mode)
                                        (css-mode . css-ts-mode)
                                        (typescript-mode . tsx-ts-mode)
                                        (js2-mode . js-ts-mode)
