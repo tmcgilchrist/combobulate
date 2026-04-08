@@ -526,7 +526,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_code_block_content"
+              "name": "code_block_content"
             },
             {
               "type": "BLANK"
@@ -574,7 +574,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "_code_block_content"
+                  "name": "code_block_content"
                 },
                 {
                   "type": "BLANK"
@@ -619,7 +619,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "_code_block_content"
+                  "name": "code_block_content"
                 },
                 {
                   "type": "BLANK"
@@ -1634,7 +1634,7 @@
   "externals": [
     {
       "type": "SYMBOL",
-      "name": "_code_block_content"
+      "name": "code_block_content"
     },
     {
       "type": "SYMBOL",

@@ -78,7 +78,17 @@
   {
     "type": "code_block",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "code_block_content",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "code_block_with_lang",
@@ -88,6 +98,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "code_block_content",
+          "named": true
+        },
         {
           "type": "code_block_delimiter_close",
           "named": true
@@ -1620,6 +1634,10 @@
   {
     "type": "]}",
     "named": false
+  },
+  {
+    "type": "code_block_content",
+    "named": true
   },
   {
     "type": "code_block_delimiter_close",
