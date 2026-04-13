@@ -85,6 +85,8 @@
 ;;;###autoload
 (require 'combobulate-go)
 ;;;###autoload
+(require 'combobulate-c)
+;;;###autoload
 (require 'combobulate-ocaml)
 ;;; end language support
 
