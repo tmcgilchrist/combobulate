@@ -228,8 +228,34 @@ syntax tree."
     (nreverse siblings)))
 
 (defun combobulate--get-nearest-navigable-node ()
-  "Returns the nearest navigable node to point"
-  (combobulate-node-at-point combobulate-navigable-nodes))
+  "Return the nearest navigable node to point.
+
+When point sits on an anonymous token (for example the `,' that
+separates two list elements), prefer the nearest named sibling of
+that token in the tree -- the walk up from an anonymous separator
+lands on its non-navigable parent container and would otherwise make
+navigation jump up a level unexpectedly.
+
+Otherwise, walk up from the smallest named node covering the single
+character at point to find one whose type is in
+`combobulate-navigable-nodes'.  Using a one-byte range avoids the
+Emacs `treesit-node-on' quirk where an empty range at a node
+boundary returns the enclosing parent -- which would otherwise cause
+navigation to miss the node starting at point."
+  (or (let ((leaf (combobulate-node-at (point))))
+        (when (and leaf (not (combobulate-node-named-p leaf)))
+          (let ((next (treesit-node-next-sibling leaf t))
+                (prev (treesit-node-prev-sibling leaf t)))
+            (or (and next (member (combobulate-node-type next) combobulate-navigable-nodes) next)
+                (and prev (member (combobulate-node-type prev) combobulate-navigable-nodes) prev)))))
+      (let* ((end (min (1+ (point)) (point-max)))
+             (node (treesit-node-on (point) end (combobulate-primary-language) t))
+             (this node))
+        (catch 'done
+          (while this
+            (when (member (combobulate-node-type this) combobulate-navigable-nodes)
+              (throw 'done this))
+            (setq this (combobulate-node-parent this)))))))
 
 (defun combobulate-get-parents (node)
   "Get all parent nodes of NODE"
