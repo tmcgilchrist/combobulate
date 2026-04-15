@@ -228,7 +228,7 @@
         "named": true
       },
       {
-        "type": "type_synomym",
+        "type": "type_synonym",
         "named": true
       }
     ]
@@ -371,6 +371,10 @@
       },
       {
         "type": "tuple",
+        "named": true
+      },
+      {
+        "type": "typed_hole",
         "named": true
       },
       {
@@ -5756,7 +5760,7 @@
     "fields": {}
   },
   {
-    "type": "type_synomym",
+    "type": "type_synonym",
     "named": true,
     "fields": {
       "name": {
@@ -6127,7 +6131,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "constructor",
@@ -6135,7 +6140,8 @@
   },
   {
     "type": "cpp",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "d",
@@ -6191,7 +6197,8 @@
   },
   {
     "type": "haddock",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "hiding",
@@ -6283,7 +6290,8 @@
   },
   {
     "type": "pragma",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "qualified",
