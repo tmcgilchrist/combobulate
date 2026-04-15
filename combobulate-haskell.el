@@ -71,7 +71,7 @@
                (or (combobulate-node-text
                     (combobulate-node-child-by-field node "name"))
                    "")))
-      ("type_synomym"
+      ("type_synonym"
        (concat "type "
                (or (combobulate-node-text
                     (combobulate-node-child-by-field node "name"))
@@ -152,22 +152,27 @@
       (procedures-defun
        '((:activation-nodes
           ((:nodes ("function" "signature" "data_type" "newtype"
-                    "class" "instance" "type_synomym" "type_family"
+                    "class" "instance" "type_synonym" "type_family"
                     "foreign_import" "foreign_export"
                     "pattern_synonym" "deriving_instance"))))))
       (procedures-logical
        '((:activation-nodes ((:nodes (all))))))
       (procedures-sibling
-       '(;; Top-level declarations
+       '(;; Top-level items: the haddock, module header, imports and
+         ;; declarations blocks live in separate parse-tree containers, but
+         ;; we present their contents as a single flat sibling list so
+         ;; C-M-n/C-M-p flow across the boundaries -- e.g. from the module
+         ;; header down into the first import, or from the last import into
+         ;; the first declaration.
          (:activation-nodes
-          ((:nodes ((rule "declaration"))
-                   :has-parent ("declarations")))
-          :selector (:choose parent :match-children t))
-         ;; Import statements
-         (:activation-nodes
-          ((:nodes ("import")
-                   :has-parent ("imports")))
-          :selector (:choose parent :match-children t))
+          ((:nodes ("pragma" "import" (rule "declaration"))
+                   :has-ancestor ("haskell")))
+          :selector (:choose parent
+                     :match-query (:query ((haskell (pragma) @match)
+                                           (haskell (header) @match)
+                                           (imports (import) @match)
+                                           (declarations (_) @match))
+                                   :engine treesitter)))
          ;; Bindings and let statements in do-blocks (navigate the LHS of <- and let)
          (:activation-nodes
           ((:nodes ("bind" "let")
@@ -205,11 +210,6 @@
            (:nodes ((rule "instance_decl"))
                    :has-parent ("instance_declarations")))
           :selector (:choose parent :match-children t))
-         ;; List elements and tuple elements
-         (:activation-nodes
-          ((:nodes ((rule "list") (rule "tuple"))
-                   :has-parent ("list" "tuple")))
-          :selector (:choose parent :match-children t))
          ;; Import names
          (:activation-nodes
           ((:nodes ("import_name")
@@ -229,6 +229,17 @@
          (:activation-nodes
           ((:nodes ("guard")
                    :has-parent ("guards")))
+          :selector (:choose parent :match-children t))
+         ;; Top-level structural sections: the haddock block, the module
+         ;; header, the imports block and the declarations block are direct
+         ;; children of the root `haskell' node.  This is the fallback when
+         ;; no more specific sibling procedure matched -- it lets navigation
+         ;; step between the major sections when point is inside a comment
+         ;; header or anywhere else that is not inside a smaller navigable
+         ;; construct.
+         (:activation-nodes
+          ((:nodes ("haddock" "header" "imports" "declarations")
+                   :has-parent ("haskell")))
           :selector (:choose parent :match-children t))))
       (procedures-hierarchy
        '(;; Descend into do-blocks
