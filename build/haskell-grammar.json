@@ -1771,7 +1771,7 @@
         }
       ]
     },
-    "type_synomym": {
+    "type_synonym": {
       "type": "SEQ",
       "members": [
         {
@@ -1921,27 +1921,6 @@
         }
       ]
     },
-    "_tyfam_inj": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "type_family_result"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "type_family_injectivity"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
-    },
     "_tyfam": {
       "type": "SEQ",
       "members": [
@@ -1961,9 +1940,21 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "_tyfam_inj"
+                  "name": "type_family_result"
                 }
               ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "type_family_injectivity"
             },
             {
               "type": "BLANK"
@@ -2675,6 +2666,10 @@
           }
         }
       ]
+    },
+    "_exp_typed_hole": {
+      "type": "STRING",
+      "value": "_"
     },
     "_exp_parens": {
       "type": "SEQ",
@@ -4916,6 +4911,15 @@
           "name": "_exp_name"
         },
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_exp_typed_hole"
+          },
+          "named": true,
+          "value": "typed_hole"
+        },
+        {
           "type": "SYMBOL",
           "name": "_universal"
         }
@@ -6638,7 +6642,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "type_synomym"
+          "name": "type_synonym"
         },
         {
           "type": "SYMBOL",
@@ -7084,7 +7088,7 @@
               "name": "name",
               "content": {
                 "type": "SYMBOL",
-                "name": "_con"
+                "name": "_decl_con"
               }
             },
             {
@@ -7362,7 +7366,7 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "_con"
+            "name": "_decl_con"
           }
         },
         {
@@ -7427,7 +7431,7 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "_constructor"
+            "name": "_decl_constructor"
           }
         },
         {
@@ -7786,7 +7790,7 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "_con"
+            "name": "_decl_con"
           }
         },
         {
@@ -9721,6 +9725,10 @@
           {
             "type": "STRING",
             "value": "interruptible"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[A-Z_]+"
           }
         ]
       }
@@ -10823,35 +10831,81 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SEQ",
+            "type": "CHOICE",
             "members": [
               {
-                "type": "STRING",
-                "value": "\""
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "PATTERN",
-                      "value": "[^\\\\\"\\n]"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "\\\\(\\^)?."
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "\\\\\\n\\s*\\\\"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "\""
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "PATTERN",
+                          "value": "[^\\\\\"\\n]"
+                        },
+                        {
+                          "type": "PATTERN",
+                          "value": "\\\\(\\^)?."
+                        },
+                        {
+                          "type": "PATTERN",
+                          "value": "\\\\\\n\\s*\\\\"
+                        }
+                      ]
                     }
-                  ]
-                }
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "\""
+                  }
+                ]
               },
               {
-                "type": "STRING",
-                "value": "\""
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "\"\"\""
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "PATTERN",
+                          "value": "[^\\\\\"]"
+                        },
+                        {
+                          "type": "PATTERN",
+                          "value": "\\\\(\\^)?."
+                        },
+                        {
+                          "type": "PATTERN",
+                          "value": "\\\\\\n\\s*\\\\"
+                        },
+                        {
+                          "type": "PATTERN",
+                          "value": "\"[^\"]"
+                        },
+                        {
+                          "type": "PATTERN",
+                          "value": "\"\"[^\"]"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "\"\"\""
+                  }
+                ]
               }
             ]
           },
@@ -11369,6 +11423,10 @@
       "named": true,
       "value": "constructor"
     },
+    "_decl_constructor": {
+      "type": "SYMBOL",
+      "name": "_constructor"
+    },
     "_qualified_constructor": {
       "type": "PREC",
       "value": "qualified-id",
@@ -11463,6 +11521,10 @@
           "name": "_qcon"
         }
       ]
+    },
+    "_decl_con": {
+      "type": "SYMBOL",
+      "name": "_con"
     },
     "_constructor_ticked": {
       "type": "SEQ",
@@ -11637,8 +11699,17 @@
             "content": {
               "type": "ALIAS",
               "content": {
-                "type": "SYMBOL",
-                "name": "_arrow"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_arrow"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_linear_arrow"
+                  }
+                ]
               },
               "named": true,
               "value": "operator"
@@ -12807,6 +12878,10 @@
     },
     {
       "type": "PATTERN",
+      "value": "\\t"
+    },
+    {
+      "type": "PATTERN",
       "value": "\\n"
     },
     {
@@ -13052,6 +13127,10 @@
     },
     {
       "type": "SYMBOL",
+      "name": "_cmd_hsc_brace_open"
+    },
+    {
+      "type": "SYMBOL",
       "name": "_cmd_texp_start"
     },
     {
@@ -13191,6 +13270,18 @@
       "name": "_consym"
     },
     {
+      "type": "SYMBOL",
+      "name": "_cond_hsc_hash"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "hsc_args_nested"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "hsc_args_newline"
+    },
+    {
       "type": "PATTERN",
       "value": "\\n"
     }
@@ -13221,9 +13312,11 @@
     "_exp_name",
     "_exp_greedy",
     "_let",
+    "_exp_typed_hole",
     "_pat_apply_arg",
     "_pat_name",
     "_pat_texp",
+    "_pat_wildcard",
     "_tyconid",
     "_tyconids",
     "_tycon",
@@ -13263,5 +13356,6 @@
     "statement",
     "qualifier",
     "guard"
-  ]
+  ],
+  "reserved": {}
 }
