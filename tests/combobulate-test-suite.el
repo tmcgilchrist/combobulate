@@ -293,6 +293,7 @@ doesn't exist."
                                         ("\\.dune\\'" . dune-ts-mode)
                                         ("\\.opam\\'" . opam-ts-mode)
                                         ("\\.mld\\'" . odoc-ts-mode)
+                                        ("\\.hs\\'" . curry-mode)
                                         ("\\.c\\'" . c-ts-mode))))
              ;; required to ensure the right major mode is chosen.
              (major-mode-remap-alist '((c-mode . c-ts-mode)
@@ -433,11 +434,16 @@ doesn't exist."
            (fixture-language) (fixture-major-mode) (lang))
       (with-current-buffer fixture-buf
         (setq lang (car (combobulate-parser-list)))
-        (cl-assert (not (null lang)) nil "No language found in `%s' (major mode: `%s')" fixture-file-name major-mode)
-        (setq fixture-language (combobulate-parser-language lang))
-        (setf fixture-major-mode major-mode)
-        (setq numbers (seq-sort #'< (mapcar (lambda (ov) (overlay-get ov 'combobulate-test-number))
-                                            (combobulate--with-test-overlays)))))
+        (when lang
+          (setq fixture-language (combobulate-parser-language lang))
+          (setf fixture-major-mode major-mode)
+          (setq numbers (seq-sort #'< (mapcar (lambda (ov) (overlay-get ov 'combobulate-test-number))
+                                              (combobulate--with-test-overlays))))))
+      (unless lang
+        (message "Skipping `%s': no tree-sitter parser (major mode: `%s')"
+                 fixture-file-name major-mode)
+        (kill-buffer fixture-buf))
+      (when lang
       (cl-assert (not (null numbers)) nil "No markers found in `%s'" fixture-file-name)
       (unwind-protect
           (dolist (number (if (oref obj reverse) (reverse numbers) numbers))
@@ -462,7 +468,7 @@ doesn't exist."
                                    :output-buffer (oref obj output-buffer)
                                    :collection-name (oref obj collection-name))
                              harness-factory-args)))))))
-        (kill-buffer fixture-buf)))))
+        (kill-buffer fixture-buf))))))
 
 (provide 'combobulate-test-suite)
 ;;; combobulate-test-suite ends here
