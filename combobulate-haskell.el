@@ -158,7 +158,16 @@
       (procedures-logical
        '((:activation-nodes ((:nodes (all))))))
       (procedures-sibling
-       '(;; Top-level items: the haddock, module header, imports and
+       '(;; Declarations inside a class or instance body.  Put this first so
+         ;; that navigation inside a type class does not escape up to the
+         ;; top-level via the unified top-level procedure below.
+         (:activation-nodes
+          ((:nodes ((rule "class_decl"))
+                   :has-parent ("class_declarations"))
+           (:nodes ((rule "instance_decl"))
+                   :has-parent ("instance_declarations")))
+          :selector (:choose parent :match-children t))
+         ;; Top-level items: the haddock, module header, imports and
          ;; declarations blocks live in separate parse-tree containers, but
          ;; we present their contents as a single flat sibling list so
          ;; C-M-n/C-M-p flow across the boundaries -- e.g. from the module
@@ -202,13 +211,6 @@
          (:activation-nodes
           ((:nodes ("field")
                    :has-parent ("fields")))
-          :selector (:choose parent :match-children t))
-         ;; Class/instance declarations
-         (:activation-nodes
-          ((:nodes ((rule "class_decl"))
-                   :has-parent ("class_declarations"))
-           (:nodes ((rule "instance_decl"))
-                   :has-parent ("instance_declarations")))
           :selector (:choose parent :match-children t))
          ;; Import names
          (:activation-nodes
@@ -258,7 +260,12 @@
          (:activation-nodes
           ((:nodes ("declarations") :position at))
           :selector (:choose node :match-children t))
-         ;; Descend through compound expressions
+         ;; Descend through compound expressions.  This also handles
+         ;; descending into a type class or instance body: a `class' /
+         ;; `instance' node (via `(rule "declaration")') at point selects
+         ;; its `class_declarations' / `instance_declarations' child, so
+         ;; C-M-d on the line `class MonadTransDistributive ... where'
+         ;; moves to the first member declared inside.
          (:activation-nodes
           ((:nodes ((rule "declaration")
                     (rule "expression")
@@ -268,10 +275,7 @@
                              (:match-rules ("do" "alternatives"
                                             "declarations" "local_binds"
                                             "class_declarations"
-                                            "instance_declarations"))))
-         (:activation-nodes
-          ((:nodes ((all))))
-          :selector (:choose node :match-children t)))))))
+                                            "instance_declarations")))))))))
 
 (define-combobulate-language
  :name haskell

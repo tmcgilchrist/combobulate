@@ -1,0 +1,138 @@
+;; -*- mode: emacs-lisp; lexical-binding: t; no-byte-compile: t -*-
+
+;;; Eldev file for combobulate.
+;;;
+;;; Usage:
+;;;   eldev prepare                   -- install elisp dependencies
+;;;   eldev install-grammars          -- compile all pinned tree-sitter
+;;;                                      grammars into the Eldev sandbox
+;;;   eldev install-grammars haskell  -- only the named grammars
+;;;   eldev build-tests               -- expand `combobulate-test-suites'
+;;;                                      into tests/test-*.gen.el files
+;;;   eldev test                      -- run the ERT suite
+;;;   eldev test combobulate-navigate-next
+;;;                                   -- run a single ERT selector
+;;;   eldev compile                   -- byte-compile
+;;;
+;;; Isolation from the user's setup:
+;;;
+;;; The `install-grammars' command compiles each grammar into
+;;; `<project>/.eldev/<emacs-version>/tree-sitter/' and the test prelude
+;;; points `treesit-extra-load-path' at that directory first.  The grammar
+;;; URLs and revisions are pinned in `combobulate-test-grammar-recipes'
+;;; below -- keep them in sync with `build/sources.ini'.
+;;;
+;;; The generated `tests/test-*.gen.el' files are checked in so a plain
+;;; `eldev test' works without the `build-tests' step; rebuild them when
+;;; you add or change a fixture.
+
+(eldev-require-version "1.11")
+
+(eldev-use-package-archive 'gnu-elpa)
+(eldev-use-package-archive 'nongnu-elpa)
+(eldev-use-package-archive 'melpa)
+
+;; --- Elisp dependencies ----------------------------------------------------
+
+;; Development-only dependencies used by the test prelude.
+(eldev-add-extra-dependencies 'test 'yaml-mode)
+(eldev-add-extra-dependencies 'test 'json-mode)
+(eldev-add-extra-dependencies 'test 'tuareg)
+
+;; curry-mode provides the Haskell major mode backed by tree-sitter.
+;; It is not on any package archive yet; use the local checkout that
+;; lives alongside this repository.
+(eldev-use-local-dependency "../curry-mode")
+(eldev-add-extra-dependencies 'test 'curry-mode)
+
+;; --- Filesets / load paths -------------------------------------------------
+
+(setf eldev-main-fileset '("*.el"
+                           "!combobulate-test-*.el"
+                           "!tests/**/*"))
+
+(setf eldev-test-framework 'ert)
+(setf eldev-test-fileset '("./tests/test-*.el"
+                           "./tests/combobulate-test-prelude.el"
+                           "./tests/combobulate-test-suite.el"))
+
+;; Make the test helpers under tests/ and the in-tree html-ts-mode
+;; reachable to the test runner.  tuareg comes from the elpa dependency.
+(eldev-add-loading-roots 'test "tests" "tests/html-ts-mode")
+
+;; --- Tree-sitter grammar sandbox ------------------------------------------
+
+(defconst combobulate-test-grammar-dir
+  (file-name-as-directory
+   (expand-file-name (format ".eldev/%s/tree-sitter" emacs-version)
+                     (or eldev-project-dir default-directory)))
+  "Directory under `.eldev/' where pinned tree-sitter grammars are built.
+This mirrors `build/sources.ini' -- the test prelude adds this
+directory to `treesit-extra-load-path' when the tests start up.")
+
+(defconst combobulate-test-grammar-recipes
+  '(;; Mirror build/sources.ini.  Order matches that file for easy diffing.
+    (yaml             "https://github.com/ikatyang/tree-sitter-yaml"            "v0.5.0"                     "src")
+    (tsx              "https://github.com/tree-sitter/tree-sitter-typescript"   "v0.20.3"                    "tsx/src")
+    (css              "https://github.com/tree-sitter/tree-sitter-css"          "v0.20.0"                    "src")
+    (typescript       "https://github.com/tree-sitter/tree-sitter-typescript"   "v0.20.3"                    "typescript/src")
+    (javascript       "https://github.com/tree-sitter/tree-sitter-javascript"   "v0.20.1"                    "src")
+    (go               "https://github.com/tree-sitter/tree-sitter-go"           "v0.20.0"                    "src")
+    (python           "https://github.com/tree-sitter/tree-sitter-python"       "v0.20.4"                    "src")
+    (html             "https://github.com/tree-sitter/tree-sitter-html"         "v0.20.1"                    "src")
+    (toml             "https://github.com/tree-sitter/tree-sitter-toml"         "v0.5.1"                     "src")
+    (json             "https://github.com/tree-sitter/tree-sitter-json"         "v0.20.2"                    "src")
+    (ocaml            "https://github.com/tree-sitter/tree-sitter-ocaml"        "v0.24.2"                    "grammars/ocaml/src")
+    (ocaml-interface  "https://github.com/tree-sitter/tree-sitter-ocaml"        "v0.24.2"                    "grammars/interface/src")
+    (dune             "https://github.com/tmcgilchrist/tree-sitter-dune"        "master"                     "src")
+    (opam             "https://github.com/tmcgilchrist/tree-sitter-opam"        "master"                     "src")
+    (odoc             "https://github.com/tmcgilchrist/tree-sitter-odoc"        "master"                     "src")
+    (c                "https://github.com/tree-sitter/tree-sitter-c"            "v0.23.6"                    "src")
+    (haskell          "https://github.com/tmcgilchrist/tree-sitter-haskell"     "curry-mode/tek-main-abi14"  "src"))
+  "Pinned tree-sitter grammars compiled by `eldev install-grammars'.
+Format matches `treesit-language-source-alist':
+  (LANG URL REVISION SOURCE-DIR).")
+
+(eldev-defcommand combobulate-install-grammars (&rest parameters)
+  "Compile the pinned tree-sitter grammars into the Eldev sandbox.
+
+With no arguments, install every grammar in
+`combobulate-test-grammar-recipes'.  With arguments, install only
+the named grammars (e.g. `eldev install-grammars haskell ocaml')."
+  :parameters "[LANG...]"
+  (require 'treesit)
+  (make-directory combobulate-test-grammar-dir t)
+  (let* ((wanted (if parameters
+                     (mapcar #'intern parameters)
+                   (mapcar #'car combobulate-test-grammar-recipes)))
+         (treesit-language-source-alist combobulate-test-grammar-recipes)
+         (out-dir (directory-file-name combobulate-test-grammar-dir)))
+    (dolist (lang wanted)
+      (unless (assq lang combobulate-test-grammar-recipes)
+        (signal 'eldev-error (list "Unknown grammar" lang)))
+      (eldev-print "Installing %s grammar into %s" lang out-dir)
+      (treesit-install-language-grammar lang out-dir))))
+
+;; --- build-tests shim ------------------------------------------------------
+
+(eldev-defcommand combobulate-build-tests (&rest _)
+  "Expand the test-suite manifest into tests/test-*.gen.el."
+  (eldev-load-project-dependencies 'test)
+  (eldev--inject-loading-roots '(test))
+  (let ((default-directory (expand-file-name "tests/" eldev-project-dir)))
+    (load (expand-file-name "tests/generate-harnesses.el"
+                            eldev-project-dir)
+          nil nil)))
+
+;; --- haskell fixture marker builder ---------------------------------------
+
+(eldev-defcommand combobulate-build-haskell-fixtures (&rest _)
+  "Recompute marker headers for every Haskell fixture.
+Drives `tests/build-haskell-fixtures.el'.  Run after editing a
+fixture's content to refresh its `combobulate-test-point-overlays'
+file-local variable."
+  (eldev-load-project-dependencies 'test)
+  (eldev--inject-loading-roots '(test))
+  (load (expand-file-name "tests/build-haskell-fixtures.el"
+                          eldev-project-dir)
+        nil nil))
