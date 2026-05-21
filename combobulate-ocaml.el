@@ -248,6 +248,23 @@
                    :has-parent ("record_expression")))
           :selector  (:choose node :match-siblings t))
 
+         ;; Navigate between the bindings of a mutually-recursive
+         ;; `type ... and ...' (or `let ... and ...') group.  Without
+         ;; this, the nearest navigable node from any binding is the
+         ;; whole type_definition/value_definition, so navigation jumps
+         ;; over the `and' clauses to the next top-level item.
+         ;;
+         ;; `:has-sibling' restricts this to bindings that are part of
+         ;; a group: a lone `type t = ...' or `let x = ... in' has no
+         ;; binding sibling, so it falls through to the coarser-grained
+         ;; structure rules and keeps navigating at the top level.
+         (:activation-nodes
+          ((:nodes ("type_binding")
+                   :has-sibling ("type_binding"))
+           (:nodes ("let_binding")
+                   :has-sibling ("let_binding")))
+          :selector  (:choose node :match-siblings t))
+
          ;; Navigate forward through let chains. From any
          ;; let_expression or let_open_expression, go to the body
          ;; child if it is another let or application.

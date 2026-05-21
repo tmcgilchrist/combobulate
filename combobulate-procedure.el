@@ -56,6 +56,21 @@
                   parent))
               parents)))
 
+(defun combobulate-procedure-apply-has-sibling (has-sibling-rules action-node)
+  "Determine if ACTION-NODE has a named sibling matching HAS-SIBLING-RULES.
+
+ACTION-NODE itself is excluded from the search.  This restricts a
+procedure to nodes that belong to a group of similar siblings --
+such as the individual bindings of a mutually-recursive
+`type ... and ...' or `let ... and ...' -- so that a lone binding
+instead falls through to a coarser-grained procedure."
+  (when-let ((parent (combobulate-node-parent action-node)))
+    (let ((expanded (combobulate-procedure-expand-rules has-sibling-rules)))
+      (seq-find (lambda (sibling)
+                  (and (not (combobulate-node-eq sibling action-node))
+                       (member (combobulate-node-type sibling) expanded)))
+                (combobulate-node-children parent)))))
+
 (cl-defstruct (combobulate-procedure-result
                (:constructor combobulate-procedure-result-create)
                (:copier nil))
@@ -79,7 +94,7 @@
                  :matched-selection nil)))
     (catch 'done
       (dolist (activation-node activation-nodes)
-        (map-let (:nodes :position :has-parent :has-ancestor :has-fields)
+        (map-let (:nodes :position :has-parent :has-ancestor :has-fields :has-sibling)
             activation-node
           ;; Expand the rules in `:nodes' and determine if any of them match
           (let ((action-node-type (combobulate-node-type action-node))
@@ -106,6 +121,10 @@
                     (t (error "Unknown `:position' specifier `%s'" position)))
                    (or (and has-fields (combobulate-procedure-apply-has-field has-fields action-node))
                        (not has-fields))
+                   ;; If `:has-sibling' is specified, then require a
+                   ;; matching named sibling of the action node.
+                   (or (and has-sibling (combobulate-procedure-apply-has-sibling has-sibling action-node))
+                       (not has-sibling))
                    ;; If `:has-parent' or `:has-ancestor' is
                    ;; specified, then check the parents of the
                    ;; action node.
@@ -133,6 +152,33 @@
               activation-node
             (setq expanded-nodes (nconc expanded-nodes (combobulate-procedure-expand-rules nodes)))))))
     (seq-uniq expanded-nodes)))
+
+(defun combobulate-procedure-node-navigable-p (node)
+  "Return non-nil if NODE counts as a navigable node right now.
+
+This refines plain membership in `combobulate-navigable-nodes':
+when a node type is reachable *only* through activation nodes that
+carry a `:has-sibling' guard, the node is navigable only when that
+guard is satisfied.  A node type that is also reachable through an
+unguarded activation node stays navigable unconditionally, so this
+is behaviour-preserving for every node type except those gated
+exclusively by `:has-sibling'.
+
+If no procedures are in scope, fall back to plain membership."
+  (and node
+       (member (combobulate-node-type node) combobulate-navigable-nodes)
+       (let ((type (combobulate-node-type node)))
+         (or (null combobulate-default-procedures)
+             (seq-some
+              (lambda (procedure)
+                (seq-some
+                 (lambda (activation-node)
+                   (map-let (:nodes :has-sibling) activation-node
+                     (and (member type (combobulate-procedure-expand-rules nodes))
+                          (or (null has-sibling)
+                              (combobulate-procedure-apply-has-sibling has-sibling node)))))
+                 (plist-get procedure :activation-nodes)))
+              combobulate-default-procedures)))))
 
 (defun combobulate-procedure-filter-query-results (query-results)
   "Filters QUERY-RESULTS based on their tagged name.
@@ -445,6 +491,7 @@ of which is a form matching the following pattern:
     [:position POSITION-RULE]
     [:has-parent HAS-PARENT-RULE]
     [:has-fields FIELDS]
+    [:has-sibling HAS-SIBLING-RULE]
     [:has-ancestor HAS-ANCESTOR-RULE])
 
 Where RULES is one or more rules outlined in
@@ -465,6 +512,12 @@ of the action node matches the rules.
 
 HAS-FIELD-RULE is a list of fields the action node be considered
 to be inside of.
+
+HAS-SIBLING-RULE is a list of RULES; the activation node matches
+only if the action node has at least one named sibling (other than
+itself) whose type matches.  It is an independent filter that
+combines with the other conditions and does not affect `:choose
+parent'.
 
 SELECTOR-RULES is a form matching the following pattern:
 
