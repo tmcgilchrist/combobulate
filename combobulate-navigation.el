@@ -38,6 +38,7 @@
 (declare-function combobulate-production-rules-get-inverted "combobulate-procedure")
 (declare-function combobulate-procedure-start-matches "combobulate-procedure")
 (declare-function combobulate-procedure-collect-activation-nodes "combobulate-procedure")
+(declare-function combobulate-procedure-node-navigable-p "combobulate-procedure")
 
 
 (defvar combobulate-skip-prefix-regexp " \t\n"
@@ -246,14 +247,14 @@ navigation to miss the node starting at point."
         (when (and leaf (not (combobulate-node-named-p leaf)))
           (let ((next (treesit-node-next-sibling leaf t))
                 (prev (treesit-node-prev-sibling leaf t)))
-            (or (and next (member (combobulate-node-type next) combobulate-navigable-nodes) next)
-                (and prev (member (combobulate-node-type prev) combobulate-navigable-nodes) prev)))))
+            (or (and next (combobulate-procedure-node-navigable-p next) next)
+                (and prev (combobulate-procedure-node-navigable-p prev) prev)))))
       (let* ((end (min (1+ (point)) (point-max)))
              (node (treesit-node-on (point) end (combobulate-primary-language) t))
              (this node))
         (catch 'done
           (while this
-            (when (member (combobulate-node-type this) combobulate-navigable-nodes)
+            (when (combobulate-procedure-node-navigable-p this)
               (throw 'done this))
             (setq this (combobulate-node-parent this)))))))
 
