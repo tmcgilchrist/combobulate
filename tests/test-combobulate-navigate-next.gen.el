@@ -380,7 +380,7 @@
 
 
 (ert-deftest
-    combobulate-test-ocaml-combobulate-navigate-next--extension_points-10
+    combobulate-test-ocaml-combobulate-navigate-next--extension_points-7
     ()
 
   "Test `combobulate' with `fixtures/sibling/extension_points.ml' in `tuareg-mode' mode."
@@ -390,18 +390,16 @@
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-next)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
     (combobulate-test-assert-at-marker 2)
-    (should-error (progn (combobulate-navigate-next)))
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)
     (combobulate-test-go-to-marker 3) (combobulate-navigate-next)
     (combobulate-test-assert-at-marker 4)
-    (should-error (progn (combobulate-navigate-next)))
+    (combobulate-test-go-to-marker 4) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 5)
     (combobulate-test-go-to-marker 5) (combobulate-navigate-next)
     (combobulate-test-assert-at-marker 6)
     (combobulate-test-go-to-marker 6) (combobulate-navigate-next)
-    (combobulate-test-assert-at-marker 7)
-    (combobulate-test-go-to-marker 7) (combobulate-navigate-next)
-    (combobulate-test-assert-at-marker 8)
-    (should-error (progn (combobulate-navigate-next)))
-    (should-error (progn (combobulate-navigate-next)))))
+    (combobulate-test-assert-at-marker 7)))
 
 
 (ert-deftest combobulate-test-c-combobulate-navigate-next--for-loop-3
@@ -1083,6 +1081,23 @@
     (combobulate-test-go-to-marker 3) (combobulate-navigate-next)
     (combobulate-test-assert-at-marker 4)
     (should-error (progn (combobulate-navigate-next)))))
+
+
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-next--signature_attributes-3
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/signature_attributes.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/signature_attributes.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-next)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)))
 
 
 (ert-deftest

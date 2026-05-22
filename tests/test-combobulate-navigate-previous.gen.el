@@ -395,18 +395,16 @@
 		 "fixtures/sibling/extension_points.ml")
     :tags
     '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
-    (should-error (progn (combobulate-navigate-previous)))
-    (should-error (progn (combobulate-navigate-previous)))
-    (combobulate-test-go-to-marker 7) (combobulate-navigate-previous)
-    (combobulate-test-assert-at-marker 6)
     (combobulate-test-go-to-marker 6) (combobulate-navigate-previous)
     (combobulate-test-assert-at-marker 5)
     (combobulate-test-go-to-marker 5) (combobulate-navigate-previous)
     (combobulate-test-assert-at-marker 4)
-    (should-error (progn (combobulate-navigate-previous)))
+    (combobulate-test-go-to-marker 4) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 3)
     (combobulate-test-go-to-marker 3) (combobulate-navigate-previous)
     (combobulate-test-assert-at-marker 2)
-    (should-error (progn (combobulate-navigate-previous)))
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 1)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-previous)
     (combobulate-test-assert-at-marker 1)))
 
@@ -1100,6 +1098,23 @@
     (should-error (progn (combobulate-navigate-previous)))
     (should-error (progn (combobulate-navigate-previous)))
     (should-error (progn (combobulate-navigate-previous)))
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-previous--signature_attributes-1
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/signature_attributes.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/signature_attributes.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-previous)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 1)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-previous)
     (combobulate-test-assert-at-marker 1)))
 
