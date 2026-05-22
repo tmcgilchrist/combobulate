@@ -338,8 +338,6 @@
                     (rule "method_definition")
                     (rule "structure")
                     (rule "signature")
-                    (irule "signature")
-                    (irule "structure")
                     (rule "_class_field_specification")
                     (rule "_sequence_expression")
                     (rule "_signature_item")
@@ -519,7 +517,6 @@
                     (rule "class_binding")
                     (rule "type_binding")
                     (rule "signature")
-                    (irule "signature")
                     (rule "_class_field_specification"))))
           :selector (:choose node :match-siblings (:discard-rules ("attribute"))))
 
