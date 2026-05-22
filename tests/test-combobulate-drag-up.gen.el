@@ -1348,54 +1348,6 @@
 
 
 (ert-deftest
-    combobulate-test-ocaml-combobulate-drag-up--extension_points-10
-    ()
-
-  "Test `combobulate' with `fixtures/sibling/extension_points.ml' in `tuareg-mode' mode."
-  (combobulate-test
-      (:language ocaml :mode tuareg-mode :fixture
-		 "fixtures/sibling/extension_points.ml")
-    :tags '(combobulate ocaml tuareg-mode combobulate-drag-up)
-    (should-error
-     (progn
-       (combobulate-test-go-to-marker 10) (combobulate-drag-up)
-       (combobulate-compare-action-with-fixture-delta
-	"./fixture-deltas/combobulate-drag-up/extension_points.ml[@10~after].ml")))))
-
-
-(ert-deftest
-    combobulate-test-ocaml-combobulate-drag-up--extension_points-9
-    ()
-
-  "Test `combobulate' with `fixtures/sibling/extension_points.ml' in `tuareg-mode' mode."
-  (combobulate-test
-      (:language ocaml :mode tuareg-mode :fixture
-		 "fixtures/sibling/extension_points.ml")
-    :tags '(combobulate ocaml tuareg-mode combobulate-drag-up)
-    (should-error
-     (progn
-       (combobulate-test-go-to-marker 9) (combobulate-drag-up)
-       (combobulate-compare-action-with-fixture-delta
-	"./fixture-deltas/combobulate-drag-up/extension_points.ml[@9~after].ml")))))
-
-
-(ert-deftest
-    combobulate-test-ocaml-combobulate-drag-up--extension_points-8
-    ()
-
-  "Test `combobulate' with `fixtures/sibling/extension_points.ml' in `tuareg-mode' mode."
-  (combobulate-test
-      (:language ocaml :mode tuareg-mode :fixture
-		 "fixtures/sibling/extension_points.ml")
-    :tags '(combobulate ocaml tuareg-mode combobulate-drag-up)
-    (should-error
-     (progn
-       (combobulate-test-go-to-marker 8) (combobulate-drag-up)
-       (combobulate-compare-action-with-fixture-delta
-	"./fixture-deltas/combobulate-drag-up/extension_points.ml[@8~after].ml")))))
-
-
-(ert-deftest
     combobulate-test-ocaml-combobulate-drag-up--extension_points-7
     ()
 
@@ -1446,11 +1398,9 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/extension_points.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-drag-up)
-    (should-error
-     (progn
-       (combobulate-test-go-to-marker 4) (combobulate-drag-up)
-       (combobulate-compare-action-with-fixture-delta
-	"./fixture-deltas/combobulate-drag-up/extension_points.ml[@4~after].ml")))))
+    (combobulate-test-go-to-marker 4) (combobulate-drag-up)
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-drag-up/extension_points.ml[@4~after].ml")))
 
 
 (ert-deftest
@@ -1476,11 +1426,9 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/extension_points.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-drag-up)
-    (should-error
-     (progn
-       (combobulate-test-go-to-marker 2) (combobulate-drag-up)
-       (combobulate-compare-action-with-fixture-delta
-	"./fixture-deltas/combobulate-drag-up/extension_points.ml[@2~after].ml")))))
+    (combobulate-test-go-to-marker 2) (combobulate-drag-up)
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-drag-up/extension_points.ml[@2~after].ml")))
 
 
 (ert-deftest
@@ -4065,6 +4013,53 @@
        (combobulate-test-go-to-marker 1) (combobulate-drag-up)
        (combobulate-compare-action-with-fixture-delta
 	"./fixture-deltas/combobulate-drag-up/python-tuple.py[@1~after].py")))))
+
+
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-drag-up--signature_attributes-3
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/signature_attributes.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/signature_attributes.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode combobulate-drag-up)
+    (combobulate-test-go-to-marker 3) (combobulate-drag-up)
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-drag-up/signature_attributes.mli[@3~after].mli")))
+
+
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-drag-up--signature_attributes-2
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/signature_attributes.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/signature_attributes.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode combobulate-drag-up)
+    (combobulate-test-go-to-marker 2) (combobulate-drag-up)
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-drag-up/signature_attributes.mli[@2~after].mli")))
+
+
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-drag-up--signature_attributes-1
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/signature_attributes.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/signature_attributes.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode combobulate-drag-up)
+    (should-error
+     (progn
+       (combobulate-test-go-to-marker 1) (combobulate-drag-up)
+       (combobulate-compare-action-with-fixture-delta
+	"./fixture-deltas/combobulate-drag-up/signature_attributes.mli[@1~after].mli")))))
 
 
 (ert-deftest combobulate-test-c-combobulate-drag-up--struct-members-3
