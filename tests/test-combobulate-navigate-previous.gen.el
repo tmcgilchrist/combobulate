@@ -84,7 +84,8 @@
 		 "fixtures/sibling/class_type_expressions.ml")
     :tags
     '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
-    (should-error (progn (combobulate-navigate-previous)))
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 1)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-previous)
     (combobulate-test-assert-at-marker 1)))
 
@@ -99,7 +100,8 @@
 		 "fixtures/sibling/class_value_expressions.ml")
     :tags
     '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
-    (should-error (progn (combobulate-navigate-previous)))
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 1)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-previous)
     (combobulate-test-assert-at-marker 1)))
 

@@ -82,8 +82,10 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/class_type_expressions.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-next)
-    (should-error (progn (combobulate-navigate-next)))
-    (should-error (progn (combobulate-navigate-next)))))
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)))
 
 
 (ert-deftest
@@ -97,7 +99,8 @@
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-next)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
     (combobulate-test-assert-at-marker 2)
-    (should-error (progn (combobulate-navigate-next)))))
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)))
 
 
 (ert-deftest
