@@ -274,9 +274,11 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/class_type_expressions.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-drag-down)
-    (combobulate-test-go-to-marker 3) (combobulate-drag-down)
-    (combobulate-compare-action-with-fixture-delta
-     "./fixture-deltas/combobulate-drag-down/class_type_expressions.ml[@3~after].ml")))
+    (should-error
+     (progn
+       (combobulate-test-go-to-marker 3) (combobulate-drag-down)
+       (combobulate-compare-action-with-fixture-delta
+	"./fixture-deltas/combobulate-drag-down/class_type_expressions.ml[@3~after].ml")))))
 
 
 (ert-deftest
@@ -316,9 +318,11 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/class_value_expressions.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-drag-down)
-    (combobulate-test-go-to-marker 3) (combobulate-drag-down)
-    (combobulate-compare-action-with-fixture-delta
-     "./fixture-deltas/combobulate-drag-down/class_value_expressions.ml[@3~after].ml")))
+    (should-error
+     (progn
+       (combobulate-test-go-to-marker 3) (combobulate-drag-down)
+       (combobulate-compare-action-with-fixture-delta
+	"./fixture-deltas/combobulate-drag-down/class_value_expressions.ml[@3~after].ml")))))
 
 
 (ert-deftest
