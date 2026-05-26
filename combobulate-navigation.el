@@ -243,20 +243,31 @@ character at point to find one whose type is in
 Emacs `treesit-node-on' quirk where an empty range at a node
 boundary returns the enclosing parent -- which would otherwise cause
 navigation to miss the node starting at point."
-  (or (let ((leaf (combobulate-node-at (point))))
-        (when (and leaf (not (combobulate-node-named-p leaf)))
-          (let ((next (treesit-node-next-sibling leaf t))
-                (prev (treesit-node-prev-sibling leaf t)))
-            (or (and next (combobulate-procedure-node-navigable-p next) next)
-                (and prev (combobulate-procedure-node-navigable-p prev) prev)))))
-      (let* ((end (min (1+ (point)) (point-max)))
-             (node (treesit-node-on (point) end (combobulate-primary-language) t))
-             (this node))
-        (catch 'done
-          (while this
-            (when (combobulate-procedure-node-navigable-p this)
-              (throw 'done this))
-            (setq this (combobulate-node-parent this)))))))
+  (let* ((end (min (1+ (point)) (point-max)))
+         (walk-up (let ((this (treesit-node-on (point) end (combobulate-primary-language) t)))
+                    (catch 'done
+                      (while this
+                        (when (combobulate-procedure-node-navigable-p this)
+                          (throw 'done this))
+                        (setq this (combobulate-node-parent this)))))))
+    (or
+     ;; Per-language opt-in (see `combobulate-prefer-container-types'):
+     ;; when the walk-up finds a navigable node beginning exactly at
+     ;; point whose type is in that list, the container wins over the
+     ;; anonymous-token sibling jump.  Used by OCaml so the opening
+     ;; keyword of `signature' / `structure' resolves to the container,
+     ;; not to the first child inside it.
+     (and combobulate-prefer-container-types
+          walk-up (= (combobulate-node-start walk-up) (point))
+          (member (combobulate-node-type walk-up) combobulate-prefer-container-types)
+          walk-up)
+     (let ((leaf (combobulate-node-at (point))))
+       (when (and leaf (not (combobulate-node-named-p leaf)))
+         (let ((next (treesit-node-next-sibling leaf t))
+               (prev (treesit-node-prev-sibling leaf t)))
+           (or (and next (combobulate-procedure-node-navigable-p next) next)
+               (and prev (combobulate-procedure-node-navigable-p prev) prev)))))
+     walk-up)))
 
 (defun combobulate-get-parents (node)
   "Get all parent nodes of NODE"
