@@ -1896,6 +1896,47 @@
 
 
 (ert-deftest
+    combobulate-test-ocaml-combobulate-drag-down--let_and_in-1 ()
+
+  "Test `combobulate' with `fixtures/sibling/let_and_in.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/sibling/let_and_in.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-drag-down)
+    (combobulate-test-go-to-marker 1) (combobulate-drag-down)
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-drag-down/let_and_in.ml[@1~after].ml")))
+
+
+(ert-deftest
+    combobulate-test-ocaml-combobulate-drag-down--let_and_in-2 ()
+
+  "Test `combobulate' with `fixtures/sibling/let_and_in.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/sibling/let_and_in.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-drag-down)
+    (combobulate-test-go-to-marker 2) (combobulate-drag-down)
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-drag-down/let_and_in.ml[@2~after].ml")))
+
+
+(ert-deftest
+    combobulate-test-ocaml-combobulate-drag-down--let_and_in-3 ()
+
+  "Test `combobulate' with `fixtures/sibling/let_and_in.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/sibling/let_and_in.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-drag-down)
+    (should-error
+     (progn
+       (combobulate-test-go-to-marker 3) (combobulate-drag-down)
+       (combobulate-compare-action-with-fixture-delta
+	"./fixture-deltas/combobulate-drag-down/let_and_in.ml[@3~after].ml")))))
+
+
+(ert-deftest
     combobulate-test-ocaml-combobulate-drag-down--let_bindings-1
     ()
 
@@ -2630,9 +2671,11 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/module_sig_b.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-drag-down)
-    (combobulate-test-go-to-marker 3) (combobulate-drag-down)
-    (combobulate-compare-action-with-fixture-delta
-     "./fixture-deltas/combobulate-drag-down/module_sig_b.ml[@3~after].ml")))
+    (should-error
+     (progn
+       (combobulate-test-go-to-marker 3) (combobulate-drag-down)
+       (combobulate-compare-action-with-fixture-delta
+	"./fixture-deltas/combobulate-drag-down/module_sig_b.ml[@3~after].ml")))))
 
 
 (ert-deftest
