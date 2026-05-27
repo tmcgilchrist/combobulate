@@ -85,7 +85,17 @@
 ;;;###autoload
 (require 'combobulate-go)
 ;;;###autoload
+(require 'combobulate-c)
+;;;###autoload
+(require 'combobulate-haskell)
+;;;###autoload
 (require 'combobulate-ocaml)
+;;;###autoload
+(require 'combobulate-dune)
+;;;###autoload
+(require 'combobulate-opam)
+;;;###autoload
+(require 'combobulate-odoc)
 ;;; end language support
 
 (provide 'combobulate)

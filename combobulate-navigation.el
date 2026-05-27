@@ -38,6 +38,7 @@
 (declare-function combobulate-production-rules-get-inverted "combobulate-procedure")
 (declare-function combobulate-procedure-start-matches "combobulate-procedure")
 (declare-function combobulate-procedure-collect-activation-nodes "combobulate-procedure")
+(declare-function combobulate-procedure-node-navigable-p "combobulate-procedure")
 
 
 (defvar combobulate-skip-prefix-regexp " \t\n"
@@ -228,8 +229,45 @@ syntax tree."
     (nreverse siblings)))
 
 (defun combobulate--get-nearest-navigable-node ()
-  "Returns the nearest navigable node to point"
-  (combobulate-node-at-point combobulate-navigable-nodes))
+  "Return the nearest navigable node to point.
+
+When point sits on an anonymous token (for example the `,' that
+separates two list elements), prefer the nearest named sibling of
+that token in the tree -- the walk up from an anonymous separator
+lands on its non-navigable parent container and would otherwise make
+navigation jump up a level unexpectedly.
+
+Otherwise, walk up from the smallest named node covering the single
+character at point to find one whose type is in
+`combobulate-navigable-nodes'.  Using a one-byte range avoids the
+Emacs `treesit-node-on' quirk where an empty range at a node
+boundary returns the enclosing parent -- which would otherwise cause
+navigation to miss the node starting at point."
+  (let* ((end (min (1+ (point)) (point-max)))
+         (walk-up (let ((this (treesit-node-on (point) end (combobulate-primary-language) t)))
+                    (catch 'done
+                      (while this
+                        (when (combobulate-procedure-node-navigable-p this)
+                          (throw 'done this))
+                        (setq this (combobulate-node-parent this)))))))
+    (or
+     ;; Per-language opt-in (see `combobulate-prefer-container-types'):
+     ;; when the walk-up finds a navigable node beginning exactly at
+     ;; point whose type is in that list, the container wins over the
+     ;; anonymous-token sibling jump.  Used by OCaml so the opening
+     ;; keyword of `signature' / `structure' resolves to the container,
+     ;; not to the first child inside it.
+     (and combobulate-prefer-container-types
+          walk-up (= (combobulate-node-start walk-up) (point))
+          (member (combobulate-node-type walk-up) combobulate-prefer-container-types)
+          walk-up)
+     (let ((leaf (combobulate-node-at (point))))
+       (when (and leaf (not (combobulate-node-named-p leaf)))
+         (let ((next (treesit-node-next-sibling leaf t))
+               (prev (treesit-node-prev-sibling leaf t)))
+           (or (and next (combobulate-procedure-node-navigable-p next) next)
+               (and prev (combobulate-procedure-node-navigable-p prev) prev)))))
+     walk-up)))
 
 (defun combobulate-get-parents (node)
   "Get all parent nodes of NODE"

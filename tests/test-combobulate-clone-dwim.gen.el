@@ -19,6 +19,32 @@
      "./fixture-deltas/combobulate-clone-dwim/attributes.html[@1~after].html")))
 
 
+(ert-deftest combobulate-test-c-combobulate-clone-dwim--block-1 ()
+
+  "Test `combobulate' with `fixtures/clone/block.c' in `c-ts-mode' mode."
+  (combobulate-test
+      (:language c :mode c-ts-mode :fixture "fixtures/clone/block.c")
+    :tags '(combobulate c c-ts-mode combobulate-clone-dwim)
+    (combobulate-test-go-to-marker 1)
+    (combobulate-with-stubbed-proffer-choices (:choices '(0 0 0 0))
+      (combobulate-clone-node-dwim))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-clone-dwim/block.c[@1~after].c")))
+
+
+(ert-deftest combobulate-test-c-combobulate-clone-dwim--block-2 ()
+
+  "Test `combobulate' with `fixtures/clone/block.c' in `c-ts-mode' mode."
+  (combobulate-test
+      (:language c :mode c-ts-mode :fixture "fixtures/clone/block.c")
+    :tags '(combobulate c c-ts-mode combobulate-clone-dwim)
+    (combobulate-test-go-to-marker 2)
+    (combobulate-with-stubbed-proffer-choices (:choices '(0 0 0 0))
+      (combobulate-clone-node-dwim))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-clone-dwim/block.c[@2~after].c")))
+
+
 (ert-deftest
     combobulate-test-tsx-combobulate-clone-dwim--component-jsx-1
     ()
@@ -342,6 +368,111 @@
       (combobulate-clone-node-dwim))
     (combobulate-compare-action-with-fixture-delta
      "./fixture-deltas/combobulate-clone-dwim/module-statements.tsx[@1~after].tsx")))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-clone-dwim--module-1
+    ()
+
+  "Test `combobulate' with `fixtures/clone/module.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/clone/module.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-clone-dwim)
+    (combobulate-test-go-to-marker 1)
+    (combobulate-with-stubbed-proffer-choices (:choices '(0 0 0 0))
+      (combobulate-clone-node-dwim))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-clone-dwim/module.ml[@1~after].ml")))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-clone-dwim--module-2
+    ()
+
+  "Test `combobulate' with `fixtures/clone/module.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/clone/module.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-clone-dwim)
+    (combobulate-test-go-to-marker 2)
+    (combobulate-with-stubbed-proffer-choices (:choices '(0 0 0 0))
+      (combobulate-clone-node-dwim))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-clone-dwim/module.ml[@2~after].ml")))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-clone-dwim--module-3
+    ()
+
+  "Test `combobulate' with `fixtures/clone/module.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/clone/module.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-clone-dwim)
+    (combobulate-test-go-to-marker 3)
+    (combobulate-with-stubbed-proffer-choices (:choices '(0 0 0 0))
+      (combobulate-clone-node-dwim))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-clone-dwim/module.ml[@3~after].ml")))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-clone-dwim--module-4
+    ()
+
+  "Test `combobulate' with `fixtures/clone/module.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/clone/module.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-clone-dwim)
+    (combobulate-test-go-to-marker 4)
+    (combobulate-with-stubbed-proffer-choices (:choices '(0 0 0 0))
+      (combobulate-clone-node-dwim))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-clone-dwim/module.ml[@4~after].ml")))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-clone-dwim--module-5
+    ()
+
+  "Test `combobulate' with `fixtures/clone/module.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/clone/module.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-clone-dwim)
+    (combobulate-test-go-to-marker 5)
+    (combobulate-with-stubbed-proffer-choices (:choices '(0 0 0 0))
+      (combobulate-clone-node-dwim))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-clone-dwim/module.ml[@5~after].ml")))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-clone-dwim--module-6
+    ()
+
+  "Test `combobulate' with `fixtures/clone/module.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/clone/module.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-clone-dwim)
+    (combobulate-test-go-to-marker 6)
+    (combobulate-with-stubbed-proffer-choices (:choices '(0 0 0 0))
+      (combobulate-clone-node-dwim))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-clone-dwim/module.ml[@6~after].ml")))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-clone-dwim--module-7
+    ()
+
+  "Test `combobulate' with `fixtures/clone/module.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/clone/module.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-clone-dwim)
+    (combobulate-test-go-to-marker 7)
+    (combobulate-with-stubbed-proffer-choices (:choices '(0 0 0 0))
+      (combobulate-clone-node-dwim))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-clone-dwim/module.ml[@7~after].ml")))
 
 
 (ert-deftest

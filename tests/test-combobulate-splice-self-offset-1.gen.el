@@ -41,6 +41,23 @@
 
 
 (ert-deftest
+    combobulate-test-c-combobulate-splice-self-offset-1--choice-1-switch-1
+    ()
+
+  "Test `combobulate' with `fixtures/splice/choice-1-switch.c' in `c-ts-mode' mode."
+  (combobulate-test
+      (:language c :mode c-ts-mode :fixture
+		 "fixtures/splice/choice-1-switch.c")
+    :tags '(combobulate c c-ts-mode combobulate-splice-self-offset-1)
+    (combobulate-test-go-to-marker 1)
+    (combobulate-with-stubbed-proffer-choices
+	(:choices '(1 1 1 1 1 1 1))
+      (combobulate-splice-self))
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-splice-self-offset-1/choice-1-switch.c[@1~after].c")))
+
+
+(ert-deftest
     combobulate-test-go-combobulate-splice-self-offset-1--choice-1-switch-1
     ()
 
