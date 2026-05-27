@@ -289,9 +289,14 @@ doesn't exist."
     (save-excursion
       (let* ((auto-mode-alist (append auto-mode-alist
                                       '(("\\.go\\'" . go-ts-mode)
-                                        ("\\.ml[i]?\\'" . tuareg-mode))))
+                                        ("\\.ml[i]?\\'" . tuareg-mode)
+                                        ("\\.dune\\'" . dune-ts-mode)
+                                        ("\\.opam\\'" . opam-ts-mode)
+                                        ("\\.mld\\'" . odoc-ts-mode)
+                                        ("\\.c\\'" . c-ts-mode))))
              ;; required to ensure the right major mode is chosen.
-             (major-mode-remap-alist '((python-mode . python-ts-mode)
+             (major-mode-remap-alist '((c-mode . c-ts-mode)
+                                       (python-mode . python-ts-mode)
                                        (css-mode . css-ts-mode)
                                        (typescript-mode . tsx-ts-mode)
                                        (js2-mode . js-ts-mode)
@@ -428,11 +433,16 @@ doesn't exist."
            (fixture-language) (fixture-major-mode) (lang))
       (with-current-buffer fixture-buf
         (setq lang (car (combobulate-parser-list)))
-        (cl-assert (not (null lang)) nil "No language found in `%s' (major mode: `%s')" fixture-file-name major-mode)
-        (setq fixture-language (combobulate-parser-language lang))
-        (setf fixture-major-mode major-mode)
-        (setq numbers (seq-sort #'< (mapcar (lambda (ov) (overlay-get ov 'combobulate-test-number))
-                                            (combobulate--with-test-overlays)))))
+        (when lang
+          (setq fixture-language (combobulate-parser-language lang))
+          (setf fixture-major-mode major-mode)
+          (setq numbers (seq-sort #'< (mapcar (lambda (ov) (overlay-get ov 'combobulate-test-number))
+                                              (combobulate--with-test-overlays))))))
+      (unless lang
+        (message "Skipping `%s': no tree-sitter parser (major mode: `%s')"
+                 fixture-file-name major-mode)
+        (kill-buffer fixture-buf))
+      (when lang
       (cl-assert (not (null numbers)) nil "No markers found in `%s'" fixture-file-name)
       (unwind-protect
           (dolist (number (if (oref obj reverse) (reverse numbers) numbers))
@@ -457,7 +467,7 @@ doesn't exist."
                                    :output-buffer (oref obj output-buffer)
                                    :collection-name (oref obj collection-name))
                              harness-factory-args)))))))
-        (kill-buffer fixture-buf)))))
+        (kill-buffer fixture-buf))))))
 
 (provide 'combobulate-test-suite)
 ;;; combobulate-test-suite ends here

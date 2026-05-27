@@ -30,6 +30,21 @@
 (require 'ert)
 ;;; required to make major modes load
 (require 'treesit)
+
+;; When the tests are driven by Eldev, point `treesit-extra-load-path' at
+;; the project-local `.eldev/<version>/tree-sitter/' directory populated
+;; by `eldev install-grammars'.  Doing this before any major mode loads
+;; isolates the suite from whatever tree-sitter grammars the user may
+;; have installed globally.  If the sandbox directory does not exist we
+;; leave `treesit-extra-load-path' alone so the tests still work in
+;; interactive development (where the user's own grammars are fine).
+(let ((sandbox (expand-file-name
+                (format "../.eldev/%s/tree-sitter/" emacs-version)
+                (file-name-directory (or load-file-name
+                                         buffer-file-name
+                                         default-directory)))))
+  (when (file-directory-p sandbox)
+    (setq treesit-extra-load-path (list sandbox))))
 (require 'typescript-ts-mode)
 (require 'css-mode)
 (require 'python)
@@ -591,10 +606,12 @@ macros are available for use in the test body."
            (combobulate-setup)
            (switch-to-buffer (current-buffer))
            (with-current-buffer (current-buffer)
-             ;; the default directory must be set explicitly. Here
-             ;; we'll use the root of the ./tests/ directory by
-             ;; looking for the combobulate-test-prelude file
-             ;; (setq default-directory (file-name-directory (locate-library "combobulate-test-prelude")))
+             ;; Anchor fixture lookup at the tests/ directory so tests
+             ;; can be invoked from anywhere (e.g. by eldev from the
+             ;; project root, not just by `make' with --chdir ./tests/).
+             (setq default-directory
+                   (file-name-directory
+                    (locate-library "combobulate-test-prelude")))
              (should (combobulate-read minor-mode))
              (should (treesit-parser-list))
              (erase-buffer)
