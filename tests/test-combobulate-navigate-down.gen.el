@@ -77,25 +77,20 @@
 
 
 (ert-deftest
-    combobulate-test-ocaml-combobulate-navigate-down--class_types-1
-    ()
-
-  "Test `combobulate' with `fixtures/down/class_types.ml' in `tuareg-mode' mode."
-  (combobulate-test
-      (:language ocaml :mode tuareg-mode :fixture
-		 "fixtures/down/class_types.ml")
-    :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)))
-
-
-(ert-deftest
-    combobulate-test-ocaml-combobulate-navigate-down--class_types_b-1
+    combobulate-test-ocaml-combobulate-navigate-down--class_types_b-4
     ()
 
   "Test `combobulate' with `fixtures/down/class_types_b.ml' in `tuareg-mode' mode."
   (combobulate-test
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/down/class_types_b.ml")
-    :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)))
+    :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 3)
+    (combobulate-test-go-to-marker 3) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 4)))
 
 
 (ert-deftest
@@ -231,7 +226,7 @@
 
 
 (ert-deftest
-    combobulate-test-ocaml-combobulate-navigate-down--function_body-2
+    combobulate-test-ocaml-combobulate-navigate-down--function_body-3
     ()
 
   "Test `combobulate' with `fixtures/down/function_body.ml' in `tuareg-mode' mode."
@@ -240,7 +235,9 @@
 		 "fixtures/down/function_body.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-down)
-    (combobulate-test-assert-at-marker 2)))
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 3)))
 
 
 (ert-deftest

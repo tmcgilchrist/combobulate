@@ -372,15 +372,14 @@
                              (:match-rules (rule "let_binding" :body))))
 
          ;; From the top of a definition (point on the `let' keyword)
-         ;; descend straight to the binding body, skipping the name and
-         ;; parameters.  The body is a grandchild of value_definition
-         ;; (value_definition -> let_binding -> body), so a recursive
-         ;; query reaches it; without this the first C-M-d lands on the
-         ;; let_binding (the name) and a second is needed for the body.
-         (:activation-nodes ((:nodes ("value_definition")))
-          :selector (:choose node :match-query
-                             (:query ((let_binding body: (_) @match))
-                              :engine treesitter)))
+         ;; descend one level to the binding itself.  The cursor lands
+         ;; at the start of the let_binding, which is the function
+         ;; name (or pattern).  A second C-M-d then descends from the
+         ;; let_binding to its body via the rule above, giving the
+         ;; full path `let -> name -> body' in two steps.
+         (:activation-nodes ((:nodes ("value_definition") :position at))
+          :selector (:choose node :match-children
+                             (:match-rules ("let_binding" "attribute"))))
 
          ;; Navigate down through chains of let ... in / let open ... in
          ;; expressions. Since these are nested (parent-child) rather than
