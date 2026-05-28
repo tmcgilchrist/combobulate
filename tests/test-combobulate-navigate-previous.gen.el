@@ -445,6 +445,22 @@
 
 
 (ert-deftest
+    combobulate-test-ocaml-combobulate-navigate-previous--infix-1
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/infix.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/sibling/infix.ml")
+    :tags
+    '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 1)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest
     combobulate-test-go-combobulate-navigate-previous--inside-case-1
     ()
 
@@ -1011,6 +1027,20 @@
     (combobulate-test-assert-at-marker 2)
     (combobulate-test-go-to-marker 2) (combobulate-navigate-previous)
     (combobulate-test-assert-at-marker 1)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest
+    combobulate-test-ocaml-combobulate-navigate-previous--record_expression-1
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/record_expression.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/sibling/record_expression.ml")
+    :tags
+    '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-previous)
     (combobulate-test-assert-at-marker 1)))
 
