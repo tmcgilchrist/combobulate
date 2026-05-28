@@ -350,23 +350,12 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/down/module_sig_a.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)
-    (should-error (progn (combobulate-navigate-down)))
-    (should-error (progn (combobulate-navigate-down)))
-    (should-error (progn (combobulate-navigate-down)))))
-
-
-(ert-deftest
-    combobulate-test-ocaml-combobulate-navigate-down--module_sig_b-4
-    ()
-
-  "Test `combobulate' with `fixtures/down/module_sig_b.ml' in `tuareg-mode' mode."
-  (combobulate-test
-      (:language ocaml :mode tuareg-mode :fixture
-		 "fixtures/down/module_sig_b.ml")
-    :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)
-    (should-error (progn (combobulate-navigate-down)))
-    (should-error (progn (combobulate-navigate-down)))
-    (should-error (progn (combobulate-navigate-down)))))
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 3)
+    (combobulate-test-go-to-marker 3) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 4)))
 
 
 (ert-deftest

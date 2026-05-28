@@ -1,6 +1,6 @@
-(* -*- combobulate-test-point-overlays: ((1 outline 180) (2 outline 259) (3 outline 281) (4 outline 305)); eval: (combobulate-test-fixture-mode t); -*- *)
+(* -*- eval: (combobulate-test-fixture-mode t); combobulate-test-point-overlays: ((1 outline 156) (2 outline 163) (3 outline 174) (4 outline 180)); -*- *)
 module Positive : sig
-  type t = private int (* Hierarchy navigation should go from sig to type t *)
+  type t = private int
   val make : int -> t
   val to_int : t -> int
   val add : t -> t -> t
