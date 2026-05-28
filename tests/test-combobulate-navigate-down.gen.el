@@ -359,14 +359,18 @@
 
 
 (ert-deftest
-    combobulate-test-ocaml-combobulate-navigate-down--module_string-1
+    combobulate-test-ocaml-combobulate-navigate-down--module_string-3
     ()
 
   "Test `combobulate' with `fixtures/down/module_string.ml' in `tuareg-mode' mode."
   (combobulate-test
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/down/module_string.ml")
-    :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)))
+    :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 3)))
 
 
 (ert-deftest
