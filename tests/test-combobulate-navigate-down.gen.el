@@ -308,14 +308,19 @@
 
 
 (ert-deftest
-    combobulate-test-ocaml-combobulate-navigate-down--matches-2 ()
+    combobulate-test-ocaml-combobulate-navigate-down--matches-4 ()
 
   "Test `combobulate' with `fixtures/down/matches.ml' in `tuareg-mode' mode."
   (combobulate-test
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/down/matches.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)
-    (should-error (progn (combobulate-navigate-down)))))
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 3)
+    (combobulate-test-go-to-marker 3) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 4)))
 
 
 (ert-deftest
@@ -396,18 +401,6 @@
     (combobulate-test-assert-at-marker 7)
     (combobulate-test-go-to-marker 7) (combobulate-navigate-down)
     (combobulate-test-assert-at-marker 8)))
-
-
-(ert-deftest
-    combobulate-test-ocaml-combobulate-navigate-down--nested_matches-2
-    ()
-
-  "Test `combobulate' with `fixtures/down/nested_matches.ml' in `tuareg-mode' mode."
-  (combobulate-test
-      (:language ocaml :mode tuareg-mode :fixture
-		 "fixtures/down/nested_matches.ml")
-    :tags '(combobulate ocaml tuareg-mode combobulate-navigate-down)
-    (should-error (progn (combobulate-navigate-down)))))
 
 
 (ert-deftest combobulate-test-json-combobulate-navigate-down--object-9

@@ -366,8 +366,13 @@
 
        '(;; Navigate down into let_binding body, skipping the function
          ;; name/pattern and parameters. Like Go skips to the block.
+         ;; `:position at' keeps the rule from firing when point is
+         ;; *inside* the binding's body (e.g. on `function' inside
+         ;; `let f = function | ...'); without the qualifier this rule
+         ;; matches any cursor inside let_binding and wins over more
+         ;; specific rules (function_expression, match_expression).
          (:activation-nodes
-          ((:nodes ("let_binding")))
+          ((:nodes ("let_binding") :position at))
           :selector (:choose node :match-children
                              (:match-rules (rule "let_binding" :body))))
 
@@ -391,6 +396,13 @@
                              (:match-rules ("let_expression"
                                             "let_open_expression"
                                             "application_expression"))))
+
+         ;; Descend from `match e with' / `try ... with' / `function ...'
+         ;; straight to its first case.  Stepping further between cases
+         ;; is handled by the match_case sibling rule.
+         (:activation-nodes
+          ((:nodes ("match_expression" "try_expression" "function_expression") :position at))
+          :selector (:choose node :match-children (:match-rules ("match_case"))))
 
          (:activation-nodes
           ((:nodes ("field_get_expression"
@@ -609,11 +621,21 @@
 (defun combobulate-ocaml-setup (_)
   "Setup function for OCaml mode with Combobulate."
   (setq-local combobulate-navigate-down-into-lists nil
-              ;; Make the opening keyword of a `signature' / `structure'
-              ;; resolve to that container, so `C-M-n' on `sig' steps to
-              ;; `struct' (siblings of module_binding) instead of
-              ;; descending into the first signature item.
-              combobulate-prefer-container-types '("signature" "structure")))
+              ;; Make the opening keyword of these containers resolve to
+              ;; the container itself rather than skipping past the
+              ;; keyword to its first child.  Effects:
+              ;;   - `sig' / `struct' steps sibling between module bodies
+              ;;     (module_binding's children) instead of descending
+              ;;     into the first signature item.
+              ;;   - `match' / `try' / `function' keyword resolves to
+              ;;     match_expression / try_expression / function_expression
+              ;;     so `C-M-d' descends into the first match_case via
+              ;;     the rule in procedures-hierarchy instead of resolving
+              ;;     to that first match_case and going nowhere from
+              ;;     there.
+              combobulate-prefer-container-types
+              '("signature" "structure"
+                "match_expression" "try_expression" "function_expression")))
 
 (provide 'combobulate-ocaml)
 ;;; combobulate-ocaml.el ends here
