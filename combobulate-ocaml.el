@@ -404,6 +404,24 @@
           ((:nodes ("match_expression" "try_expression" "function_expression") :position at))
           :selector (:choose node :match-children (:match-rules ("match_case"))))
 
+         ;; From a case pattern (`_pattern' / `constructor_path' /
+         ;; `value_path' / `value_pattern' under a `match_case'),
+         ;; descend to the case's body, guard or refutation case
+         ;; (the `| pat -> .'  syntax).  Without this rule, point on
+         ;; the discriminator of a case (e.g. `MACHO' in
+         ;; `| MACHO -> ...') has no rule to fire and `C-M-d' does
+         ;; nothing.
+         (:activation-nodes
+          ((:nodes ((rule "_pattern")
+                    "constructor_path"
+                    "value_path"
+                    "value_pattern") :has-parent ("match_case") :position at))
+          :selector (:choose parent :match-children
+                             (:match-rules ((rule "_sequence_expression")
+                                            (rule "_simple_expression")
+                                            "refutation_case"
+                                            "guard"))))
+
          (:activation-nodes
           ((:nodes ("field_get_expression"
                     "value_path"
