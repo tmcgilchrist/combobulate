@@ -214,8 +214,14 @@
           ((:nodes ( "constructor_pattern" )))
           :selector (:choose parent :match-siblings t))
 
+         ;; Step between cases of a `match' / `try' / `function'.
+         ;; `:position at' keeps the rule from firing when point is
+         ;; *inside* a case body (e.g. on the `let' of
+         ;; `| MACHO -> let header = ...'), where it would otherwise
+         ;; swallow the cursor and prevent let-body sibling navigation
+         ;; from firing.
          (:activation-nodes
-          ((:nodes ( "match_case" )))
+          ((:nodes ("match_case") :position at))
           :selector (:choose node :match-siblings t))
 
          (:activation-nodes

@@ -2092,6 +2092,36 @@
 	"./fixture-deltas/combobulate-drag-down/let_bindings.ml[@11~after].ml")))))
 
 
+(ert-deftest
+    combobulate-test-ocaml-combobulate-drag-down--let_in_case_body-1
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/let_in_case_body.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/sibling/let_in_case_body.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-drag-down)
+    (combobulate-test-go-to-marker 1) (combobulate-drag-down)
+    (combobulate-compare-action-with-fixture-delta
+     "./fixture-deltas/combobulate-drag-down/let_in_case_body.ml[@1~after].ml")))
+
+
+(ert-deftest
+    combobulate-test-ocaml-combobulate-drag-down--let_in_case_body-2
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/let_in_case_body.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/sibling/let_in_case_body.ml")
+    :tags '(combobulate ocaml tuareg-mode combobulate-drag-down)
+    (should-error
+     (progn
+       (combobulate-test-go-to-marker 2) (combobulate-drag-down)
+       (combobulate-compare-action-with-fixture-delta
+	"./fixture-deltas/combobulate-drag-down/let_in_case_body.ml[@2~after].ml")))))
+
+
 (ert-deftest combobulate-test-go-combobulate-drag-down--literal-1
     ()
 

@@ -630,6 +630,20 @@
 
 
 (ert-deftest
+    combobulate-test-ocaml-combobulate-navigate-previous--let_in_case_body-1
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/let_in_case_body.ml' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml :mode tuareg-mode :fixture
+		 "fixtures/sibling/let_in_case_body.ml")
+    :tags
+    '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-previous)
+    (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest
     combobulate-test-go-combobulate-navigate-previous--literal-1
     ()
 
