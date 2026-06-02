@@ -1637,9 +1637,11 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/if_else_chain.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-drag-down)
-    (combobulate-test-go-to-marker 1) (combobulate-drag-down)
-    (combobulate-compare-action-with-fixture-delta
-     "./fixture-deltas/combobulate-drag-down/if_else_chain.ml[@1~after].ml")))
+    (should-error
+     (progn
+       (combobulate-test-go-to-marker 1) (combobulate-drag-down)
+       (combobulate-compare-action-with-fixture-delta
+	"./fixture-deltas/combobulate-drag-down/if_else_chain.ml[@1~after].ml")))))
 
 
 (ert-deftest

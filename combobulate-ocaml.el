@@ -410,6 +410,18 @@
           ((:nodes ("match_expression" "try_expression" "function_expression") :position at))
           :selector (:choose node :match-children (:match-rules ("match_case"))))
 
+         ;; Descend from `if cond then a else b' to the first branch
+         ;; (the then-clause or else-clause).  Stepping between
+         ;; branches is handled by the if/else sibling rule in
+         ;; procedures-sibling.  Without this rule, `C-M-d' on the
+         ;; `if' keyword falls through to a deeper descent and lands
+         ;; inside the then-clause's body (e.g. the tuple of
+         ;; `then (DWARF64, ...)') instead of on the then-clause
+         ;; itself.
+         (:activation-nodes ((:nodes ("if_expression") :position at))
+          :selector (:choose node :match-children
+                             (:match-rules ("then_clause" "else_clause"))))
+
          ;; From a case pattern (`_pattern' / `constructor_path' /
          ;; `value_path' / `value_pattern' under a `match_case'),
          ;; descend to the case's body, guard or refutation case
@@ -657,9 +669,15 @@
               ;;     the rule in procedures-hierarchy instead of resolving
               ;;     to that first match_case and going nowhere from
               ;;     there.
+              ;;   - `if' keyword resolves to if_expression so `C-M-d'
+              ;;     descends to the then-clause and `C-M-n' steps
+              ;;     through if/else-if/else branches as siblings,
+              ;;     instead of resolving to the condition and falling
+              ;;     through into the then-clause body.
               combobulate-prefer-container-types
               '("signature" "structure"
-                "match_expression" "try_expression" "function_expression")))
+                "match_expression" "try_expression" "function_expression"
+                "if_expression")))
 
 (provide 'combobulate-ocaml)
 ;;; combobulate-ocaml.el ends here
