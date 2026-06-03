@@ -398,6 +398,25 @@
 
 
 (ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-down--module_signature-4
+    ()
+
+  "Test `combobulate' with `fixtures/down/module_signature.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/down/module_signature.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-down)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 3)
+    (combobulate-test-go-to-marker 3) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 4)))
+
+
+(ert-deftest
     combobulate-test-ocaml-combobulate-navigate-down--module_string-3
     ()
 
