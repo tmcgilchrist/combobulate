@@ -515,3 +515,20 @@
     (combobulate-test-assert-at-marker 5)))
 
 
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-down--variant_type-4
+    ()
+
+  "Test `combobulate' with `fixtures/down/variant_type.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/down/variant_type.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-down)
+    (should-error (progn (combobulate-navigate-down)))
+    (should-error (progn (combobulate-navigate-down)))
+    (combobulate-test-go-to-marker 3) (combobulate-navigate-down)
+    (combobulate-test-assert-at-marker 4)))
+
+
