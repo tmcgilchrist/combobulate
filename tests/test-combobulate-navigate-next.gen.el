@@ -89,6 +89,23 @@
 
 
 (ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-next--class_type_expressions-3
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/class_type_expressions.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/class_type_expressions.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-next)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)))
+
+
+(ert-deftest
     combobulate-test-ocaml-combobulate-navigate-next--class_value_expressions-3
     ()
 
@@ -469,6 +486,23 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/gadt.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-next)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)))
+
+
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-next--gadt-3
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/gadt.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/gadt.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-next)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
     (combobulate-test-assert-at-marker 2)
     (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
@@ -891,6 +925,29 @@
 
 
 (ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-next--module_type_expressions-6
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/module_type_expressions.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/module_type_expressions.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-next)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)
+    (combobulate-test-go-to-marker 3) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 4)
+    (combobulate-test-go-to-marker 4) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 5)
+    (combobulate-test-go-to-marker 5) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 6)))
+
+
+(ert-deftest
     combobulate-test-ocaml-combobulate-navigate-next--module_value_expressions-6
     ()
 
@@ -967,6 +1024,21 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/nested_type_records.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-next)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 2)))
+
+
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-next--nested_type_records-2
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/nested_type_records.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/nested_type_records.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-next)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
     (combobulate-test-assert-at-marker 2)))
 
@@ -1302,6 +1374,23 @@
 
 
 (ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-next--type_and_bindings-3
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/type_and_bindings.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/type_and_bindings.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-next)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)))
+
+
+(ert-deftest
     combobulate-test-ocaml-combobulate-navigate-next--type_declarations-16
     ()
 
@@ -1310,6 +1399,49 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/type_declarations.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-next)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)
+    (combobulate-test-go-to-marker 3) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 4)
+    (combobulate-test-go-to-marker 4) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 5)
+    (combobulate-test-go-to-marker 5) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 6)
+    (combobulate-test-go-to-marker 6) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 7)
+    (combobulate-test-go-to-marker 7) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 8)
+    (combobulate-test-go-to-marker 8) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 9)
+    (combobulate-test-go-to-marker 9) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 10)
+    (combobulate-test-go-to-marker 10) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 11)
+    (combobulate-test-go-to-marker 11) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 12)
+    (combobulate-test-go-to-marker 12) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 13)
+    (combobulate-test-go-to-marker 13) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 14)
+    (combobulate-test-go-to-marker 14) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 15)
+    (combobulate-test-go-to-marker 15) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 16)))
+
+
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-next--type_declarations-16
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/type_declarations.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/type_declarations.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-next)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
     (combobulate-test-assert-at-marker 2)
     (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
@@ -1376,6 +1508,25 @@
       (:language ocaml :mode tuareg-mode :fixture
 		 "fixtures/sibling/type_records.ml")
     :tags '(combobulate ocaml tuareg-mode combobulate-navigate-next)
+    (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 2)
+    (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 3)
+    (combobulate-test-go-to-marker 3) (combobulate-navigate-next)
+    (combobulate-test-assert-at-marker 4)))
+
+
+(ert-deftest
+    combobulate-test-ocaml-interface-combobulate-navigate-next--type_records-4
+    ()
+
+  "Test `combobulate' with `fixtures/sibling/type_records.mli' in `tuareg-mode' mode."
+  (combobulate-test
+      (:language ocaml-interface :mode tuareg-mode :fixture
+		 "fixtures/sibling/type_records.mli")
+    :tags
+    '(combobulate ocaml-interface tuareg-mode
+		  combobulate-navigate-next)
     (combobulate-test-go-to-marker 1) (combobulate-navigate-next)
     (combobulate-test-assert-at-marker 2)
     (combobulate-test-go-to-marker 2) (combobulate-navigate-next)
