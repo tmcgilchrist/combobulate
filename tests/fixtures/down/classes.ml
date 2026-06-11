@@ -1,4 +1,4 @@
-(* -*- combobulate-test-point-overlays: ((1 outline 165) (2 outline 173)); eval: (combobulate-test-fixture-mode t); -*- *)
+(* -*- eval: (combobulate-test-fixture-mode t); combobulate-test-point-overlays: ((1 outline 156) (2 outline 162) (3 outline 174) (4 outline 185)); -*- *)
 class counter =
   object
     val mutable count = 0

@@ -214,8 +214,14 @@
           ((:nodes ( "constructor_pattern" )))
           :selector (:choose parent :match-siblings t))
 
+         ;; Step between cases of a `match' / `try' / `function'.
+         ;; `:position at' keeps the rule from firing when point is
+         ;; *inside* a case body (e.g. on the `let' of
+         ;; `| MACHO -> let header = ...'), where it would otherwise
+         ;; swallow the cursor and prevent let-body sibling navigation
+         ;; from firing.
          (:activation-nodes
-          ((:nodes ( "match_case" )))
+          ((:nodes ("match_case") :position at))
           :selector (:choose node :match-siblings t))
 
          (:activation-nodes
@@ -234,12 +240,68 @@
                     "value_pattern")))
           :selector (:choose node :match-children t))
 
+         ;; Navigate between the bindings of a `type ... and ...' or
+         ;; `let ... and ...' group (sibling type_binding / let_binding
+         ;; nodes).  `:has-sibling' limits this to multi-binding groups;
+         ;; a lone binding has no sibling and falls through to the
+         ;; structure rules so top-level navigation still works.
+         ;; Must come before the value_definition / let_expression rule
+         ;; below, which would otherwise match the enclosing
+         ;; value_definition first and step to the let_expression body
+         ;; (skipping the `and' sibling).
+         (:activation-nodes
+          ((:nodes ("type_binding")
+                   :has-sibling ("type_binding"))
+           (:nodes ("let_binding")
+                   :has-sibling ("let_binding")))
+          :selector  (:choose node :match-siblings t))
+
          (:activation-nodes
           ((:nodes ("value_definition"
-                    "value_pattern"
-                    "let_expression")
-                   :has-parent ("let_expression")))
+                    "value_pattern")
+                   :has-parent ("let_expression"
+                                "let_open_expression")))
           :selector  (:choose parent :match-children t))
+
+         ;; Navigate between record fields. Must come before the let
+         ;; chain rule, otherwise let_open_expression (an ancestor)
+         ;; matches first and intercepts navigation.
+         (:activation-nodes
+          ((:nodes ("field_expression")
+                   :has-parent ("record_expression")))
+          :selector  (:choose node :match-siblings t))
+
+         ;; Navigate between the members of a class object
+         ;; (`val'/`method') and the method specifications of a class
+         ;; type, e.g. the methods of `class c = object ... end' or
+         ;; `class type c = object ... end'.
+         (:activation-nodes
+          ((:nodes ("instance_variable_definition"
+                    "method_definition"
+                    "method_specification")))
+          :selector  (:choose node :match-siblings t))
+
+         ;; Navigate forward through let chains. From any
+         ;; let_expression or let_open_expression, go to the body
+         ;; child if it is another let or application.
+         (:activation-nodes
+          ((:nodes ("let_expression"
+                    "let_open_expression")))
+          :selector  (:choose node :match-children
+                              (:match-rules ("let_expression"
+                                             "let_open_expression"
+                                             "application_expression"))))
+
+         ;; Navigate forward through if/else if/else chains.
+         ;; Like let chains, these are nested (else_clause contains
+         ;; another if_expression), not flat siblings.
+         ;; From if_expression or else_clause, navigate to the next
+         ;; branch (else_clause or nested if_expression).
+         (:activation-nodes
+          ((:nodes ("if_expression" "else_clause")))
+          :selector  (:choose node :match-children
+                              (:match-rules ("else_clause"
+                                             "if_expression"))))
 
          (:activation-nodes
           ((:nodes ("type_variable"
@@ -274,8 +336,11 @@
                    :has-ancestor ("module_definition"
                                   "module_type_definition"
                                   "package_expression"))
-           (:nodes ("attribute"
-                    "comment"
+           ;; Navigation moves between top-level definitions and treats
+           ;; a plain `attribute' (e.g. the `[@inline]' in
+           ;; `let[@inline] f = ...') as a decoration: it is never a
+           ;; navigation target and is skipped over between definitions.
+           (:nodes ("comment"
                     "field_declaration"
                     "function_expression"
                     (rule "function_type")
@@ -286,16 +351,13 @@
                     (rule "class_binding")
                     (rule "class_application")
                     (rule "type_binding")
-                    (rule "method_definition")
                     (rule "structure")
                     (rule "signature")
-                    (irule "signature")
-                    (irule "structure")
                     (rule "_class_field_specification")
                     (rule "_sequence_expression")
                     (rule "_signature_item")
                     (rule "_structure_item"))))
-          :selector (:choose node :match-siblings t))
+          :selector (:choose node :match-siblings (:discard-rules ("attribute"))))
 
          (:activation-nodes
           ((:nodes ((rule "compilation_unit"))))
@@ -303,38 +365,82 @@
 
       (procedures-hierarchy
 
-       ;; NOTE: Known limitation regarding navigation within class
-       ;; hierarchies.
-       ;; Navigation will go through:
-       ;;   class
-       ;;    → class_definition
-       ;;    → class_binding
-       ;;    → class_name
-       ;;    → parameter
-       ;;    → parameter
-       ;;    → object_expression
-       ;; But we want:
-       ;;   class
-       ;;    → class_name
-       ;;    → object
-       ;;    → instance_variable_definition
-       ;; This appears to be either:
-       ;;   1. A limitation in how combobulate processes selector
-       ;;      rules for certain grammars
-       ;;   2. An issue specific to the OCaml tree-sitter grammar structure
-       ;;   3. A bug in the combobulate procedure matching logic
+       ;; Class navigation: the class rules below navigate down
+       ;; class -> name -> object body -> members.  navigate-up only
+       ;; walks ancestors, so it does not revisit the name; this
+       ;; down/up asymmetry is intentional.
 
-       ;; Pretty printing rules for `class_binding' gives us:
-       ;; - :*unnamed*: ("abstract_type" "item_attribute"
-       ;;                "parameter" "class_function_type" "type_variable")
-       ;; - :body: ("class_function" "let_open_class_expression"
-       ;;            "let_class_expression" "class_application")
-       ;; - :name ("class_name")
+       '(;; Navigate down into let_binding body, skipping the function
+         ;; name/pattern and parameters. Like Go skips to the block.
+         ;; `:position at' keeps the rule from firing when point is
+         ;; *inside* the binding's body (e.g. on `function' inside
+         ;; `let f = function | ...'); without the qualifier this rule
+         ;; matches any cursor inside let_binding and wins over more
+         ;; specific rules (function_expression, match_expression).
+         (:activation-nodes
+          ((:nodes ("let_binding") :position at))
+          :selector (:choose node :match-children
+                             (:match-rules (rule "let_binding" :body))))
 
-       ;; the object expression does not appear in these rules which is probably
-       ;; part of the problem.
+         ;; From the top of a definition (point on the `let' keyword)
+         ;; descend one level to the binding itself.  The cursor lands
+         ;; at the start of the let_binding, which is the function
+         ;; name (or pattern).  A second C-M-d then descends from the
+         ;; let_binding to its body via the rule above, giving the
+         ;; full path `let -> name -> body' in two steps.
+         (:activation-nodes ((:nodes ("value_definition") :position at))
+          :selector (:choose node :match-children
+                             (:match-rules ("let_binding" "attribute"))))
 
-       '((:activation-nodes
+         ;; Navigate down through chains of let ... in / let open ... in
+         ;; expressions. Since these are nested (parent-child) rather than
+         ;; flat siblings, hierarchy navigation is the natural fit.
+         (:activation-nodes
+          ((:nodes ("let_expression"
+                    "let_open_expression")))
+          :selector (:choose node :match-children
+                             (:match-rules ("let_expression"
+                                            "let_open_expression"
+                                            "application_expression"))))
+
+         ;; Descend from `match e with' / `try ... with' / `function ...'
+         ;; straight to its first case.  Stepping further between cases
+         ;; is handled by the match_case sibling rule.
+         (:activation-nodes
+          ((:nodes ("match_expression" "try_expression" "function_expression") :position at))
+          :selector (:choose node :match-children (:match-rules ("match_case"))))
+
+         ;; Descend from `if cond then a else b' to the first branch
+         ;; (the then-clause or else-clause).  Stepping between
+         ;; branches is handled by the if/else sibling rule in
+         ;; procedures-sibling.  Without this rule, `C-M-d' on the
+         ;; `if' keyword falls through to a deeper descent and lands
+         ;; inside the then-clause's body (e.g. the tuple of
+         ;; `then (DWARF64, ...)') instead of on the then-clause
+         ;; itself.
+         (:activation-nodes ((:nodes ("if_expression") :position at))
+          :selector (:choose node :match-children
+                             (:match-rules ("then_clause" "else_clause"))))
+
+         ;; From a case pattern (`_pattern' / `constructor_path' /
+         ;; `value_path' / `value_pattern' under a `match_case'),
+         ;; descend to the case's body, guard or refutation case
+         ;; (the `| pat -> .'  syntax).  Without this rule, point on
+         ;; the discriminator of a case (e.g. `MACHO' in
+         ;; `| MACHO -> ...') has no rule to fire and `C-M-d' does
+         ;; nothing.
+         (:activation-nodes
+          ((:nodes ((rule "_pattern")
+                    "constructor_path"
+                    "value_path"
+                    "value_pattern") :has-parent ("match_case") :position at))
+          :selector (:choose parent :match-children
+                             (:match-rules ((rule "_sequence_expression")
+                                            (rule "_simple_expression")
+                                            "refutation_case"
+                                            "guard"))))
+
+         (:activation-nodes
           ((:nodes ("field_get_expression"
                     "value_path"
                     "paranthesized_operator"
@@ -344,13 +450,43 @@
            (:nodes ((rule "polymorphic_variant_type"))))
           :selector (:choose node :match-children t))
 
+         ;; From the class name, step to the object body.  Must come
+         ;; before the object rule below, which would otherwise match
+         ;; the enclosing `class_binding' and step to a value parameter.
+         (:activation-nodes ((:nodes ("class_name")
+                                     :has-parent ("class_binding")))
+          :selector (:choose parent :match-children
+                             (:match-rules ("object_expression"))))
+
+         ;; Descend into an object body and its members.  `class_body_type'
+         ;; (the body of a `class type') is included so down also reaches
+         ;; its method_specification members.
          (:activation-nodes
           ((:nodes ("object_expression"
+                    "class_body_type"
                     (rule "class_definition")
                     (rule "object_expression")
                     (rule "class_binding"))))
           :selector (:choose node :match-children
                              (:discard-rules ("tag_specification"))))
+
+         ;; Descend from a class / class type to its name then object
+         ;; body, skipping type parameters, `virtual' and value
+         ;; parameters.  The name and body are grandchildren of
+         ;; class_definition / class_type_definition, so a recursive
+         ;; query reaches them.  Must come after the object rule above so
+         ;; that descending from inside the object (a `val'/`method')
+         ;; stays local rather than jumping back to the name.
+         (:activation-nodes ((:nodes ("class_definition")))
+          :selector (:choose node :match-query
+                             (:query ((class_binding
+                                       [(class_name) (object_expression)] @match))
+                              :engine treesitter)))
+         (:activation-nodes ((:nodes ("class_type_definition")))
+          :selector (:choose node :match-query
+                             (:query ((class_type_binding
+                                       [(class_type_name) (class_body_type)] @match))
+                              :engine treesitter)))
 
          ;; Specific rules for converting from a constructor
          ;; (of a Sum type) to its type
@@ -412,7 +548,12 @@
 
       (envelope-indent-region-function #'indent-region)
       (pretty-print-node-name-function #'combobulate-ocaml-pretty-print-node-name)
-      (plausible-separators '(";" "," "|"))
+      (plausible-separators '(";" ",", "|"))
+      ;; Match the implementation side: don't let `combobulate-navigate-down'
+      ;; fall back to `scan-lists' when no procedure matches.  The fallback
+      ;; jumps into the first parenthesised expression it finds (e.g. into
+      ;; `(string path * string)' of a val_specification's type), which is
+      ;; never useful for a signature body.
       (navigate-down-into-lists nil)
 
       ;; Interface files only have specifications, not definitions
@@ -433,7 +574,18 @@
       (procedures-logical '((:activation-nodes ((:nodes (all))))))
 
       (procedures-sibling
-       '((:activation-nodes
+       '(
+         ;; Step between the bindings of a `type ... and ... and ...'
+         ;; group inside a signature.  Mirror of the .ml side -- without
+         ;; this rule, the catch-all below treats every type_binding's
+         ;; contents as the activation and lands on the surrounding
+         ;; type_definition instead of stepping between bindings.
+         (:activation-nodes
+          ((:nodes ("type_binding")
+                   :has-sibling ("type_binding")))
+          :selector  (:choose node :match-siblings t))
+
+         (:activation-nodes
           ((:nodes ("variant_declaration"
                     "record_declaration")))
           :selector (:choose node :match-children t))
@@ -445,7 +597,6 @@
                     (rule "_signature_item")
 
                     ;; Regular nodes
-                    "attribute"
                     "comment"
                     "field_declaration"
                     (rule "attribute_payload")
@@ -454,9 +605,8 @@
                     (rule "class_binding")
                     (rule "type_binding")
                     (rule "signature")
-                    (irule "signature")
                     (rule "_class_field_specification"))))
-          :selector (:choose node :match-siblings t))
+          :selector (:choose node :match-siblings (:discard-rules ("attribute"))))
 
          (:activation-nodes
           ((:nodes ((rule "compilation_unit"))))
@@ -471,12 +621,66 @@
           :selector (:choose parent :match-children
                              (:match-rules ("signature"))))
 
-         ;; From sig keyword, navigate to sibling signature items
-         ;; (type_definition, value_specification, etc.)
+         ;; From the `sig ... end' body of a module signature, descend
+         ;; into its first item (value_specification, type_definition,
+         ;; etc.).  `signature' is added to `combobulate-prefer-container-types'
+         ;; so the `sig' keyword resolves to the signature container,
+         ;; letting this rule fire at the keyword.  Without it the
+         ;; cursor walks past the keyword to the first val_specification
+         ;; (or wherever the anonymous-sibling logic lands), no rule
+         ;; matches, and `combobulate-navigate-down' falls through to
+         ;; the parenthesis-jump fallback -- landing inside the type
+         ;; of the *last* val_specification rather than on the first
+         ;; signature item.
          (:activation-nodes
-          ((:nodes ("sig")))
-          :selector (:choose node :match-siblings
+          ((:nodes ("signature") :position at))
+          :selector (:choose node :match-children
                              (:match-rules ((rule "_signature_item")))))
+
+         ;; Descend from a constructor declaration into its payload
+         ;; type (the `of T' part of `| Foo of T').  Mirrors the
+         ;; equivalent .ml hierarchy rule; without it, cursor on a
+         ;; constructor name in an .mli falls back to the
+         ;; variant_declaration sibling rule and jumps to the *next*
+         ;; constructor rather than descending into the payload of
+         ;; the current one.  Must come before the type_binding rule
+         ;; below so it matches first when cursor is on a
+         ;; constructor_name inside a variant.
+         (:activation-nodes
+          ((:nodes ("constructor_declaration")))
+          :selector (:choose node :match-children
+                             (:discard-rules ("|"))))
+
+         ;; Descend from a type binding into its variant declaration
+         ;; (or record) so cursor on the type name (e.g. `path_item' in
+         ;; `type 'cu path_item = | A | B') steps to the first
+         ;; constructor.  The .ml side handles this via a separate
+         ;; type_binding rule; in the interface we add an explicit
+         ;; type_binding match because the catch-all rule below uses
+         ;; `(rule "type_binding")' which expands to the type
+         ;; binding's *contents*, not the binding itself, and so
+         ;; never picks variant_declaration as a match target.
+         (:activation-nodes
+          ((:nodes ("type_binding") :position at))
+          :selector (:choose node :match-children
+                             (:match-rules ("variant_declaration"
+                                            "record_declaration"
+                                            "constructed_type"
+                                            "type_constructor_path"))))
+
+         ;; Descend from `class type c = object ... end' through its
+         ;; class_type_binding to the class_type_name and then the
+         ;; class_body_type.  In the interface grammar the recursive
+         ;; query used on the .ml side returns the class_type_binding
+         ;; parent rather than its inner children, so step-by-step
+         ;; rules are used instead.  `:position at' keeps each rule
+         ;; from competing with the class_body_type descent below.
+         (:activation-nodes ((:nodes ("class_type_definition") :position at))
+          :selector (:choose node :match-children
+                             (:match-rules ("class_type_binding"))))
+         (:activation-nodes ((:nodes ("class_type_binding") :position at))
+          :selector (:choose node :match-children
+                             (:match-rules ("class_type_name" "class_body_type"))))
 
          ;; From method keyword, navigate to parent then to method_name
          (:activation-nodes
@@ -521,7 +725,29 @@
  :setup-fn combobulate-ocaml-setup)
 
 (defun combobulate-ocaml-setup (_)
-  "Setup function for OCaml mode with Combobulate.")
+  "Setup function for OCaml mode with Combobulate."
+  (setq-local combobulate-navigate-down-into-lists nil
+              ;; Make the opening keyword of these containers resolve to
+              ;; the container itself rather than skipping past the
+              ;; keyword to its first child.  Effects:
+              ;;   - `sig' / `struct' steps sibling between module bodies
+              ;;     (module_binding's children) instead of descending
+              ;;     into the first signature item.
+              ;;   - `match' / `try' / `function' keyword resolves to
+              ;;     match_expression / try_expression / function_expression
+              ;;     so `C-M-d' descends into the first match_case via
+              ;;     the rule in procedures-hierarchy instead of resolving
+              ;;     to that first match_case and going nowhere from
+              ;;     there.
+              ;;   - `if' keyword resolves to if_expression so `C-M-d'
+              ;;     descends to the then-clause and `C-M-n' steps
+              ;;     through if/else-if/else branches as siblings,
+              ;;     instead of resolving to the condition and falling
+              ;;     through into the then-clause body.
+              combobulate-prefer-container-types
+              '("signature" "structure"
+                "match_expression" "try_expression" "function_expression"
+                "if_expression")))
 
 (provide 'combobulate-ocaml)
 ;;; combobulate-ocaml.el ends here

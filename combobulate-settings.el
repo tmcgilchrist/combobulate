@@ -267,6 +267,21 @@ without requiring that they are lisetd explicitly.")
 This is typically set by `with-navigation-nodes' by passing a
 `:procedures' property with the list of procedures to use.")
 
+(defvar-local combobulate-prefer-container-types nil
+  "Per-language list of node type names whose containing node wins
+over the anonymous-token sibling jump in
+`combobulate--get-nearest-navigable-node'.
+
+When point sits on an anonymous opening keyword and the walk-up
+finds a navigable node of one of these types that begins exactly
+at point, that container is returned as the nearest node instead
+of the keyword's next named sibling (which would otherwise pick
+the first child inside the container).
+
+Set per language in the mode's setup function.  Leave nil in
+languages that don't need it, so nearest-node remains unchanged on
+collection openers like `[' / `{' / `switch'.")
+
 
 (defvar combobulate-envelope-symbol-prefix "combobulate-envelop-"
   "Prefix to use for symbol functions and variables for envelopes.")
