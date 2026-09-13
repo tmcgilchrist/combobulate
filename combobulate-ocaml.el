@@ -51,7 +51,7 @@
   (defconst combobulate-ocaml-definitions
     '((context-nodes
        '("false" "true" "number" "class_name" "value_name" "stack_" "mutable"
-         "module_name" "module_type_name" "field_name" "false" "true"))
+         "kind_name" "module_name" "module_type_name" "field_name"))
 
       (navigate-down-into-lists nil)
       (envelope-indent-region-function #'indent-region)
@@ -207,7 +207,8 @@
           ((:nodes ("type_definition" "exception_definition" "external"
                     "value_definition" "method_definition"
                     "instance_variable_definition" "module_definition"
-                    "module_type_definition" "class_definition"))))))
+                    "module_type_definition" "class_definition"
+                    "kind_definition"))))))
 
       (procedures-sibling
        '(
@@ -492,6 +493,8 @@
 
         (:activation-nodes ((:nodes ("application_expression"
                                      "stack_expression"
+                                     "borrow_expression"
+                                     "local_expression"
                                      "comprehension"
                                      "comprehension_binding") :position at))
           :selector (:choose node :match-children t))
@@ -655,7 +658,7 @@
   (defconst combobulate-ocaml-interface-definitions
     '((context-nodes
        '("false" "true" "number" "class_name" "value_name" "stack_" "mutable"
-         "module_name" "module_type_name" "field_name"
+         "kind_name" "module_name" "module_type_name" "field_name"
          "module" "sig" "end" "val" "type" "class" "exception"
          "open" "external" ":" ";" "," "|" "->" "=" "(" ")" "[" "]" "{" "}"))
 
@@ -682,7 +685,9 @@
                     "class_type_definition"
                     "include_module"
                     "include_module_type"
-                    "open_module"))))))
+                    "open_module"
+                    "open_module_signature"
+                    "kind_definition"))))))
 
       (procedures-logical '((:activation-nodes ((:nodes (all))))))
 
