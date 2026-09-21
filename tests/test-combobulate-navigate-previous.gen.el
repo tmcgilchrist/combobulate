@@ -563,6 +563,17 @@
 	       (combobulate-test-assert-at-marker 1)))
 
 
+(ert-deftest combobulate-test-ocaml-combobulate-navigate-previous--match_in_fun-1 ()
+ "Test `combobulate' with `fixtures/sibling/match_in_fun.ml' in `tuareg-mode' mode."
+	     (combobulate-test
+		 (:language ocaml :mode tuareg-mode :fixture "fixtures/sibling/match_in_fun.ml")
+	       :tags
+	       '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
 (ert-deftest combobulate-test-python-combobulate-navigate-previous--module-statements-1 ()
  "Test `combobulate' with `fixtures/sibling/module-statements.py' in `python-ts-mode' mode."
 	     (combobulate-test
@@ -887,6 +898,102 @@
 		 (:language ocaml-interface :mode tuareg-interface-mode :fixture "fixtures/sibling/nested_type_records.mli")
 	       :tags
 	       '(combobulate ocaml-interface tuareg-interface-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest combobulate-test-ocaml-interface-combobulate-navigate-previous--oxcaml_attributes-1 ()
+ "Test `combobulate' with `fixtures/sibling/oxcaml_attributes.mli' in `tuareg-interface-mode' mode."
+	     (combobulate-test
+		 (:language ocaml-interface :mode tuareg-interface-mode :fixture "fixtures/sibling/oxcaml_attributes.mli")
+	       :tags
+	       '(combobulate ocaml-interface tuareg-interface-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest combobulate-test-ocaml-interface-combobulate-navigate-previous--oxcaml_interface-1 ()
+ "Test `combobulate' with `fixtures/sibling/oxcaml_interface.mli' in `tuareg-interface-mode' mode."
+	     (combobulate-test
+		 (:language ocaml-interface :mode tuareg-interface-mode :fixture "fixtures/sibling/oxcaml_interface.mli")
+	       :tags
+	       '(combobulate ocaml-interface tuareg-interface-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-navigate-previous--oxcaml_kinds-1 ()
+ "Test `combobulate' with `fixtures/sibling/oxcaml_kinds.ml' in `tuareg-mode' mode."
+	     (combobulate-test
+		 (:language ocaml :mode tuareg-mode :fixture "fixtures/sibling/oxcaml_kinds.ml")
+	       :tags
+	       '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-navigate-previous--oxcaml_modes-1 ()
+ "Test `combobulate' with `fixtures/sibling/oxcaml_modes.ml' in `tuareg-mode' mode."
+	     (combobulate-test
+		 (:language ocaml :mode tuareg-mode :fixture "fixtures/sibling/oxcaml_modes.ml")
+	       :tags
+	       '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-navigate-previous--oxcaml_records-1 ()
+ "Test `combobulate' with `fixtures/sibling/oxcaml_records.ml' in `tuareg-mode' mode."
+	     (combobulate-test
+		 (:language ocaml :mode tuareg-mode :fixture "fixtures/sibling/oxcaml_records.ml")
+	       :tags
+	       '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-navigate-previous--oxcaml_unboxed-1 ()
+ "Test `combobulate' with `fixtures/sibling/oxcaml_unboxed.ml' in `tuareg-mode' mode."
+	     (combobulate-test
+		 (:language ocaml :mode tuareg-mode :fixture "fixtures/sibling/oxcaml_unboxed.ml")
+	       :tags
+	       '(combobulate ocaml tuareg-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
 	       (combobulate-test-go-to-marker 1)
 	       (combobulate-navigate-previous)
 	       (combobulate-test-assert-at-marker 1)))

@@ -50,8 +50,8 @@
   ;; Combobulate for implementation files (`ml').
   (defconst combobulate-ocaml-definitions
     '((context-nodes
-       '("false" "true" "number" "class_name" "value_name"
-         "module_name" "module_type_name" "field_name" "false" "true"))
+       '("false" "true" "number" "class_name" "value_name" "stack_" "mutable"
+         "kind_name" "module_name" "module_type_name" "field_name"))
 
       (navigate-down-into-lists nil)
       (envelope-indent-region-function #'indent-region)
@@ -207,7 +207,8 @@
           ((:nodes ("type_definition" "exception_definition" "external"
                     "value_definition" "method_definition"
                     "instance_variable_definition" "module_definition"
-                    "module_type_definition" "class_definition"))))))
+                    "module_type_definition" "class_definition"
+                    "kind_definition"))))))
 
       (procedures-sibling
        '(
@@ -230,7 +231,8 @@
            :selector (:choose parent :match-children t))
 
           (:activation-nodes
-           ((:nodes ("application_expression" "fun_expression") :position in))
+           ((:nodes ("comprehension") :position at)
+            (:nodes ("application_expression" "fun_expression") :position at))
            :selector (:choose node :match-children t))
 
          (:activation-nodes
@@ -479,7 +481,8 @@
 
         (:activation-nodes ((:nodes ("let_binding" 
                                      "fun_expression") 
-                             :position at))
+                             :position at)
+                             (:nodes ("infix_expression") :position at :has-parent ("comprehension")))
           :selector (:choose node :match-children t))
 
         (:activation-nodes ((:nodes ("let_expression") :position at))
@@ -488,7 +491,12 @@
                                     (rule "_sequence_expression")
                                     (rule "_simple_expression")))))
 
-        (:activation-nodes ((:nodes ("application_expression") :position at))
+        (:activation-nodes ((:nodes ("application_expression"
+                                     "stack_expression"
+                                     "borrow_expression"
+                                     "local_expression"
+                                     "comprehension"
+                                     "comprehension_binding") :position at))
           :selector (:choose node :match-children t))
 
         ;;  (:activation-nodes ((:nodes ("while_expression" "for_expression") :position at))
@@ -546,7 +554,7 @@
                     "tuple_pattern"
                     "application_expression"
                     "constructor_declaration"
-                    "parameter") :position at)
+                    "parameter" "at_mode_expr" "comprehension_iterator") :position at)
            (:nodes ((rule "polymorphic_variant_type"))))
           :selector (:choose node :match-children (:discard-rules ("|"))))
 
@@ -649,8 +657,8 @@
   ;; Asubset of constructs compared to implementation files
   (defconst combobulate-ocaml-interface-definitions
     '((context-nodes
-       '("false" "true" "number" "class_name" "value_name"
-         "module_name" "module_type_name" "field_name"
+       '("false" "true" "number" "class_name" "value_name" "stack_" "mutable"
+         "kind_name" "module_name" "module_type_name" "field_name"
          "module" "sig" "end" "val" "type" "class" "exception"
          "open" "external" ":" ";" "," "|" "->" "=" "(" ")" "[" "]" "{" "}"))
 
@@ -677,7 +685,9 @@
                     "class_type_definition"
                     "include_module"
                     "include_module_type"
-                    "open_module"))))))
+                    "open_module"
+                    "open_module_signature"
+                    "kind_definition"))))))
 
       (procedures-logical '((:activation-nodes ((:nodes (all))))))
 
@@ -713,8 +723,14 @@
                     (rule "class_binding")
                     (rule "type_binding")
                     (rule "signature")
-                    (rule "_class_field_specification"))))
-          :selector (:choose node :match-siblings (:discard-rules ("attribute" "ERROR"))))
+                    (rule "_class_field_specification")
+                    "attribute"
+                    "item_attribute"
+                    "floating_attribute"
+                    (rule "comprehension")
+                    (rule "stack_expression")
+                    (irule "signature"))))
+          :selector (:choose node :match-siblings (:discard-rules ("ERROR"))))
 
          (:activation-nodes
           ((:nodes ((rule "compilation_unit"))))

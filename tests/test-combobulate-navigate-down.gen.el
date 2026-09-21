@@ -559,6 +559,28 @@
 	       (combobulate-test-assert-at-marker 9)))
 
 
+(ert-deftest combobulate-test-ocaml-combobulate-navigate-down--oxcaml_modes-2 ()
+ "Test `combobulate' with `fixtures/down/oxcaml_modes.ml' in `tuareg-mode' mode."
+	     (combobulate-test
+		 (:language ocaml :mode tuareg-mode :fixture "fixtures/down/oxcaml_modes.ml")
+	       :tags
+	       '(combobulate ocaml tuareg-mode combobulate-navigate-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-down)
+	       (combobulate-test-assert-at-marker 2)))
+
+
+(ert-deftest combobulate-test-ocaml-combobulate-navigate-down--oxcaml_unboxed-2 ()
+ "Test `combobulate' with `fixtures/down/oxcaml_unboxed.ml' in `tuareg-mode' mode."
+	     (combobulate-test
+		 (:language ocaml :mode tuareg-mode :fixture "fixtures/down/oxcaml_unboxed.ml")
+	       :tags
+	       '(combobulate ocaml tuareg-mode combobulate-navigate-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-down)
+	       (combobulate-test-assert-at-marker 2)))
+
+
 (ert-deftest combobulate-test-toml-combobulate-navigate-down--table-3 ()
  "Test `combobulate' with `fixtures/down/table.toml' in `toml-ts-mode' mode."
 	     (combobulate-test
