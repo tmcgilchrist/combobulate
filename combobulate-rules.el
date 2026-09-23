@@ -483,6 +483,80 @@
 )
 ;; END All supertypes in tsx
 
+;; START Production rules for dune
+(defconst combobulate-rules-dune 
+ '(("action" (:*unnamed* ("action_name") :arguments ("action" "file_name" "file_name_dep" "file_name_target" "multiline_string" "quoted_string" "shell_command"))) 
+ ("action_name" (:*unnamed* nil)) 
+ ("alias_name" (:*unnamed* ("multiline_string" "quoted_string"))) 
+ ("blang" (:*unnamed* ("blang" "blang_op" "multiline_string" "quoted_string"))) 
+ ("blang_op" (:*unnamed* nil)) 
+ ("bool" (:*unnamed* nil)) 
+ ("comment" (:*unnamed* nil)) 
+ ("field_name" (:*unnamed* nil)) 
+ ("file_name" (:*unnamed* ("multiline_string" "quoted_string"))) 
+ ("file_name_dep" (:*unnamed* ("file_name"))) 
+ ("file_name_target" (:*unnamed* ("file_name"))) 
+ ("library_name" (:*unnamed* ("multiline_string" "quoted_string"))) 
+ ("lock_name" (:*unnamed* ("multiline_string" "quoted_string"))) 
+ ("module_name" (:*unnamed* ("multiline_string" "quoted_string"))) 
+ ("multiline_string" (:*unnamed* nil)) 
+ ("named_variable" (:*unnamed* nil)) 
+ ("ocaml_syntax" (:*unnamed* nil)) 
+ ("package_dep" (:*unnamed* ("package_name" "version_constraint"))) 
+ ("package_name" (:*unnamed* ("multiline_string" "quoted_string"))) 
+ ("public_name" (:*unnamed* ("multiline_string" "quoted_string"))) 
+ ("quoted_string" (:*unnamed* nil)) 
+ ("sexp" (:*unnamed* ("multiline_string" "quoted_string" "sexp"))) 
+ ("sexps1" (:*unnamed* ("sexp"))) 
+ ("shell_command" (:*unnamed* ("multiline_string" "quoted_string"))) 
+ ("source_file" (:*unnamed* ("ocaml_syntax" "stanza"))) 
+ ("stanza" (:*unnamed* ("action" "bool" "field_name" "file_name" "module_name" "multiline_string" "package_name" "quoted_string" "sexp" "stanza_name") :author ("multiline_string" "quoted_string") :context_name ("multiline_string" "quoted_string") :directory ("file_name") :enabled ("bool") :extension ("multiline_string" "quoted_string") :host_context ("multiline_string" "quoted_string") :language ("multiline_string" "quoted_string") :license ("multiline_string" "quoted_string") :lock_dir ("multiline_string" "quoted_string") :maintainer ("multiline_string" "quoted_string") :new_name ("library_name") :old_name ("library_name") :opam_root ("multiline_string" "quoted_string") :path ("multiline_string" "quoted_string") :profile ("multiline_string" "quoted_string") :profile_name ("multiline_string" "quoted_string") :project_name ("multiline_string" "quoted_string") :repo ("multiline_string" "quoted_string") :stanzas ("stanza") :switch ("multiline_string" "quoted_string") :target_exe ("multiline_string" "quoted_string") :target_triple ("multiline_string" "quoted_string") :toolchain ("multiline_string" "quoted_string") :url ("multiline_string" "quoted_string") :value ("action" "alias_name" "blang" "bool" "field_name" "file_name" "file_name_target" "library_name" "lock_name" "module_name" "multiline_string" "named_variable" "package_dep" "package_name" "public_name" "quoted_string" "sexp" "sexps1") :version ("multiline_string" "quoted_string"))) 
+ ("stanza_name" (:*unnamed* nil)) 
+ ("version_constraint" (:*unnamed* ("multiline_string" "quoted_string" "version_constraint"))) 
+))
+;; END Production rules for dune
+;; START Inverse production rules for dune
+(defconst combobulate-rules-dune-inverse 
+ '(("action" ("action" "stanza"))
+   ("action_name" ("action"))
+   ("alias_name" ("stanza"))
+   ("blang" ("blang" "stanza"))
+   ("blang_op" ("blang"))
+   ("bool" ("stanza"))
+   ("field_name" ("stanza"))
+   ("file_name" ("action" "file_name_dep" "file_name_target" "stanza"))
+   ("file_name_dep" ("action"))
+   ("file_name_target" ("action" "stanza"))
+   ("library_name" ("stanza"))
+   ("lock_name" ("stanza"))
+   ("module_name" ("stanza"))
+   ("multiline_string" ("action" "alias_name" "blang" "file_name" "library_name" "lock_name" "module_name" "package_name" "public_name" "sexp" "shell_command" "stanza" "version_constraint"))
+   ("named_variable" ("stanza"))
+   ("ocaml_syntax" ("source_file"))
+   ("package_dep" ("stanza"))
+   ("package_name" ("package_dep" "stanza"))
+   ("public_name" ("stanza"))
+   ("quoted_string" ("action" "alias_name" "blang" "file_name" "library_name" "lock_name" "module_name" "package_name" "public_name" "sexp" "shell_command" "stanza" "version_constraint"))
+   ("sexp" ("sexp" "sexps1" "stanza"))
+   ("sexps1" ("stanza"))
+   ("shell_command" ("action"))
+   ("stanza" ("source_file" "stanza"))
+   ("stanza_name" ("stanza"))
+   ("version_constraint" ("package_dep" "version_constraint"))
+  ) 
+)
+;; END Inverse production rules for dune
+;; START All node types in dune
+(defconst combobulate-rules-dune-types 
+ '("action" "action_name" "alias_name" "blang" "blang_op" "bool" "comment" "field_name" "file_name" "file_name_dep" "file_name_target" "library_name" "lock_name" "module_name" "multiline_string" "named_variable" "ocaml_syntax" "package_dep" "package_name" "public_name" "quoted_string" "sexp" "sexps1" "shell_command" "source_file" "stanza" "stanza_name" "version_constraint") 
+)
+;; END All node types in dune
+;; START All supertypes in dune
+(defconst combobulate-rules-dune-supertypes 
+ nil 
+)
+;; END All supertypes in dune
+
 ;; START Production rules for css
 (defconst combobulate-rules-css 
  '(("adjacent_sibling_selector" (:*unnamed* ("class_selector" "adjacent_sibling_selector" "descendant_selector" "tag_name" "string_value" "pseudo_class_selector" "sibling_selector" "universal_selector" "id_selector" "nesting_selector" "child_selector" "pseudo_element_selector" "attribute_selector" "namespace_selector"))) 
@@ -2994,11 +3068,12 @@
 
 ;; START Auto-generated list of all languages
 (defconst combobulate-rules-languages 
- '(css go html javascript json ocaml ocaml-interface python toml tsx typescript yaml) 
+ '(css dune go html javascript json ocaml ocaml-interface python toml tsx typescript yaml) 
  "A list of all the languages that have production rules.")
 ;; END Auto-generated list of all languages
 (defconst combobulate-rules-alist 
  `((css ,combobulate-rules-css)
+ (dune ,combobulate-rules-dune)
  (go ,combobulate-rules-go)
  (html ,combobulate-rules-html)
  (javascript ,combobulate-rules-javascript)
@@ -3014,6 +3089,7 @@
 
 (defconst combobulate-rules-inverse-alist 
  `((css ,combobulate-rules-css-inverse)
+ (dune ,combobulate-rules-dune-inverse)
  (go ,combobulate-rules-go-inverse)
  (html ,combobulate-rules-html-inverse)
  (javascript ,combobulate-rules-javascript-inverse)
@@ -3029,6 +3105,7 @@
 
 (defconst combobulate-rules-types-alist 
  `((css ,combobulate-rules-css-types)
+ (dune ,combobulate-rules-dune-types)
  (go ,combobulate-rules-go-types)
  (html ,combobulate-rules-html-types)
  (javascript ,combobulate-rules-javascript-types)
@@ -3044,6 +3121,7 @@
 
 (defconst combobulate-rules-supertypes-alist 
  `((css ,combobulate-rules-css-supertypes)
+ (dune ,combobulate-rules-dune-supertypes)
  (go ,combobulate-rules-go-supertypes)
  (html ,combobulate-rules-html-supertypes)
  (javascript ,combobulate-rules-javascript-supertypes)

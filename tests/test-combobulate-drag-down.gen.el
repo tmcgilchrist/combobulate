@@ -854,6 +854,87 @@
 		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/document-level.toml[@7~after].toml")))))
 
 
+(ert-deftest combobulate-test-dune-combobulate-drag-down--dune-fields-in-stanza-1 ()
+ "Test `combobulate' with `fixtures/sibling/dune-fields-in-stanza.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-fields-in-stanza.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/dune-fields-in-stanza.dune[@1~after].dune")))
+
+
+(ert-deftest combobulate-test-dune-combobulate-drag-down--dune-fields-in-stanza-2 ()
+ "Test `combobulate' with `fixtures/sibling/dune-fields-in-stanza.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-fields-in-stanza.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/dune-fields-in-stanza.dune[@2~after].dune")))
+
+
+(ert-deftest combobulate-test-dune-combobulate-drag-down--dune-fields-in-stanza-3 ()
+ "Test `combobulate' with `fixtures/sibling/dune-fields-in-stanza.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-fields-in-stanza.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/dune-fields-in-stanza.dune[@3~after].dune")))
+
+
+(ert-deftest combobulate-test-dune-combobulate-drag-down--dune-fields-in-stanza-4 ()
+ "Test `combobulate' with `fixtures/sibling/dune-fields-in-stanza.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-fields-in-stanza.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 4)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/dune-fields-in-stanza.dune[@4~after].dune")))))
+
+
+(ert-deftest combobulate-test-dune-combobulate-drag-down--dune-stanzas-1 ()
+ "Test `combobulate' with `fixtures/sibling/dune-stanzas.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-stanzas.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/dune-stanzas.dune[@1~after].dune")))
+
+
+(ert-deftest combobulate-test-dune-combobulate-drag-down--dune-stanzas-2 ()
+ "Test `combobulate' with `fixtures/sibling/dune-stanzas.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-stanzas.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/dune-stanzas.dune[@2~after].dune")))
+
+
+(ert-deftest combobulate-test-dune-combobulate-drag-down--dune-stanzas-3 ()
+ "Test `combobulate' with `fixtures/sibling/dune-stanzas.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-stanzas.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 3)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/dune-stanzas.dune[@3~after].dune")))))
+
+
 (ert-deftest combobulate-test-html-combobulate-drag-down--elements-1 ()
  "Test `combobulate' with `fixtures/sibling/elements.html' in `html-ts-mode' mode."
 	     (combobulate-test

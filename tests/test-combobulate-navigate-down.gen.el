@@ -238,6 +238,17 @@
 	       (combobulate-test-assert-at-marker 3)))
 
 
+(ert-deftest combobulate-test-dune-combobulate-navigate-down--dune-into-stanza-2 ()
+ "Test `combobulate' with `fixtures/down/dune-into-stanza.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/down/dune-into-stanza.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-navigate-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-down)
+	       (combobulate-test-assert-at-marker 2)))
+
+
 (ert-deftest combobulate-test-html-combobulate-navigate-down--elements-3 ()
  "Test `combobulate' with `fixtures/down/elements.html' in `html-ts-mode' mode."
 	     (combobulate-test

@@ -316,6 +316,37 @@
 	       (combobulate-test-assert-at-marker 1)))
 
 
+(ert-deftest combobulate-test-dune-combobulate-navigate-previous--dune-fields-in-stanza-1 ()
+ "Test `combobulate' with `fixtures/sibling/dune-fields-in-stanza.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-fields-in-stanza.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest combobulate-test-dune-combobulate-navigate-previous--dune-stanzas-1 ()
+ "Test `combobulate' with `fixtures/sibling/dune-stanzas.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-stanzas.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
 (ert-deftest combobulate-test-html-combobulate-navigate-previous--elements-1 ()
  "Test `combobulate' with `fixtures/sibling/elements.html' in `html-ts-mode' mode."
 	     (combobulate-test
