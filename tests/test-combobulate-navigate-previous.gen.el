@@ -934,6 +934,52 @@
 	       (combobulate-test-assert-at-marker 1)))
 
 
+(ert-deftest combobulate-test-odoc-combobulate-navigate-previous--odoc-blocks-1 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-blocks.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-blocks.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 6)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 5)
+	       (combobulate-test-go-to-marker 5)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-navigate-previous--odoc-list-in-body-1 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-list-in-body.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-list-in-body.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
 (ert-deftest combobulate-test-opam-combobulate-navigate-previous--opam-dependencies-1 ()
  "Test `combobulate' with `fixtures/sibling/opam-dependencies.opam' in `neocaml-opam-mode' mode."
 	     (combobulate-test

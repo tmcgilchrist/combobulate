@@ -570,6 +570,20 @@
 	       (combobulate-test-assert-at-marker 9)))
 
 
+(ert-deftest combobulate-test-odoc-combobulate-navigate-down--odoc-into-list-3 ()
+ "Test `combobulate' with `fixtures/down/odoc-into-list.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/down/odoc-into-list.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-navigate-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-down)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-down)
+	       (combobulate-test-assert-at-marker 3)))
+
+
 (ert-deftest combobulate-test-opam-combobulate-navigate-down--opam-into-section-3 ()
  "Test `combobulate' with `fixtures/down/opam-into-section.opam' in `neocaml-opam-mode' mode."
 	     (combobulate-test

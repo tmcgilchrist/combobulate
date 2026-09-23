@@ -2577,6 +2577,142 @@
 		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/nested_type_records.mli[@2~after].mli")))))
 
 
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-blocks-1 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-blocks.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-blocks.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-blocks.mld[@1~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-blocks-2 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-blocks.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-blocks.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-blocks.mld[@2~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-blocks-3 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-blocks.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-blocks.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-blocks.mld[@3~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-blocks-4 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-blocks.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-blocks.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-blocks.mld[@4~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-blocks-5 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-blocks.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-blocks.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 5)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-blocks.mld[@5~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-blocks-6 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-blocks.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-blocks.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 6)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-blocks.mld[@6~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-blocks-7 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-blocks.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-blocks.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 7)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-blocks.mld[@7~after].mld")))))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-list-in-body-1 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-list-in-body.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-list-in-body.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-list-in-body.mld[@1~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-list-in-body-2 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-list-in-body.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-list-in-body.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-list-in-body.mld[@2~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-list-in-body-3 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-list-in-body.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-list-in-body.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-list-in-body.mld[@3~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-list-in-body-4 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-list-in-body.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-list-in-body.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-list-in-body.mld[@4~after].mld")))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-drag-down--odoc-list-in-body-5 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-list-in-body.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-list-in-body.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 5)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/odoc-list-in-body.mld[@5~after].mld")))))
+
+
 (ert-deftest combobulate-test-opam-combobulate-drag-down--opam-dependencies-1 ()
  "Test `combobulate' with `fixtures/sibling/opam-dependencies.opam' in `neocaml-opam-mode' mode."
 	     (combobulate-test

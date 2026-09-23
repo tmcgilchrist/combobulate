@@ -12,9 +12,11 @@
 (require 'neocaml)
 (require 'neocaml-dune)
 (require 'neocaml-opam)
+(require 'neocaml-odoc)
 (setq auto-mode-alist
       (append '(("\\.mli\\'" . tuareg-interface-mode)
                 ("\\.ml\\'" . tuareg-mode)
                 ("\\.dune\\'" . neocaml-dune-mode)
-                ("\\.opam\\'" . neocaml-opam-mode))
+                ("\\.opam\\'" . neocaml-opam-mode)
+                ("\\.mld\\'" . neocaml-odoc-mode))
               auto-mode-alist))
