@@ -557,6 +557,76 @@
 )
 ;; END All supertypes in dune
 
+;; START Production rules for opam
+(defconst combobulate-rules-opam 
+ '(("atom" (:*unnamed* ("bool" "filter_ident" "ident" "int" "string"))) 
+ ("block_comment" (:*unnamed* nil)) 
+ ("bool" (:*unnamed* nil)) 
+ ("comment" (:*unnamed* ("block_comment"))) 
+ ("env_binding" (:*unnamed* nil :operator ("envop") :value ("atom") :variable ("atom"))) 
+ ("envop" (:*unnamed* nil)) 
+ ("escape_sequence" (:*unnamed* nil)) 
+ ("filter_ident" (:*unnamed* nil)) 
+ ("group" (:*unnamed* nil :values ("value"))) 
+ ("ident" (:*unnamed* nil)) 
+ ("int" (:*unnamed* nil)) 
+ ("interpolation" (:*unnamed* ("interpolation_content"))) 
+ ("interpolation_content" (:*unnamed* nil)) 
+ ("list" (:*unnamed* nil :values ("value"))) 
+ ("logop_value" (:*unnamed* nil :left ("value") :right ("value"))) 
+ ("option_value" (:*unnamed* nil :options ("value") :value ("value"))) 
+ ("pfxop" (:*unnamed* nil)) 
+ ("pfxop_value" (:*unnamed* nil :operator ("pfxop") :value ("value"))) 
+ ("prefix_relop" (:*unnamed* nil :operator ("relop") :value ("atom"))) 
+ ("relop" (:*unnamed* nil)) 
+ ("relop_value" (:*unnamed* nil :left ("atom") :operator ("relop") :right ("atom"))) 
+ ("section" (:*unnamed* nil :items ("section" "variable") :kind ("ident") :name ("string"))) 
+ ("source_file" (:*unnamed* ("section" "variable"))) 
+ ("string" (:*unnamed* ("escape_sequence" "interpolation"))) 
+ ("value" (:*unnamed* ("atom" "env_binding" "group" "list" "logop_value" "option_value" "pfxop_value" "prefix_relop" "relop_value"))) 
+ ("variable" (:*unnamed* nil :name ("ident") :value ("value"))) 
+))
+;; END Production rules for opam
+;; START Inverse production rules for opam
+(defconst combobulate-rules-opam-inverse 
+ '(("atom" ("env_binding" "prefix_relop" "relop_value" "value"))
+   ("block_comment" ("comment"))
+   ("bool" ("atom"))
+   ("env_binding" ("value"))
+   ("envop" ("env_binding"))
+   ("escape_sequence" ("string"))
+   ("filter_ident" ("atom"))
+   ("group" ("value"))
+   ("ident" ("atom" "section" "variable"))
+   ("int" ("atom"))
+   ("interpolation" ("string"))
+   ("interpolation_content" ("interpolation"))
+   ("list" ("value"))
+   ("logop_value" ("value"))
+   ("option_value" ("value"))
+   ("pfxop" ("pfxop_value"))
+   ("pfxop_value" ("value"))
+   ("prefix_relop" ("value"))
+   ("relop" ("prefix_relop" "relop_value"))
+   ("relop_value" ("value"))
+   ("section" ("section" "source_file"))
+   ("string" ("atom" "section"))
+   ("value" ("group" "list" "logop_value" "option_value" "pfxop_value" "variable"))
+   ("variable" ("section" "source_file"))
+  ) 
+)
+;; END Inverse production rules for opam
+;; START All node types in opam
+(defconst combobulate-rules-opam-types 
+ '("atom" "block_comment" "bool" "comment" "env_binding" "envop" "escape_sequence" "filter_ident" "group" "ident" "int" "interpolation" "interpolation_content" "list" "logop_value" "option_value" "pfxop" "pfxop_value" "prefix_relop" "relop" "relop_value" "section" "source_file" "string" "value" "variable") 
+)
+;; END All node types in opam
+;; START All supertypes in opam
+(defconst combobulate-rules-opam-supertypes 
+ nil 
+)
+;; END All supertypes in opam
+
 ;; START Production rules for css
 (defconst combobulate-rules-css 
  '(("adjacent_sibling_selector" (:*unnamed* ("class_selector" "adjacent_sibling_selector" "descendant_selector" "tag_name" "string_value" "pseudo_class_selector" "sibling_selector" "universal_selector" "id_selector" "nesting_selector" "child_selector" "pseudo_element_selector" "attribute_selector" "namespace_selector"))) 
@@ -3068,7 +3138,7 @@
 
 ;; START Auto-generated list of all languages
 (defconst combobulate-rules-languages 
- '(css dune go html javascript json ocaml ocaml-interface python toml tsx typescript yaml) 
+ '(css dune go html javascript json ocaml ocaml-interface opam python toml tsx typescript yaml) 
  "A list of all the languages that have production rules.")
 ;; END Auto-generated list of all languages
 (defconst combobulate-rules-alist 
@@ -3080,6 +3150,7 @@
  (json ,combobulate-rules-json)
  (ocaml ,combobulate-rules-ocaml)
  (ocaml-interface ,combobulate-rules-ocaml-interface)
+ (opam ,combobulate-rules-opam)
  (python ,combobulate-rules-python)
  (toml ,combobulate-rules-toml)
  (tsx ,combobulate-rules-tsx)
@@ -3096,6 +3167,7 @@
  (json ,combobulate-rules-json-inverse)
  (ocaml ,combobulate-rules-ocaml-inverse)
  (ocaml-interface ,combobulate-rules-ocaml-interface-inverse)
+ (opam ,combobulate-rules-opam-inverse)
  (python ,combobulate-rules-python-inverse)
  (toml ,combobulate-rules-toml-inverse)
  (tsx ,combobulate-rules-tsx-inverse)
@@ -3112,6 +3184,7 @@
  (json ,combobulate-rules-json-types)
  (ocaml ,combobulate-rules-ocaml-types)
  (ocaml-interface ,combobulate-rules-ocaml-interface-types)
+ (opam ,combobulate-rules-opam-types)
  (python ,combobulate-rules-python-types)
  (toml ,combobulate-rules-toml-types)
  (tsx ,combobulate-rules-tsx-types)
@@ -3128,6 +3201,7 @@
  (json ,combobulate-rules-json-supertypes)
  (ocaml ,combobulate-rules-ocaml-supertypes)
  (ocaml-interface ,combobulate-rules-ocaml-interface-supertypes)
+ (opam ,combobulate-rules-opam-supertypes)
  (python ,combobulate-rules-python-supertypes)
  (toml ,combobulate-rules-toml-supertypes)
  (tsx ,combobulate-rules-tsx-supertypes)

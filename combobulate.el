@@ -87,6 +87,7 @@
 ;;;###autoload
 (require 'combobulate-ocaml)
 (require 'combobulate-dune)
+(require 'combobulate-opam)
 ;;; end language support
 
 (provide 'combobulate)

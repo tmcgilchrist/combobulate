@@ -570,6 +570,20 @@
 	       (combobulate-test-assert-at-marker 9)))
 
 
+(ert-deftest combobulate-test-opam-combobulate-navigate-down--opam-into-section-3 ()
+ "Test `combobulate' with `fixtures/down/opam-into-section.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/down/opam-into-section.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-navigate-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-down)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-down)
+	       (combobulate-test-assert-at-marker 3)))
+
+
 (ert-deftest combobulate-test-ocaml-combobulate-navigate-down--oxcaml_modes-2 ()
  "Test `combobulate' with `fixtures/down/oxcaml_modes.ml' in `tuareg-mode' mode."
 	     (combobulate-test

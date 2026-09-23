@@ -11,8 +11,10 @@
 (add-to-list 'load-path (expand-file-name "neocaml" default-directory))
 (require 'neocaml)
 (require 'neocaml-dune)
+(require 'neocaml-opam)
 (setq auto-mode-alist
       (append '(("\\.mli\\'" . tuareg-interface-mode)
                 ("\\.ml\\'" . tuareg-mode)
-                ("\\.dune\\'" . neocaml-dune-mode))
+                ("\\.dune\\'" . neocaml-dune-mode)
+                ("\\.opam\\'" . neocaml-opam-mode))
               auto-mode-alist))

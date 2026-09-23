@@ -934,6 +934,49 @@
 	       (combobulate-test-assert-at-marker 1)))
 
 
+(ert-deftest combobulate-test-opam-combobulate-navigate-previous--opam-dependencies-1 ()
+ "Test `combobulate' with `fixtures/sibling/opam-dependencies.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-dependencies.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
+(ert-deftest combobulate-test-opam-combobulate-navigate-previous--opam-variables-1 ()
+ "Test `combobulate' with `fixtures/sibling/opam-variables.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-variables.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-navigate-previous)
+	       (combobulate-test-go-to-marker 6)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 5)
+	       (combobulate-test-go-to-marker 5)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-previous)
+	       (combobulate-test-assert-at-marker 1)))
+
+
 (ert-deftest combobulate-test-ocaml-interface-combobulate-navigate-previous--oxcaml_attributes-1 ()
  "Test `combobulate' with `fixtures/sibling/oxcaml_attributes.mli' in `tuareg-interface-mode' mode."
 	     (combobulate-test

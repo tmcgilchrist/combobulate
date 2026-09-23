@@ -2577,6 +2577,131 @@
 		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/nested_type_records.mli[@2~after].mli")))))
 
 
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-dependencies-1 ()
+ "Test `combobulate' with `fixtures/sibling/opam-dependencies.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-dependencies.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-dependencies.opam[@1~after].opam")))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-dependencies-2 ()
+ "Test `combobulate' with `fixtures/sibling/opam-dependencies.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-dependencies.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-dependencies.opam[@2~after].opam")))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-dependencies-3 ()
+ "Test `combobulate' with `fixtures/sibling/opam-dependencies.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-dependencies.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-dependencies.opam[@3~after].opam")))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-dependencies-4 ()
+ "Test `combobulate' with `fixtures/sibling/opam-dependencies.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-dependencies.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 4)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-dependencies.opam[@4~after].opam")))))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-variables-1 ()
+ "Test `combobulate' with `fixtures/sibling/opam-variables.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-variables.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-variables.opam[@1~after].opam")))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-variables-2 ()
+ "Test `combobulate' with `fixtures/sibling/opam-variables.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-variables.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-variables.opam[@2~after].opam")))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-variables-3 ()
+ "Test `combobulate' with `fixtures/sibling/opam-variables.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-variables.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-variables.opam[@3~after].opam")))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-variables-4 ()
+ "Test `combobulate' with `fixtures/sibling/opam-variables.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-variables.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-variables.opam[@4~after].opam")))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-variables-5 ()
+ "Test `combobulate' with `fixtures/sibling/opam-variables.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-variables.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 5)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-variables.opam[@5~after].opam")))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-variables-6 ()
+ "Test `combobulate' with `fixtures/sibling/opam-variables.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-variables.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 6)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-variables.opam[@6~after].opam")))
+
+
+(ert-deftest combobulate-test-opam-combobulate-drag-down--opam-variables-7 ()
+ "Test `combobulate' with `fixtures/sibling/opam-variables.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-variables.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 7)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/opam-variables.opam[@7~after].opam")))))
+
+
 (ert-deftest combobulate-test-ocaml-interface-combobulate-drag-down--oxcaml_attributes-1 ()
  "Test `combobulate' with `fixtures/sibling/oxcaml_attributes.mli' in `tuareg-interface-mode' mode."
 	     (combobulate-test
