@@ -41,6 +41,26 @@
 	       (combobulate-test-assert-at-marker 6)))
 
 
+(ert-deftest combobulate-test-haskell-combobulate-navigate-next--class-members-5 ()
+ "Test `combobulate' with `fixtures/sibling/class-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/class-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 5)))
+
+
 (ert-deftest combobulate-test-ocaml-combobulate-navigate-next--class_type_expressions-3 ()
  "Test `combobulate' with `fixtures/sibling/class_type_expressions.ml' in `tuareg-mode' mode."
 	     (combobulate-test
@@ -342,6 +362,26 @@
 	       (combobulate-test-assert-at-marker 7)))
 
 
+(ert-deftest combobulate-test-haskell-combobulate-navigate-next--exports-5 ()
+ "Test `combobulate' with `fixtures/sibling/exports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/exports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 5)))
+
+
 (ert-deftest combobulate-test-go-combobulate-navigate-next--expr-switch-3 ()
  "Test `combobulate' with `fixtures/sibling/expr-switch.go' in `go-ts-mode' mode."
 	     (combobulate-test
@@ -455,6 +495,26 @@
 	       (combobulate-test-assert-at-marker 2)))
 
 
+(ert-deftest combobulate-test-haskell-combobulate-navigate-next--imports-5 ()
+ "Test `combobulate' with `fixtures/sibling/imports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/imports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 5)))
+
+
 (ert-deftest combobulate-test-go-combobulate-navigate-next--inside-case-1 ()
  "Test `combobulate' with `fixtures/sibling/inside-case.go' in `go-ts-mode' mode."
 	     (combobulate-test
@@ -475,6 +535,23 @@
 	       (combobulate-test-go-to-marker 2)
 	       (combobulate-navigate-next)
 	       (combobulate-test-assert-at-marker 3)))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-navigate-next--instance-members-4 ()
+ "Test `combobulate' with `fixtures/sibling/instance-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/instance-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)))
 
 
 (ert-deftest combobulate-test-ocaml-combobulate-navigate-next--let_and_in-3 ()
@@ -572,6 +649,35 @@
 	       (combobulate-test-go-to-marker 1)
 	       (combobulate-navigate-next)
 	       (combobulate-test-assert-at-marker 2)))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-navigate-next--module-sections-8 ()
+ "Test `combobulate' with `fixtures/sibling/module-sections.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/module-sections.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 5)
+	       (combobulate-test-go-to-marker 5)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 6)
+	       (combobulate-test-go-to-marker 6)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 7)
+	       (combobulate-test-go-to-marker 7)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 8)))
 
 
 (ert-deftest combobulate-test-python-combobulate-navigate-next--module-statements-8 ()
@@ -1064,6 +1170,26 @@
 		 (:language ocaml-interface :mode tuareg-interface-mode :fixture "fixtures/sibling/patterns.mli")
 	       :tags
 	       '(combobulate ocaml-interface tuareg-interface-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 5)))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-navigate-next--pragmas-5 ()
+ "Test `combobulate' with `fixtures/sibling/pragmas.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/pragmas.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-navigate-next)
 	       (combobulate-test-go-to-marker 1)
 	       (combobulate-navigate-next)
 	       (combobulate-test-assert-at-marker 2)

@@ -107,6 +107,63 @@
 		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/block.go[@6~after].go")))))
 
 
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--class-members-1 ()
+ "Test `combobulate' with `fixtures/sibling/class-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/class-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/class-members.hs[@1~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--class-members-2 ()
+ "Test `combobulate' with `fixtures/sibling/class-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/class-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/class-members.hs[@2~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--class-members-3 ()
+ "Test `combobulate' with `fixtures/sibling/class-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/class-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/class-members.hs[@3~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--class-members-4 ()
+ "Test `combobulate' with `fixtures/sibling/class-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/class-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/class-members.hs[@4~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--class-members-5 ()
+ "Test `combobulate' with `fixtures/sibling/class-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/class-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 5)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/class-members.hs[@5~after].hs")))))
+
+
 (ert-deftest combobulate-test-ocaml-combobulate-drag-down--class_type_expressions-1 ()
  "Test `combobulate' with `fixtures/sibling/class_type_expressions.ml' in `tuareg-mode' mode."
 	     (combobulate-test
@@ -933,6 +990,63 @@
 		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/elements.html[@7~after].html")))))
 
 
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--exports-1 ()
+ "Test `combobulate' with `fixtures/sibling/exports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/exports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/exports.hs[@1~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--exports-2 ()
+ "Test `combobulate' with `fixtures/sibling/exports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/exports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/exports.hs[@2~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--exports-3 ()
+ "Test `combobulate' with `fixtures/sibling/exports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/exports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/exports.hs[@3~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--exports-4 ()
+ "Test `combobulate' with `fixtures/sibling/exports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/exports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/exports.hs[@4~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--exports-5 ()
+ "Test `combobulate' with `fixtures/sibling/exports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/exports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 5)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/exports.hs[@5~after].hs")))))
+
+
 (ert-deftest combobulate-test-go-combobulate-drag-down--expr-switch-1 ()
  "Test `combobulate' with `fixtures/sibling/expr-switch.go' in `go-ts-mode' mode."
 	     (combobulate-test
@@ -1233,6 +1347,63 @@
 		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/import-declaration.go[@2~after].go")))))
 
 
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--imports-1 ()
+ "Test `combobulate' with `fixtures/sibling/imports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/imports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/imports.hs[@1~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--imports-2 ()
+ "Test `combobulate' with `fixtures/sibling/imports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/imports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/imports.hs[@2~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--imports-3 ()
+ "Test `combobulate' with `fixtures/sibling/imports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/imports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/imports.hs[@3~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--imports-4 ()
+ "Test `combobulate' with `fixtures/sibling/imports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/imports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/imports.hs[@4~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--imports-5 ()
+ "Test `combobulate' with `fixtures/sibling/imports.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/imports.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 5)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/imports.hs[@5~after].hs")))))
+
+
 (ert-deftest combobulate-test-go-combobulate-drag-down--inside-case-1 ()
  "Test `combobulate' with `fixtures/sibling/inside-case.go' in `go-ts-mode' mode."
 	     (combobulate-test
@@ -1277,6 +1448,52 @@
 		  (combobulate-test-go-to-marker 3)
 		  (combobulate-drag-down)
 		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/inside-table.toml[@3~after].toml")))))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--instance-members-1 ()
+ "Test `combobulate' with `fixtures/sibling/instance-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/instance-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/instance-members.hs[@1~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--instance-members-2 ()
+ "Test `combobulate' with `fixtures/sibling/instance-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/instance-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/instance-members.hs[@2~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--instance-members-3 ()
+ "Test `combobulate' with `fixtures/sibling/instance-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/instance-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/instance-members.hs[@3~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--instance-members-4 ()
+ "Test `combobulate' with `fixtures/sibling/instance-members.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/instance-members.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 4)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/instance-members.hs[@4~after].hs")))))
 
 
 (ert-deftest combobulate-test-ocaml-combobulate-drag-down--let_and_in-1 ()
@@ -1551,6 +1768,96 @@
 		  (combobulate-test-go-to-marker 2)
 		  (combobulate-drag-down)
 		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/match_in_fun.ml[@2~after].ml")))))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--module-sections-1 ()
+ "Test `combobulate' with `fixtures/sibling/module-sections.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/module-sections.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/module-sections.hs[@1~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--module-sections-2 ()
+ "Test `combobulate' with `fixtures/sibling/module-sections.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/module-sections.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/module-sections.hs[@2~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--module-sections-3 ()
+ "Test `combobulate' with `fixtures/sibling/module-sections.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/module-sections.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/module-sections.hs[@3~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--module-sections-4 ()
+ "Test `combobulate' with `fixtures/sibling/module-sections.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/module-sections.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/module-sections.hs[@4~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--module-sections-5 ()
+ "Test `combobulate' with `fixtures/sibling/module-sections.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/module-sections.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 5)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/module-sections.hs[@5~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--module-sections-6 ()
+ "Test `combobulate' with `fixtures/sibling/module-sections.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/module-sections.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 6)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/module-sections.hs[@6~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--module-sections-7 ()
+ "Test `combobulate' with `fixtures/sibling/module-sections.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/module-sections.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 7)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/module-sections.hs[@7~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--module-sections-8 ()
+ "Test `combobulate' with `fixtures/sibling/module-sections.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/module-sections.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 8)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/module-sections.hs[@8~after].hs")))))
 
 
 (ert-deftest combobulate-test-python-combobulate-drag-down--module-statements-1 ()
@@ -3005,6 +3312,63 @@
 		  (combobulate-test-go-to-marker 5)
 		  (combobulate-drag-down)
 		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/patterns.mli[@5~after].mli")))))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--pragmas-1 ()
+ "Test `combobulate' with `fixtures/sibling/pragmas.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/pragmas.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/pragmas.hs[@1~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--pragmas-2 ()
+ "Test `combobulate' with `fixtures/sibling/pragmas.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/pragmas.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/pragmas.hs[@2~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--pragmas-3 ()
+ "Test `combobulate' with `fixtures/sibling/pragmas.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/pragmas.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/pragmas.hs[@3~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--pragmas-4 ()
+ "Test `combobulate' with `fixtures/sibling/pragmas.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/pragmas.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-drag-down)
+	       (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/pragmas.hs[@4~after].hs")))
+
+
+(ert-deftest combobulate-test-haskell-combobulate-drag-down--pragmas-5 ()
+ "Test `combobulate' with `fixtures/sibling/pragmas.hs' in `curry-mode' mode."
+	     (combobulate-test
+		 (:language haskell :mode curry-mode :fixture "fixtures/sibling/pragmas.hs")
+	       :tags
+	       '(combobulate haskell curry-mode combobulate-drag-down)
+	       (should-error
+		(progn
+		  (combobulate-test-go-to-marker 5)
+		  (combobulate-drag-down)
+		  (combobulate-compare-action-with-fixture-delta "./fixture-deltas/combobulate-drag-down/pragmas.hs[@5~after].hs")))))
 
 
 (ert-deftest combobulate-test-go-combobulate-drag-down--program-1 ()
