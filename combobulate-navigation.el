@@ -228,8 +228,21 @@ syntax tree."
     (nreverse siblings)))
 
 (defun combobulate--get-nearest-navigable-node ()
-  "Returns the nearest navigable node to point"
-  (combobulate-node-at-point combobulate-navigable-nodes))
+  "Return the nearest navigable node to point.
+
+Walk up from the smallest named node covering the single character at
+point.  The one-character range matters: `treesit-node-on\=' given an
+empty range at a node boundary returns the enclosing parent, so point
+at the start of a node would otherwise resolve to its container and
+navigation could not step between siblings."
+  (let* ((end (min (1+ (point)) (point-max)))
+         (this (treesit-node-on (point) end (combobulate-primary-language) t)))
+    (or (catch 'done
+          (while this
+            (when (member (combobulate-node-type this) combobulate-navigable-nodes)
+              (throw 'done this))
+            (setq this (combobulate-node-parent this))))
+        (combobulate-node-at-point combobulate-navigable-nodes))))
 
 (defun combobulate-get-parents (node)
   "Get all parent nodes of NODE"
