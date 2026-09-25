@@ -86,6 +86,9 @@
 (require 'combobulate-go)
 ;;;###autoload
 (require 'combobulate-ocaml)
+(require 'combobulate-dune)
+(require 'combobulate-opam)
+(require 'combobulate-odoc)
 ;;; end language support
 
 (provide 'combobulate)

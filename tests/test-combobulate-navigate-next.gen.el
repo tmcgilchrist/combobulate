@@ -316,6 +316,37 @@
 	       (combobulate-test-assert-at-marker 7)))
 
 
+(ert-deftest combobulate-test-dune-combobulate-navigate-next--dune-fields-in-stanza-4 ()
+ "Test `combobulate' with `fixtures/sibling/dune-fields-in-stanza.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-fields-in-stanza.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)))
+
+
+(ert-deftest combobulate-test-dune-combobulate-navigate-next--dune-stanzas-3 ()
+ "Test `combobulate' with `fixtures/sibling/dune-stanzas.dune' in `neocaml-dune-mode' mode."
+	     (combobulate-test
+		 (:language dune :mode neocaml-dune-mode :fixture "fixtures/sibling/dune-stanzas.dune")
+	       :tags
+	       '(combobulate dune neocaml-dune-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)))
+
+
 (ert-deftest combobulate-test-html-combobulate-navigate-next--elements-7 ()
  "Test `combobulate' with `fixtures/sibling/elements.html' in `html-ts-mode' mode."
 	     (combobulate-test
@@ -901,6 +932,95 @@
 	       (combobulate-test-go-to-marker 1)
 	       (combobulate-navigate-next)
 	       (combobulate-test-assert-at-marker 2)))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-navigate-next--odoc-blocks-7 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-blocks.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-blocks.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 5)
+	       (combobulate-test-go-to-marker 5)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 6)
+	       (combobulate-test-go-to-marker 6)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 7)))
+
+
+(ert-deftest combobulate-test-odoc-combobulate-navigate-next--odoc-list-in-body-5 ()
+ "Test `combobulate' with `fixtures/sibling/odoc-list-in-body.mld' in `neocaml-odoc-mode' mode."
+	     (combobulate-test
+		 (:language odoc :mode neocaml-odoc-mode :fixture "fixtures/sibling/odoc-list-in-body.mld")
+	       :tags
+	       '(combobulate odoc neocaml-odoc-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 5)))
+
+
+(ert-deftest combobulate-test-opam-combobulate-navigate-next--opam-dependencies-4 ()
+ "Test `combobulate' with `fixtures/sibling/opam-dependencies.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-dependencies.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)))
+
+
+(ert-deftest combobulate-test-opam-combobulate-navigate-next--opam-variables-7 ()
+ "Test `combobulate' with `fixtures/sibling/opam-variables.opam' in `neocaml-opam-mode' mode."
+	     (combobulate-test
+		 (:language opam :mode neocaml-opam-mode :fixture "fixtures/sibling/opam-variables.opam")
+	       :tags
+	       '(combobulate opam neocaml-opam-mode combobulate-navigate-next)
+	       (combobulate-test-go-to-marker 1)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 2)
+	       (combobulate-test-go-to-marker 2)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 3)
+	       (combobulate-test-go-to-marker 3)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 4)
+	       (combobulate-test-go-to-marker 4)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 5)
+	       (combobulate-test-go-to-marker 5)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 6)
+	       (combobulate-test-go-to-marker 6)
+	       (combobulate-navigate-next)
+	       (combobulate-test-assert-at-marker 7)))
 
 
 (ert-deftest combobulate-test-ocaml-interface-combobulate-navigate-next--oxcaml_attributes-4 ()

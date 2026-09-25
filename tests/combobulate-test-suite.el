@@ -287,7 +287,10 @@ doesn't exist."
     (save-excursion
       (let* ((auto-mode-alist (append '(("\\.go\\'" . go-ts-mode)
                                         ("\\.mli\\'" . tuareg-interface-mode)
-                                        ("\\.ml\\'" . tuareg-mode))
+                                        ("\\.ml\\'" . tuareg-mode)
+                                        ("\\.dune\\'" . neocaml-dune-mode)
+                                        ("\\.opam\\'" . neocaml-opam-mode)
+                                        ("\\.mld\\'" . neocaml-odoc-mode))
                                       auto-mode-alist))
              ;; required to ensure the right major mode is chosen.
              (major-mode-remap-alist '((python-mode . python-ts-mode)

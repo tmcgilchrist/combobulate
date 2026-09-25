@@ -1,0 +1,9 @@
+@ -*- combobulate-test-point-overlays: ((1 outline 1) (2 outline 166) (3 outline 184) (4 outline 216) (5 outline 284)); eval: (combobulate-test-fixture-mode t); -*-
+{1 Installation}
+
+{ul {- run [opam install mylib]}
+    {- add it to your dune file}}
+
+Install the package with opam.
+
+Then build the project.

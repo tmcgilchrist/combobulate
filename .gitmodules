@@ -4,3 +4,6 @@
 [submodule "tests/tuareg"]
 	path = tests/tuareg
 	url = https://github.com/ocaml/tuareg.git
+[submodule "tests/neocaml"]
+	path = tests/neocaml
+	url = https://github.com/bbatsov/neocaml.git
