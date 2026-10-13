@@ -5,7 +5,12 @@
 (load-library "tests/tuareg/tuareg-opam.el")
 (load-library "tests/tuareg/tuareg-compat.el")
 (load-library "tests/tuareg/tuareg.el")
+
+;; curry-mode supplies the Haskell major mode.
+(add-to-list 'load-path (expand-file-name "curry-mode" default-directory))
+(require 'curry-mode)
 (setq auto-mode-alist
       (append '(("\\.mli\\'" . tuareg-interface-mode)
-                ("\\.ml\\'" . tuareg-mode))
+                ("\\.ml\\'" . tuareg-mode)
+                ("\\.hs\\'" . curry-mode))
               auto-mode-alist))

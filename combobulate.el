@@ -86,6 +86,7 @@
 (require 'combobulate-go)
 ;;;###autoload
 (require 'combobulate-ocaml)
+(require 'combobulate-haskell)
 ;;; end language support
 
 (provide 'combobulate)
