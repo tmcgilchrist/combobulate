@@ -1,0 +1,6 @@
+@ -*- combobulate-test-point-overlays: ((1 outline 151) (2 outline 155) (3 outline 158)); eval: (combobulate-test-fixture-mode t); -*-
+{1 My Module}
+
+{ul {- First item}
+    {- Second item}
+    {- Third item}}
